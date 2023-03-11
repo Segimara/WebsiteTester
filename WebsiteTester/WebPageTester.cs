@@ -22,19 +22,11 @@ namespace WebsiteTester
             var uniqueUrls = onPageUrls.Concat(onlyInSitemap);
             var results = TestUrls(uniqueUrls).OrderBy(x => x.Item2);
             // i can create nice "table" output but don`t think it's really necessary in this task
+            string messageForUrlsInSitemap = "Urls FOUNDED IN SITEMAP.XML but not founded after crawling a web site";
+            OutputUrls(messageForUrlsInSitemap, onlyInSitemap);
+            string messageForUrlsInWebSite = "Urls FOUNDED BY CRAWLING THE WEBSITE but not in sitemap.xml";
+            OutputUrls(messageForUrlsInSitemap, onlyInWebSite);
             int i = 1;
-            Console.WriteLine("Urls FOUNDED IN SITEMAP.XML but not founded after crawling a web site");
-            foreach (var u in onlyInSitemap)
-            {
-                Console.WriteLine($"{i++}) {u}");
-            }
-            i = 1;
-            Console.WriteLine("Urls FOUNDED BY CRAWLING THE WEBSITE but not in sitemap.xml");
-            foreach (var u in onlyInWebSite)
-            {
-                Console.WriteLine($"{i++}) {u}");
-            }
-            i = 1;
             Console.WriteLine("Timing");
             foreach (var u in results)
             {
@@ -71,6 +63,15 @@ namespace WebsiteTester
             }
             stopwatch.Stop();
             return stopwatch.ElapsedMilliseconds;
+        }
+        private void OutputUrls(string preMessage, IEnumerable<string> urls)
+        {
+            int i = 1;
+            Console.WriteLine(preMessage);
+            foreach (var u in urls)
+            {
+                Console.WriteLine($"{i++}) {u}");
+            }
         }
     }
 }
