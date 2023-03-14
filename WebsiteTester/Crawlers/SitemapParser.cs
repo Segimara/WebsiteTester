@@ -29,7 +29,9 @@ namespace WebsiteTester.Crawlers
             var urlsXML = doc.GetElementsByTagName("url");
             var srtUrls = from XmlNode urlNode in urlsXML
                           select urlNode["loc"].InnerText;
-            foreach (var url in srtUrls)
+            var correct = srtUrls.GetCorrectUrls(new Uri(baseUrl));
+            var unique = correct.Distinct();
+            foreach (var url in unique)
             {
                 yield return url;
             }
@@ -39,17 +41,14 @@ namespace WebsiteTester.Crawlers
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync(url + "/sitemap.xml");
+                HttpResponseMessage response = await client.GetAsync(new Uri(new Uri(url), "/sitemap.xml"));
 
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     return content;
                 }
-                else
-                {
-                    throw new Exception($"Failed to retrieve sitemap.xml from {url}. StatusCode: {response.StatusCode}");
-                }
+                throw new Exception($"Failed to retrieve sitemap.xml from {url}. StatusCode: {response.StatusCode}");
             }
         }
     }

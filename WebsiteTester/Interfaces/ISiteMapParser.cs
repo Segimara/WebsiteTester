@@ -8,9 +8,6 @@ namespace WebsiteTester.Interfaces
 {
     public interface ISiteMapParser
     {
-        public IEnumerable<string> Parse(string baseUrl)
-        {
-            yield return "";
-        }
+        IEnumerable<string> Parse(string baseUrl);
     }
 }

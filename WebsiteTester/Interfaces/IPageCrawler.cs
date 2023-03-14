@@ -8,6 +8,6 @@ namespace WebsiteTester.Interfaces
 {
     public interface IPageCrawler
     {
-        public IEnumerable<string> Crawl(string url);
+        IEnumerable<string> Crawl(string url);
     }
 }

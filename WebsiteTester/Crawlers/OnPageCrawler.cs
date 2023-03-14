@@ -1,6 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using System.Net;
-using System.Xml;
+﻿using HtmlAgilityPack;
+using System;
 using WebsiteTester.Interfaces;
 
 namespace WebsiteTester.Crawlers
@@ -9,25 +8,25 @@ namespace WebsiteTester.Crawlers
     {
         public IEnumerable<string> Crawl(string url)
         {
-            //may be use lib
-            var client = new WebClient();
-            var html = client.DownloadString(url);
-            var startIndex = 0;
-            while ((startIndex = html.IndexOf("<a ", startIndex)) != -1)
-            {
-                var hrefIndex = html.IndexOf("href=", startIndex);
-                if (hrefIndex == -1) break;
-
-                var linkStartIndex = hrefIndex + 6;
-                var linkEndIndex = html.IndexOf('"', linkStartIndex);
-                if (linkEndIndex == -1) break;
-
-                var link = html.Substring(linkStartIndex, linkEndIndex - linkStartIndex);
-                yield return link;
-
-                startIndex = linkEndIndex;
-            }
-
+            var basiUrl = new Uri(url);
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+            var links = doc.DocumentNode.Descendants("a")
+                            .Select(a => a.GetAttributeValue("href", null))
+                            .Where(href => ValidateUrl(href));
+            var correctUrls = links.Distinct().GetCorrectUrls(basiUrl);
+            var uniqueUrls = correctUrls.Distinct();
+            return uniqueUrls;   
         }
+        private bool ValidateUrl(string url)
+        {
+            return !String.IsNullOrEmpty(url) &&
+                        (url.StartsWith("http")
+                        || url.StartsWith("https")
+                        || url.StartsWith("#")
+                        || url.StartsWith("/")
+                        || url.StartsWith("."));
+        }
+
     }
 }
