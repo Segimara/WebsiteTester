@@ -15,13 +15,15 @@ namespace WebsiteTester
         }
         public void Test(string url)
         {
-            var onPageUrls = _pageCrawler.Crawl(url);
-            var sitemapUrlps = _siteMapParser.Parse(url);
+            var onPageUrls = _pageCrawler.Crawl(url).ToList();//.ToList() To avoid iterating over IEnumerable several times 
+            OutputUrls("test page", onPageUrls);
+            var sitemapUrlps = _siteMapParser.Parse(url).ToList();
+            OutputUrls("test sitemap", sitemapUrlps);
             var onlyInSitemap = sitemapUrlps.Except(onPageUrls);
             var onlyInWebSite = onPageUrls.Except(sitemapUrlps);
+            
             var uniqueUrls = onPageUrls.Concat(onlyInSitemap).Distinct();
             var results = TestRenderTimeOfUrls(uniqueUrls).OrderBy(x => x.Item2);
-            // i can create nice "table" output but don`t think it's really necessary in this task
             string messageForUrlsInSitemap = "Urls FOUNDED IN SITEMAP.XML but not founded after crawling a web site";
             OutputUrls(messageForUrlsInSitemap, onlyInSitemap);
             string messageForUrlsInWebSite = "Urls FOUNDED BY CRAWLING THE WEBSITE but not in sitemap.xml";

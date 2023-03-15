@@ -29,7 +29,7 @@ namespace WebsiteTester.Crawlers
             var urlsXML = doc.GetElementsByTagName("url");
             var srtUrls = from XmlNode urlNode in urlsXML
                           select urlNode["loc"].InnerText;
-            var correct = srtUrls.GetCorrectUrls(new Uri(baseUrl));
+            var correct = srtUrls.GetCorrectUrls(baseUrl);
             var unique = correct.Distinct();
             foreach (var url in unique)
             {

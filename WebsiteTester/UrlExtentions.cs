@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,36 +9,33 @@ namespace WebsiteTester
 {
     public static class UrlExtentions
     {
-        public static IEnumerable<string> GetCorrectUrls(this IEnumerable<string> nonUniqueUrls, Uri baseUri)
+        public static IEnumerable<string> GetCorrectUrls(this IEnumerable<string> urls, string baseUrl)
         {
-            foreach (var url in nonUniqueUrls)
+            Uri baseUri = new Uri(baseUrl, UriKind.Absolute);
+            foreach (string url in urls)
             {
                 Uri uri;
-                Uri _url = null ;
-                if (url.StartsWith("/") || url.StartsWith("."))
+                if (Uri.TryCreate(url, UriKind.Absolute, out uri))
                 {
-                    if (Uri.TryCreate(url, UriKind.Relative, out uri))
+                    if (uri.Host == baseUri.Host)
                     {
-                        _url = new Uri(baseUri, url);
+                        yield return GetNormalizedUrl(uri);
                     }
                 }
-                else if (url.StartsWith("#") || url == "/")
+                else if (Uri.TryCreate(baseUri, url, out uri))
                 {
-                    _url = baseUri;
-                }
-                else
-                {
-                    _url = new Uri(baseUri, url);
-                }
-                if (_url != null)
-                {
-                    if (_url.Host == baseUri.Host)
-                    {
-                        yield return _url.ToString();
-                    }
+                    yield return GetNormalizedUrl(uri);
                 }
             }
-            yield break;
+        }
+        private static string GetNormalizedUrl(Uri url)
+        {
+            string normalizedUrl = url.GetLeftPart(UriPartial.Path);
+            if (normalizedUrl.EndsWith("/"))
+            {
+                normalizedUrl = normalizedUrl.Substring(0, normalizedUrl.Length - 1);
+            }
+            return normalizedUrl;
         }
     }
 }
