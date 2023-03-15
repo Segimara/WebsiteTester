@@ -35,7 +35,8 @@ namespace WebsiteTester
                 Console.WriteLine($"{i++}) {u.Item1} \t {u.Item2}");
             }
             Console.WriteLine($"Urls(html documents) found after crawling a website: {onPageUrls.Count()}");
-            Console.WriteLine($"Urls found in sitemap: {sitemapUrlps.Count()}"); 
+            Console.WriteLine($"Urls found in sitemap: {sitemapUrlps.Count()}");
+            Console.WriteLine(_pageCrawler.Counter);
         }
         private IEnumerable<(string, long)> TestRenderTimeOfUrls(IEnumerable<string> urls)
         {
