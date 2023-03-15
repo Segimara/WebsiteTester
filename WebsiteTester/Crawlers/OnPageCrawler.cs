@@ -9,7 +9,6 @@ namespace WebsiteTester.Crawlers
 {
     public class OnPageCrawler : IPageCrawler
     {
-        public int Counter { get; set; } = 0;
         public IEnumerable<string> Crawl(string _url)
         {
             var startUrls = GetLinksFromPage(_url);
@@ -63,7 +62,6 @@ namespace WebsiteTester.Crawlers
             {
                 throw new Exception("it is not a html document");
             }
-            Counter++;
             return doc.DocumentNode.Descendants("a")
                             .Select(a => a.GetAttributeValue("href", null))
                             .Where(href => ValidateUrl(href))

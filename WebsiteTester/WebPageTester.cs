@@ -16,9 +16,9 @@ namespace WebsiteTester
         public void Test(string url)
         {
             var onPageUrls = _pageCrawler.Crawl(url).ToList();//.ToList() To avoid iterating over IEnumerable several times 
-            OutputUrls("test page", onPageUrls);
+            
             var sitemapUrlps = _siteMapParser.Parse(url).ToList();
-            OutputUrls("test sitemap", sitemapUrlps);
+            
             var onlyInSitemap = sitemapUrlps.Except(onPageUrls);
             var onlyInWebSite = onPageUrls.Except(sitemapUrlps);
             
@@ -36,7 +36,6 @@ namespace WebsiteTester
             }
             Console.WriteLine($"Urls(html documents) found after crawling a website: {onPageUrls.Count()}");
             Console.WriteLine($"Urls found in sitemap: {sitemapUrlps.Count()}");
-            Console.WriteLine(_pageCrawler.Counter);
         }
         private IEnumerable<(string, long)> TestRenderTimeOfUrls(IEnumerable<string> urls)
         {
