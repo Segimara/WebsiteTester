@@ -14,7 +14,7 @@ namespace WebsiteTester.Services.Parsers
             var web = new HtmlWeb();
             var doc = web.Load(new Uri(url));
 
-            if (!doc.Text.Contains("<!DOCTYPE html>"))
+            if (!doc.DocumentNode.Descendants().Any())
             {
                 throw new Exception("it is not a html document");
             }
@@ -25,6 +25,7 @@ namespace WebsiteTester.Services.Parsers
                 .Distinct()
                 .ToList();
         }
+        //todo refactor
         private bool ValidateUrl(string url)
         {
             return !String.IsNullOrEmpty(url) &&

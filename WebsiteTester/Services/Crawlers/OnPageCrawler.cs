@@ -17,36 +17,27 @@ namespace WebsiteTester.Crawlers
         public IEnumerable<string> Crawl(string _url)
         {
             var startUrls = _websiteParser.Parse(_url);
-            var queue = new Queue<string>(startUrls);
-            var alredyReceived = new HashSet<string>();
-            var alredyParsed = new HashSet<string>();
-            while (queue.Count > 0)
+            var visitedUrls = new HashSet<string>();
+            var urlsToVisit = new Queue<string>();
+            while (urlsToVisit.Count > 0)
             {
-                var url = queue.Dequeue();
-                if (!alredyParsed.Contains(url))
-                {
-                    IEnumerable<string> linksInUrlThoseNotParsedYet = null;
-                    try
-                    {
-                        linksInUrlThoseNotParsedYet = _websiteParser.Parse(url).Except(queue).Except(alredyParsed).Except(alredyReceived);
-                    }
-                    catch (Exception)
-                    {
-                        continue;
-                    }
-                    foreach (var link in linksInUrlThoseNotParsedYet)
-                    {
-                        queue.Enqueue(link);
-                    }
-                }
+                var url = urlsToVisit.Dequeue();
                 
-                alredyParsed.Add(url);
-                if (!alredyReceived.Contains(url))
+                IEnumerable<string> linksInUrlThoseNotParsedYet = null;
+                try
                 {
-                    alredyReceived.Add(url);
-                    yield return url;
+                    linksInUrlThoseNotParsedYet = _websiteParser.Parse(url).Except(visitedUrls);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+                foreach (var link in linksInUrlThoseNotParsedYet)
+                {
+                    urlsToVisit.Enqueue(link);
                 }
             }
+            return visitedUrls;
         }
         
     }

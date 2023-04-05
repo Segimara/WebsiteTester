@@ -13,7 +13,6 @@ namespace WebsiteTester.Services
             return urls
                 .Select(url => (url, GetRenderTime(url)));
         }
-
         private long GetRenderTime(string url)
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -25,7 +24,7 @@ namespace WebsiteTester.Services
             }
             catch (Exception)
             {
-                //do i need catch specific status codes?
+
             }
             finally
             {

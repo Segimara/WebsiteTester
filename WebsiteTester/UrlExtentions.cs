@@ -9,6 +9,7 @@ namespace WebsiteTester
 {
     public static class UrlExtentions
     {
+        // todo create method "StringToURI" and refactor this method to LINQ methods
         public static IEnumerable<string> GetCorrectUrls(this IEnumerable<string> urls, string baseUrl)
         {
             Uri baseUri = new Uri(baseUrl, UriKind.Absolute);

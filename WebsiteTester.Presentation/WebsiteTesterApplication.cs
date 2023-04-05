@@ -11,15 +11,13 @@ namespace WebsiteTester.Presentation
 {
     public class WebsiteTesterApplication
     {
-        private readonly OnPageCrawler _webCrawler;
-        private readonly SitemapParser _siteMapParser;
+        private readonly DomainLinkExtractor _linkExtractor;
         private readonly WebPageTester _webTester;
 
 
-        public WebsiteTesterApplication(SitemapParser siteMapParser, OnPageCrawler webCrawler, WebPageTester webPageTester)
+        public WebsiteTesterApplication(DomainLinkExtractor linkExtractor, WebPageTester webPageTester)
         {
-            _siteMapParser = siteMapParser;
-            _webCrawler = webCrawler;   
+            _linkExtractor = linkExtractor;
             _webTester = webPageTester;
         }
 
@@ -30,27 +28,21 @@ namespace WebsiteTester.Presentation
             StartTestUrl(url);
         }
 
-        private void StartTestUrl(string? url)
+        private void StartTestUrl(string url)
         {
-            var onPageUrls = _webCrawler.Crawl(url).ToList();
-            var sitemapUrlps = _siteMapParser.Parse(url).ToList();
+            var linksFromUrl = _linkExtractor.Extract(url);
 
-            var onlyInSitemap = sitemapUrlps.Except(onPageUrls);
-            var onlyInWebSite = onPageUrls.Except(sitemapUrlps);
-
-            var uniqueUrls = onPageUrls.Concat(sitemapUrlps).Distinct();
-
-            OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
+            OutputUrlsFromPage(linksFromUrl.LinksOnlyInWebsite, linksFromUrl.LinksOnlyInSitemap);
 
             var results = _webTester
-                .Test(uniqueUrls)
+                .Test(linksFromUrl.UniqueLinks)
                 .OrderBy(x => x.Item2)
                 .Select(result => $"{result.Item1} \t {result.Item2}");
 
             OutputList("Timing", results);
 
-            Console.WriteLine($"Urls(html documents) found after crawling a website: {onPageUrls.Count()}");
-            Console.WriteLine($"Urls found in sitemap: {sitemapUrlps.Count()}");
+            Console.WriteLine($"Urls(html documents) found after crawling a website: {linksFromUrl.LinksFromPages.Count()}");
+            Console.WriteLine($"Urls found in sitemap: {linksFromUrl.LinksFromSitemap.Count()}");
         }
 
         private void OutputUrlsFromPage(IEnumerable<string> onlyInWebSite, IEnumerable<string> onlyInSitemap)

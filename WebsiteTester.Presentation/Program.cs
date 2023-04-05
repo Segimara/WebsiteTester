@@ -10,9 +10,15 @@ namespace WebsiteTester.Presentation
         {
             WebsiteParser parser = new WebsiteParser();
             SitemapParser siteMapParser = new SitemapParser();
+            
             OnPageCrawler webCrawler = new OnPageCrawler(parser);
+            DomainLinkExtractor linkExtractor = new DomainLinkExtractor(siteMapParser, webCrawler);
+
             WebPageTester webTester = new WebPageTester();
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(siteMapParser, webCrawler, webTester);
+            
+            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(linkExtractor, webTester);
+
+            websiteTesterApplication.Run();
         }
     }
 }
