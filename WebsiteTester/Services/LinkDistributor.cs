@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebsiteTester.Interfaces
+namespace WebsiteTester.Services
 {
-    public interface IPageTester
+    public class LinkDistributor
     {
-        void Test(string url);
     }
 }

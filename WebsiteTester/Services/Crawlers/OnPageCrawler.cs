@@ -3,15 +3,20 @@ using Microsoft.VisualBasic;
 using System;
 using System.Diagnostics.Metrics;
 using System.Linq;
-using WebsiteTester.Interfaces;
+using WebsiteTester.Services.Parsers;
 
 namespace WebsiteTester.Crawlers
 {
-    public class OnPageCrawler : IPageCrawler
+    public class OnPageCrawler 
     {
+        private WebsiteParser _websiteParser;
+        public OnPageCrawler(WebsiteParser websiteParser)
+        {
+            _websiteParser = websiteParser;
+        }
         public IEnumerable<string> Crawl(string _url)
         {
-            var startUrls = GetLinksFromPage(_url);
+            var startUrls = _websiteParser.Parse(_url);
             var queue = new Queue<string>(startUrls);
             var alredyReceived = new HashSet<string>();
             var alredyParsed = new HashSet<string>();
@@ -23,7 +28,7 @@ namespace WebsiteTester.Crawlers
                     IEnumerable<string> linksInUrlThoseNotParsedYet = null;
                     try
                     {
-                        linksInUrlThoseNotParsedYet = GetLinksFromPage(url).Except(queue).Except(alredyParsed).Except(alredyReceived);
+                        linksInUrlThoseNotParsedYet = _websiteParser.Parse(url).Except(queue).Except(alredyParsed).Except(alredyReceived);
                     }
                     catch (Exception)
                     {
@@ -43,29 +48,6 @@ namespace WebsiteTester.Crawlers
                 }
             }
         }
-        private bool ValidateUrl(string url)
-        {
-            return !String.IsNullOrEmpty(url) &&
-                        (url.StartsWith("http")
-                        || url.StartsWith("https")
-                        || url.StartsWith("#")
-                        || url.StartsWith("/")
-                        || url.StartsWith("."));
-        }
         
-        private List<string> GetLinksFromPage(string url)
-        {
-            
-            var web = new HtmlWeb();
-            var doc = web.Load(new Uri(url));
-            if (!doc.Text.Contains("<!DOCTYPE html>"))
-            {
-                throw new Exception("it is not a html document");
-            }
-            return doc.DocumentNode.Descendants("a")
-                            .Select(a => a.GetAttributeValue("href", null))
-                            .Where(href => ValidateUrl(href))
-                            .GetCorrectUrls(url).Distinct().ToList();
-        }
     }
 }

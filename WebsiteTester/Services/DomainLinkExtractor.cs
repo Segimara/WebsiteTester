@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebsiteTester.Interfaces
+namespace WebsiteTester.Services
 {
-    public interface IPageCrawler
+    internal class DomainLinkExtractor
     {
-        IEnumerable<string> Crawl(string url);
     }
 }

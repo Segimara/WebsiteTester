@@ -6,12 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using WebsiteTester.Interfaces;
-
-namespace WebsiteTester.Crawlers
+namespace WebsiteTester.Services.Parsers
 {
-    //Separate from the IPageCrawler interface because you can get sitemap in different URLs and in different formats 
-    public class SitemapParser : ISiteMapParser
+    public class SitemapParser 
     {
         public IEnumerable<string> Parse(string baseUrl)
         {
