@@ -6,44 +6,53 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using WebsiteTester.Models;
+using WebsiteTester.Services.Validators;
+
 namespace WebsiteTester.Services.Parsers
 {
     public class SitemapParser 
     {
-        public IEnumerable<string> Parse(string baseUrl)
+        private readonly UrlValidator _urlValidator;
+
+        public SitemapParser(UrlValidator urlValidator)
         {
-            string sitemapXml = "";
+            _urlValidator = urlValidator;
+        }
+
+        public IEnumerable<WebLinkModel> Parse(string baseUrl)
+        {
+            string sitemapContent = "";
 
             try
             {
-                sitemapXml = GetSitemapXml(baseUrl).Result;
+                sitemapContent = GetSitemapXml(baseUrl).Result;
             }
             catch (Exception)
             {
-                yield break;
+                return null;
             }
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(sitemapXml);
+            XmlDocument sitemapDoc = new XmlDocument();
+            sitemapDoc.LoadXml(sitemapContent);
 
-            var urlsXML = doc.GetElementsByTagName("url");
+            var urlsNodes = sitemapDoc.GetElementsByTagName("url");
 
-            var srtUrls = from XmlNode urlNode in urlsXML
-                          select urlNode["loc"].InnerText;
+            var urlsList = urlsNodes.Cast<XmlNode>()
+                .Select(urlNode => urlNode["loc"].InnerText);
 
-            var correct = srtUrls.GetCorrectUrls(baseUrl);
-            var unique = correct.Distinct();
-             
-            foreach (var url in unique)
-            {
-                yield return url;
-            }
+            var normalizedUrls = urlsList
+                .Where(l => _urlValidator.isValid(l))
+                .NormalizeUrls(baseUrl);
 
+            return normalizedUrls
+                .Distinct()
+                .Select(u => new WebLinkModel(u, true, false));
         }
 
         public async Task<string> GetSitemapXml(string url)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientWrapper client = new HttpClientWrapper())
             {
                 HttpResponseMessage response = await client.GetAsync(new Uri(new Uri(url), "/sitemap.xml"));
 

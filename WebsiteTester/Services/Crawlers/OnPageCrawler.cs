@@ -1,11 +1,8 @@
-﻿using HtmlAgilityPack;
-using Microsoft.VisualBasic;
-using System;
-using System.Diagnostics.Metrics;
-using System.Linq;
+﻿using System.Linq;
+using WebsiteTester.Models;
 using WebsiteTester.Services.Parsers;
 
-namespace WebsiteTester.Crawlers
+namespace WebsiteTester.Services.Crawlers
 {
     public class OnPageCrawler 
     {
@@ -16,7 +13,7 @@ namespace WebsiteTester.Crawlers
             _websiteParser = websiteParser;
         }
 
-        public IEnumerable<string> Crawl(string _url)
+        public IEnumerable<WebLinkModel> Crawl(string _url)
         {
             var startUrls = _websiteParser.Parse(_url);
 
@@ -25,25 +22,27 @@ namespace WebsiteTester.Crawlers
 
             while (urlsToVisit.Count > 0)
             {
-                var url = urlsToVisit.Dequeue();
+                IEnumerable<string> linksToParse = null;
                 
-                IEnumerable<string> linksInUrlThoseNotParsedYet = null;
+                var url = urlsToVisit.Dequeue();
+                visitedUrls.Add(url);
                 try
                 {
-                    linksInUrlThoseNotParsedYet = _websiteParser.Parse(url).Except(visitedUrls);
+                    linksToParse = _websiteParser.Parse(url).Except(visitedUrls).Except(urlsToVisit);
                 }
                 catch (Exception)
                 {
                     continue;
                 }
 
-                foreach (var link in linksInUrlThoseNotParsedYet)
+                foreach (var link in linksToParse)
                 {
                     urlsToVisit.Enqueue(link);
                 }
             }
 
-            return visitedUrls;
+            return visitedUrls
+                .Select(u => new WebLinkModel(u, false, true));
         }
         
     }

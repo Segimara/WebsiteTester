@@ -1,35 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebsiteTester
+﻿namespace WebsiteTester
 {
     public static class UrlExtentions
     {
-        // todo create method "StringToURI" and refactor this method to LINQ methods
-        public static IEnumerable<string> GetCorrectUrls(this IEnumerable<string> urls, string baseUrl)
+        public static IEnumerable<string> NormalizeUrls(this IEnumerable<string> urls, string baseUrl)
         {
             Uri baseUri = new Uri(baseUrl, UriKind.Absolute);
-            foreach (string url in urls)
-            {
-                Uri uri;
-                if (Uri.TryCreate(url, UriKind.Absolute, out uri))
-                {
-                    if (uri.Host == baseUri.Host)
-                    {
-                        yield return GetNormalizedUrl(uri);
-                    }
-                }
-                else if (Uri.TryCreate(baseUri, url, out uri))
-                {
-                    yield return GetNormalizedUrl(uri);
-                }
-            }
+            return urls.Select(s => StringToUri(s, baseUri))
+                .Where(u => u != null && u.Host == baseUri.Host)
+                .Select(u => GetNormalizedUri(u));
         }
-        private static string GetNormalizedUrl(Uri url)
+
+        private static Uri StringToUri(string url, Uri baseUri)
+        {
+            Uri uri = null;
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                return uri;
+            }
+            else if (Uri.TryCreate(baseUri, url, out uri))
+            {
+                return uri;
+            }
+            
+            return uri;
+        }
+
+        private static string GetNormalizedUri(Uri url)
         {
             string normalizedUrl = url.GetLeftPart(UriPartial.Path);
             if (normalizedUrl.EndsWith("/"))

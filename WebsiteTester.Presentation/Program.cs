@@ -1,6 +1,7 @@
-﻿using WebsiteTester.Crawlers;
-using WebsiteTester.Services;
+﻿using WebsiteTester.Services;
+using WebsiteTester.Services.Crawlers;
 using WebsiteTester.Services.Parsers;
+using WebsiteTester.Services.Validators;
 
 namespace WebsiteTester.Presentation
 {
@@ -8,15 +9,19 @@ namespace WebsiteTester.Presentation
     {
         static void Main(string[] args)
         {
-            WebsiteParser parser = new WebsiteParser();
-            SitemapParser siteMapParser = new SitemapParser();
+            UrlValidator urlValidator = new UrlValidator();
+
+            WebsiteParser parser = new WebsiteParser(urlValidator);
+            SitemapParser siteMapParser = new SitemapParser(urlValidator);
             
             OnPageCrawler webCrawler = new OnPageCrawler(parser);
-            DomainLinkExtractor linkExtractor = new DomainLinkExtractor(siteMapParser, webCrawler);
+            PageLinkFinder linkFinder = new PageLinkFinder(siteMapParser, webCrawler);
 
             WebPageTester webTester = new WebPageTester();
             
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(linkExtractor, webTester);
+            DomainCrawler domaincrawler = new DomainCrawler(linkFinder, webTester);
+
+            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domaincrawler);
 
             websiteTesterApplication.Run();
         }

@@ -1,55 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebsiteTester.Crawlers;
+﻿using WebsiteTester.Models;
 using WebsiteTester.Services;
-using WebsiteTester.Services.Parsers;
 
 namespace WebsiteTester.Presentation
 {
     public class WebsiteTesterApplication
     {
-        private readonly DomainLinkExtractor _linkExtractor;
-        private readonly WebPageTester _webTester;
+        private readonly DomainCrawler _crawler;
 
-        public WebsiteTesterApplication(DomainLinkExtractor linkExtractor, WebPageTester webPageTester)
+        public WebsiteTesterApplication(DomainCrawler crawler)
         {
-            _linkExtractor = linkExtractor;
-            _webTester = webPageTester;
+            _crawler = crawler;
         }
 
         public void Run()
         {
             Console.WriteLine("Enter the website URL: ");
             string url = Console.ReadLine();
-            StartTestUrl(url);
+            GetResults(url);
         }
 
-        private void StartTestUrl(string url)
+        private void GetResults(string url)
         {
-            var linksFromUrl = _linkExtractor.Extract(url);
+            var linksFromUrl = _crawler.GetUrls(url).ToList();
 
-            OutputUrlsFromPage(linksFromUrl.LinksOnlyInWebsite, linksFromUrl.LinksOnlyInSitemap);
+            var onlyInWebSite = linksFromUrl.Where(l => l is { IsInWebsite: true, IsInSitemap: false });
+            var onlyInSitemap = linksFromUrl.Where(l => l is { IsInSitemap: true, IsInWebsite: true });
+            
+            OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 
-            var results = _webTester
-                .Test(linksFromUrl.UniqueLinks)
-                .OrderBy(x => x.Item2)
-                .Select(result => $"{result.Item1} \t {result.Item2}");
+            var results = linksFromUrl
+                .OrderBy(x => x.RenderTime)
+                .Select(result => $"{result.Url} \t {result.RenderTime}");
 
             OutputList("Timing", results);
 
-            Console.WriteLine($"Urls(html documents) found after crawling a website: {linksFromUrl.LinksFromPages.Count()}");
-            Console.WriteLine($"Urls found in sitemap: {linksFromUrl.LinksFromSitemap.Count()}");
+            Console.WriteLine($"Urls(html documents) found after crawling a website: {onlyInWebSite.Count()}");
+            Console.WriteLine($"Urls found in sitemap: {onlyInSitemap.Count()}");
         }
 
-        private void OutputUrlsFromPage(IEnumerable<string> onlyInWebSite, IEnumerable<string> onlyInSitemap)
+        private void OutputUrlsFromPage(IEnumerable<WebLinkModel> onlyInWebSite, IEnumerable<WebLinkModel> onlyInSitemap)
         {
             string messageForUrlsInSitemap = "Urls FOUNDED IN SITEMAP.XML but not founded after crawling a web site";
-            OutputList(messageForUrlsInSitemap, onlyInSitemap);
+            OutputList(messageForUrlsInSitemap, onlyInSitemap.Select(u => u.Url));
             string messageForUrlsInWebSite = "Urls FOUNDED BY CRAWLING THE WEBSITE but not in sitemap.xml";
-            OutputList(messageForUrlsInWebSite, onlyInWebSite);
+            OutputList(messageForUrlsInWebSite, onlyInWebSite.Select(u => u.Url));
         }
 
         private void OutputList(string preMessage, IEnumerable<string> urls)

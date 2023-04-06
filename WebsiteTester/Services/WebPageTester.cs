@@ -1,27 +1,30 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
-using WebsiteTester.Crawlers;
-using WebsiteTester.Services.Parsers;
+﻿using System.Diagnostics;
+using WebsiteTester.Models;
 
 namespace WebsiteTester.Services
 {
     public class WebPageTester
     {
-        public IEnumerable<(string, long)> Test(IEnumerable<string> urls)
+        public IEnumerable<WebLinkModel> Test(IEnumerable<WebLinkModel> urls)
         {
             return urls
-                .Select(url => (url, GetRenderTime(url)));
+                .Select(url =>
+                {
+                    url.RenderTime = GetRenderTime(url.Url);
+                    return url;
+                });
         }
 
         private long GetRenderTime(string url)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+            
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = client.GetAsync(url).Result;
             }
+
             stopwatch.Stop();
             return stopwatch.ElapsedMilliseconds;
         }
