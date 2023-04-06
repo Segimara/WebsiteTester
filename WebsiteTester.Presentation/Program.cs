@@ -1,7 +1,9 @@
-﻿using WebsiteTester.Services;
-using WebsiteTester.Services.Crawlers;
-using WebsiteTester.Services.Parsers;
-using WebsiteTester.Services.Validators;
+﻿using HtmlAgilityPack;
+using WebsiteTester.Crawlers;
+using WebsiteTester.Helpers;
+using WebsiteTester.Parsers;
+using WebsiteTester.Services;
+using WebsiteTester.Validators;
 
 namespace WebsiteTester.Presentation
 {
@@ -9,19 +11,22 @@ namespace WebsiteTester.Presentation
     {
         static void Main(string[] args)
         {
-            UrlValidator urlValidator = new UrlValidator();
+            HtmlWeb htmlWeb = new HtmlWeb();
+            ContentLoaderService contentLoaderService = new ContentLoaderService(htmlWeb);
 
-            WebsiteParser parser = new WebsiteParser(urlValidator);
-            SitemapParser siteMapParser = new SitemapParser(urlValidator);
+            UrlValidator urlValidator = new UrlValidator();
+            UrlNormalizer urlNormalizer = new UrlNormalizer();
+
+            WebsiteParser parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
+            SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, contentLoaderService);
             
             OnPageCrawler webCrawler = new OnPageCrawler(parser);
-            PageLinkFinder linkFinder = new PageLinkFinder(siteMapParser, webCrawler);
 
             WebPageTester webTester = new WebPageTester();
             
-            DomainCrawler domaincrawler = new DomainCrawler(linkFinder, webTester);
+            DomainCrawler domainCrawler = new DomainCrawler(siteMapParser, webCrawler, webTester);
 
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domaincrawler);
+            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler);
 
             websiteTesterApplication.Run();
         }

@@ -1,5 +1,5 @@
-﻿using WebsiteTester.Models;
-using WebsiteTester.Services;
+﻿using WebsiteTester.Crawlers;
+using WebsiteTester.Models;
 
 namespace WebsiteTester.Presentation
 {
@@ -24,10 +24,12 @@ namespace WebsiteTester.Presentation
             var linksFromUrl = _crawler.GetUrls(url).ToList();
 
             var onlyInWebSite = linksFromUrl
-                .Where(l => l is { IsInSitemap: false, IsInWebsite: true });
+                .Where(l => l.IsInWebsite)
+                .Where(l => !l.IsInSitemap);
 
             var onlyInSitemap = linksFromUrl
-                .Where(l => l is { IsInSitemap: true, IsInWebsite: false });
+                .Where(l => l.IsInSitemap)
+                .Where(l => !l.IsInWebsite);
             
             OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 

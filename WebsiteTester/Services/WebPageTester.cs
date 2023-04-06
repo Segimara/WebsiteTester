@@ -8,25 +8,24 @@ namespace WebsiteTester.Services
         public IEnumerable<WebLinkModel> Test(IEnumerable<WebLinkModel> urls)
         {
             return urls
-                .Select(url =>
-                {
-                    url.RenderTime = GetRenderTime(url.Url);
-                    return url;
-                });
+                .Select(url => GetRenderTime(url));
         }
 
-        private long GetRenderTime(string url)
+        private WebLinkModel GetRenderTime(WebLinkModel url)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = client.GetAsync(url).Result;
+                HttpResponseMessage response = client.GetAsync(url.Url).Result;
             }
 
             stopwatch.Stop();
-            return stopwatch.ElapsedMilliseconds;
+
+            url.RenderTime = stopwatch.ElapsedMilliseconds;
+
+            return url;
         }
         
     }

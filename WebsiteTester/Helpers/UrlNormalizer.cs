@@ -1,8 +1,14 @@
-﻿namespace WebsiteTester
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebsiteTester.Helpers
 {
-    public static class UrlExtentions
+    public class UrlNormalizer
     {
-        public static IEnumerable<string> NormalizeUrls(this IEnumerable<string> urls, string baseUrl)
+        public IEnumerable<string> NormalizeUrls(IEnumerable<string> urls, string baseUrl)
         {
             Uri baseUri = new Uri(baseUrl, UriKind.Absolute);
             return urls.Select(s => StringToUri(s, baseUri))
@@ -10,7 +16,7 @@
                 .Select(u => GetNormalizedUri(u));
         }
 
-        private static Uri StringToUri(string url, Uri baseUri)
+        private Uri StringToUri(string url, Uri baseUri)
         {
             Uri uri = null;
 
@@ -18,15 +24,15 @@
             {
                 return uri;
             }
-            else if (Uri.TryCreate(baseUri, url, out uri))
+            if (Uri.TryCreate(baseUri, url, out uri))
             {
                 return uri;
             }
-            
+
             return uri;
         }
 
-        private static string GetNormalizedUri(Uri url)
+        private string GetNormalizedUri(Uri url)
         {
             string normalizedUrl = url.GetLeftPart(UriPartial.Path);
             if (normalizedUrl.EndsWith("/"))
