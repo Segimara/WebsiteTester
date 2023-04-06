@@ -14,7 +14,6 @@ namespace WebsiteTester.Presentation
         private readonly DomainLinkExtractor _linkExtractor;
         private readonly WebPageTester _webTester;
 
-
         public WebsiteTesterApplication(DomainLinkExtractor linkExtractor, WebPageTester webPageTester)
         {
             _linkExtractor = linkExtractor;

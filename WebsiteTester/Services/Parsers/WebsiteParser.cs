@@ -18,22 +18,27 @@ namespace WebsiteTester.Services.Parsers
             {
                 throw new Exception("it is not a html document");
             }
+
             return doc.DocumentNode.Descendants("a")
                 .Select(a => a.GetAttributeValue("href", null))
-                .Where(href => ValidateUrl(href))
+                .Where(href => ValidateOnlyUrls(href))
                 .GetCorrectUrls(url)
                 .Distinct()
                 .ToList();
         }
-        //todo refactor
-        private bool ValidateUrl(string url)
+
+        private bool ValidateOnlyUrls(string url)
         {
-            return !String.IsNullOrEmpty(url) &&
-                   (url.StartsWith("http")
-                    || url.StartsWith("https")
-                    || url.StartsWith("#")
-                    || url.StartsWith("/")
-                    || url.StartsWith("."));
+            if (string.IsNullOrEmpty(url))
+            {
+                return false;
+            }
+
+            bool isRelativeLink = url.StartsWith("/") || url.StartsWith(".");
+            bool isAbsoluteLink = url.StartsWith("http") || url.StartsWith("https");
+            bool isLocalLink = url.StartsWith("#");
+
+            return isRelativeLink || isAbsoluteLink || isLocalLink;
         }
     }
 }

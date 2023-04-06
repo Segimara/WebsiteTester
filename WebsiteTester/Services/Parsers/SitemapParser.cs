@@ -13,6 +13,7 @@ namespace WebsiteTester.Services.Parsers
         public IEnumerable<string> Parse(string baseUrl)
         {
             string sitemapXml = "";
+
             try
             {
                 sitemapXml = GetSitemapXml(baseUrl).Result;
@@ -21,19 +22,25 @@ namespace WebsiteTester.Services.Parsers
             {
                 yield break;
             }
+
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(sitemapXml);
+
             var urlsXML = doc.GetElementsByTagName("url");
+
             var srtUrls = from XmlNode urlNode in urlsXML
                           select urlNode["loc"].InnerText;
+
             var correct = srtUrls.GetCorrectUrls(baseUrl);
             var unique = correct.Distinct();
+             
             foreach (var url in unique)
             {
                 yield return url;
             }
 
         }
+
         public async Task<string> GetSitemapXml(string url)
         {
             using (HttpClient client = new HttpClient())
@@ -45,6 +52,7 @@ namespace WebsiteTester.Services.Parsers
                     string content = await response.Content.ReadAsStringAsync();
                     return content;
                 }
+
                 throw new Exception($"Failed to retrieve sitemap.xml from {url}. StatusCode: {response.StatusCode}");
             }
         }

@@ -13,22 +13,14 @@ namespace WebsiteTester.Services
             return urls
                 .Select(url => (url, GetRenderTime(url)));
         }
+
         private long GetRenderTime(string url)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            HttpClient client = new HttpClient();
-            try
+            using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = client.GetAsync(url).Result;
-            }
-            catch (Exception)
-            {
-
-            }
-            finally
-            {
-                client.Dispose();
             }
             stopwatch.Stop();
             return stopwatch.ElapsedMilliseconds;

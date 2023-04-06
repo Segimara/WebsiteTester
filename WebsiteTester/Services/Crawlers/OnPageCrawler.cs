@@ -10,15 +10,19 @@ namespace WebsiteTester.Crawlers
     public class OnPageCrawler 
     {
         private WebsiteParser _websiteParser;
+
         public OnPageCrawler(WebsiteParser websiteParser)
         {
             _websiteParser = websiteParser;
         }
+
         public IEnumerable<string> Crawl(string _url)
         {
             var startUrls = _websiteParser.Parse(_url);
+
             var visitedUrls = new HashSet<string>();
-            var urlsToVisit = new Queue<string>();
+            var urlsToVisit = new Queue<string>(startUrls);
+
             while (urlsToVisit.Count > 0)
             {
                 var url = urlsToVisit.Dequeue();
@@ -32,11 +36,13 @@ namespace WebsiteTester.Crawlers
                 {
                     continue;
                 }
+
                 foreach (var link in linksInUrlThoseNotParsedYet)
                 {
                     urlsToVisit.Enqueue(link);
                 }
             }
+
             return visitedUrls;
         }
         
