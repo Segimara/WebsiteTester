@@ -23,8 +23,11 @@ namespace WebsiteTester.Presentation
         {
             var linksFromUrl = _crawler.GetUrls(url).ToList();
 
-            var onlyInWebSite = linksFromUrl.Where(l => l is { IsInWebsite: true, IsInSitemap: false });
-            var onlyInSitemap = linksFromUrl.Where(l => l is { IsInSitemap: true, IsInWebsite: true });
+            var onlyInWebSite = linksFromUrl
+                .Where(l => l is { IsInSitemap: false, IsInWebsite: true });
+
+            var onlyInSitemap = linksFromUrl
+                .Where(l => l is { IsInSitemap: true, IsInWebsite: false });
             
             OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 
