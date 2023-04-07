@@ -5,6 +5,12 @@ namespace WebsiteTester.Services
 {
     public class WebPageTester
     {
+        private HttpClientService _httpClientService;
+
+        public WebPageTester(HttpClientService httpClientService)
+        {
+            _httpClientService = httpClientService;
+        }
         public IEnumerable<WebLinkModel> Test(IEnumerable<WebLinkModel> urls)
         {
             return urls
@@ -13,13 +19,12 @@ namespace WebsiteTester.Services
 
         private WebLinkModel GetRenderTime(WebLinkModel url)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            var uri = new Uri(url.Url);
+            var stopwatch = new Stopwatch();
+            
             stopwatch.Start();
             
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = client.GetAsync(url.Url).Result;
-            }
+            var response = _httpClientService.GetAsync(uri).Result;
 
             stopwatch.Stop();
 
@@ -27,6 +32,6 @@ namespace WebsiteTester.Services
 
             return url;
         }
-        
+
     }
 }

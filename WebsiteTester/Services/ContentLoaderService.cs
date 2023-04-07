@@ -9,16 +9,16 @@ namespace WebsiteTester.Services
 {
     public class ContentLoaderService
     {
-        private readonly HtmlWeb _web;
+        private readonly HtmlWeb _loader;
 
-        public ContentLoaderService(HtmlWeb web)
+        public ContentLoaderService(HtmlWeb pageLoader)
         {
-            _web = web;
+            _loader = pageLoader;
         }
 
         public virtual HtmlDocument Load(Uri uri)
         {
-            return _web.Load(uri);
+            return _loader.Load(uri);
         }
     }
 }

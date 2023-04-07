@@ -10,13 +10,13 @@ namespace WebsiteTester.Parsers
     {
         private readonly UrlValidator _urlValidator;
         private readonly UrlNormalizer _urlNormalizer;
-        private ContentLoaderService _contentLoaderService;
+        private readonly HttpClientService _httpClientService;
 
-        public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, ContentLoaderService contentLoaderService)
+        public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, HttpClientService httpClientService)
         {
             _urlValidator = urlValidator;
             _urlNormalizer = urlNormalizer;
-            _contentLoaderService = contentLoaderService;
+            _httpClientService = httpClientService;
         }
 
         public IEnumerable<WebLinkModel> Parse(string baseUrl)
@@ -56,18 +56,16 @@ namespace WebsiteTester.Parsers
 
         public async Task<string> GetSitemapXml(string url)
         {
-            try
+            var response = await _httpClientService.GetAsync(new Uri(new Uri(url), "/sitemap.xml"));
+
+            if (response.IsSuccessStatusCode)
             {
-                string content = _contentLoaderService.Load(new Uri(new Uri(url), "/sitemap.xml"))
-                    .Text;
+                string content = await response.Content.ReadAsStringAsync();
+
                 return content;
             }
-            catch (Exception e)
-            {
-                throw;
-            }
 
-
+            throw new Exception($"Failed to retrieve sitemap.xml from {url}. StatusCode: {response.StatusCode}");
         }
     }
 }

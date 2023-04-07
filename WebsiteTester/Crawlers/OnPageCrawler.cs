@@ -52,6 +52,5 @@ namespace WebsiteTester.Crawlers
                     IsInSitemap = false,
                 });
         }
-
     }
 }

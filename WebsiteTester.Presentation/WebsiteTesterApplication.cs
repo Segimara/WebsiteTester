@@ -21,7 +21,7 @@ namespace WebsiteTester.Presentation
 
         private void GetResults(string url)
         {
-            var linksFromUrl = _crawler.GetUrls(url).ToList();
+            var linksFromUrl = _crawler.GetUrls(url);
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)
