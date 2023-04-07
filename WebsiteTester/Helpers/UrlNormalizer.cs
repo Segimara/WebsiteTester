@@ -11,8 +11,10 @@ namespace WebsiteTester.Helpers
         public IEnumerable<string> NormalizeUrls(IEnumerable<string> urls, string baseUrl)
         {
             Uri baseUri = new Uri(baseUrl, UriKind.Absolute);
+
             return urls.Select(s => StringToUri(s, baseUri))
-                .Where(u => u != null && u.Host == baseUri.Host)
+                .Where(u => u != null)
+                .Where(u => u.Host == baseUri.Host)
                 .Select(u => GetNormalizedUri(u));
         }
 
@@ -24,6 +26,7 @@ namespace WebsiteTester.Helpers
             {
                 return uri;
             }
+
             if (Uri.TryCreate(baseUri, url, out uri))
             {
                 return uri;
@@ -34,11 +37,13 @@ namespace WebsiteTester.Helpers
 
         private string GetNormalizedUri(Uri url)
         {
-            string normalizedUrl = url.GetLeftPart(UriPartial.Path);
+            var normalizedUrl = url.GetLeftPart(UriPartial.Path);
+
             if (normalizedUrl.EndsWith("/"))
             {
                 normalizedUrl = normalizedUrl.Substring(0, normalizedUrl.Length - 1);
             }
+
             return normalizedUrl;
         }
     }

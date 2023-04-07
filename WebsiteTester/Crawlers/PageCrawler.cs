@@ -5,21 +5,34 @@ using WebsiteTester.Parsers;
 
 namespace WebsiteTester.Crawlers
 {
-    public class OnPageCrawler
+    public class PageCrawler
     {
         private readonly WebsiteParser _websiteParser;
 
-        public OnPageCrawler(WebsiteParser websiteParser)
+        public PageCrawler(WebsiteParser websiteParser)
         {
             _websiteParser = websiteParser;
         }
 
-        public IEnumerable<WebLinkModel> Crawl(string url)
+        public IEnumerable<WebLink> Crawl(string url)
         {
             var startUrls = _websiteParser.Parse(url);
 
+            var visitedUrls = GetNestedUrls(startUrls);
+
+            return visitedUrls
+                .Select(u => new WebLink()
+                {
+                    Url = u,
+                    IsInWebsite = true,
+                    IsInSitemap = false,
+                });
+        }
+
+        private IEnumerable<string> GetNestedUrls(IEnumerable<string> urls)
+        {
             var visitedUrls = new HashSet<string>();
-            var urlsToVisit = new Queue<string>(startUrls);
+            var urlsToVisit = new Queue<string>(urls);
 
             while (urlsToVisit.Count > 0)
             {
@@ -27,6 +40,7 @@ namespace WebsiteTester.Crawlers
 
                 var urlToParse = urlsToVisit.Dequeue();
                 visitedUrls.Add(urlToParse);
+
                 try
                 {
                     linksToParse = _websiteParser.Parse(urlToParse)
@@ -44,13 +58,7 @@ namespace WebsiteTester.Crawlers
                 }
             }
 
-            return visitedUrls
-                .Select(u => new WebLinkModel()
-                {
-                    Url = u,
-                    IsInWebsite = true,
-                    IsInSitemap = false,
-                });
+            return visitedUrls;
         }
     }
 }

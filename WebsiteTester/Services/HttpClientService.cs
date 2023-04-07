@@ -15,10 +15,6 @@ namespace WebsiteTester.Services
             _webClient = webClient;
         }
 
-        public virtual async Task<HttpResponseMessage> GetAsync(string url)
-        {
-            return await _webClient.GetAsync(url);
-        }
         public virtual async Task<HttpResponseMessage> GetAsync(Uri url)
         {
             return await _webClient.GetAsync(url);

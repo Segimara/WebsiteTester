@@ -15,6 +15,7 @@ namespace WebsiteTester.Parsers
         private readonly UrlValidator _urlValidator;
         private readonly UrlNormalizer _urlNormalizer;
         private readonly ContentLoaderService _contentLoaderService;
+
         public WebsiteParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, ContentLoaderService contentLoaderService)
         {
             _urlValidator = urlValidator;
@@ -35,8 +36,7 @@ namespace WebsiteTester.Parsers
                 .Select(a => a.GetAttributeValue("href", null))
                 .Where(l => _urlValidator.IsValid(l));
             
-            var normalizedUrls = _urlNormalizer.NormalizeUrls(validatedUrls, url);
-            return normalizedUrls.Distinct();
+            return _urlNormalizer.NormalizeUrls(validatedUrls, url).Distinct();
         }
     }
 }

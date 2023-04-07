@@ -15,14 +15,9 @@ namespace WebsiteTester.Validators
                 return false;
             }
 
-            if (url.StartsWith("/") || url.StartsWith("#"))
-            {
-                return true;
-            }
-
             var isWebLink = url.StartsWith("http://") || url.StartsWith("https://");
-
-            if (isWebLink)
+            
+            if (url.StartsWith("/") || url.StartsWith("#") || isWebLink)
             {
                 return true;
             }

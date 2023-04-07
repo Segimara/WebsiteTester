@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using WebsiteTester.Models;
+using WebsiteTester.Services;
 
-namespace WebsiteTester.Services
+namespace WebsiteTester.Testers
 {
     public class WebPageTester
     {
@@ -11,27 +12,26 @@ namespace WebsiteTester.Services
         {
             _httpClientService = httpClientService;
         }
-        public IEnumerable<WebLinkModel> Test(IEnumerable<WebLinkModel> urls)
+
+        public async Task<IEnumerable<WebLink>> TestRenderTime(IEnumerable<WebLink> urls)
         {
-            return urls
-                .Select(url => GetRenderTime(url));
+            return urls.Select(async url => await SetRenderTime(url)).Select( u => u.Result);
         }
 
-        private WebLinkModel GetRenderTime(WebLinkModel url)
+        private async Task<WebLink> SetRenderTime(WebLink url)
         {
             var uri = new Uri(url.Url);
             var stopwatch = new Stopwatch();
-            
+
             stopwatch.Start();
-            
-            var response = _httpClientService.GetAsync(uri).Result;
+
+            await _httpClientService.GetAsync(uri);
 
             stopwatch.Stop();
 
-            url.RenderTime = stopwatch.ElapsedMilliseconds;
+            url.RenderTimeMilliseconds = (int)stopwatch.ElapsedMilliseconds;
 
             return url;
         }
-
     }
 }

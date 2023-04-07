@@ -1,9 +1,9 @@
 ﻿namespace WebsiteTester.Models
 {
-    public class WebLinkModel
+    public class WebLink
     {
         public string Url { get; set; }
-        public long RenderTime { get; set; }
+        public int RenderTimeMilliseconds { get; set; }
         public bool IsInSitemap { get; set; }
         public bool IsInWebsite { get; set; }
     }

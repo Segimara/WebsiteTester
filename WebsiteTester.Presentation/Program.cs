@@ -3,6 +3,7 @@ using WebsiteTester.Crawlers;
 using WebsiteTester.Helpers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Services;
+using WebsiteTester.Testers;
 using WebsiteTester.Validators;
 
 namespace WebsiteTester.Presentation
@@ -23,9 +24,9 @@ namespace WebsiteTester.Presentation
             SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
             WebPageTester webTester = new WebPageTester(httpClientService);
             
-            OnPageCrawler webCrawler = new OnPageCrawler(parser);
+            PageCrawler webCrawler = new PageCrawler(parser);
 
-            DomainCrawler domainCrawler = new DomainCrawler(siteMapParser, webCrawler, webTester);
+            WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, webTester);
 
             WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler);
 

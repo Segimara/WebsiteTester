@@ -19,7 +19,7 @@ namespace WebsiteTester.Parsers
             _httpClientService = httpClientService;
         }
 
-        public IEnumerable<WebLinkModel> Parse(string baseUrl)
+        public IEnumerable<WebLink> Parse(string baseUrl)
         {
             string sitemapContent = "";
 
@@ -40,13 +40,13 @@ namespace WebsiteTester.Parsers
             var urlsList = urlsNodes.Cast<XmlNode>()
                 .Select(urlNode => urlNode["loc"].InnerText);
 
-            var validatedUrls = urlsList
-                .Where(l => _urlValidator.IsValid(l));
+            var validatedUrls = urlsList.Where(l => _urlValidator.IsValid(l));
+
             var normalizedUrls = _urlNormalizer.NormalizeUrls(validatedUrls, baseUrl);
 
             return normalizedUrls
                 .Distinct()
-                .Select(u => new WebLinkModel()
+                .Select(u => new WebLink()
                 {
                     Url = u,
                     IsInSitemap = true,
@@ -60,7 +60,7 @@ namespace WebsiteTester.Parsers
 
             if (response.IsSuccessStatusCode)
             {
-                string content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync();
 
                 return content;
             }
