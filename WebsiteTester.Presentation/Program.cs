@@ -1,10 +1,10 @@
 ﻿using HtmlAgilityPack;
 using WebsiteTester.Crawlers;
-using WebsiteTester.Helpers;
+using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Services;
-using WebsiteTester.Testers;
 using WebsiteTester.Validators;
+using WebsiteTester.Wrappers;
 
 namespace WebsiteTester.Presentation
 {
@@ -22,13 +22,15 @@ namespace WebsiteTester.Presentation
 
             WebsiteParser parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
             SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
-            WebPageTester webTester = new WebPageTester(httpClientService);
+            PageRenderTimeMeterService renderTimeMeter = new PageRenderTimeMeterService(httpClientService);
             
             PageCrawler webCrawler = new PageCrawler(parser);
 
-            WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, webTester);
+            WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, renderTimeMeter);
 
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler);
+            ConsoleWrapper console = new ConsoleWrapper();
+
+            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler, console);
 
             websiteTesterApplication.Run();
         }

@@ -1,24 +1,18 @@
 ﻿using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WebsiteTester.Services
+namespace WebsiteTester.Services;
+
+public class ContentLoaderService
 {
-    public class ContentLoaderService
+    private readonly HtmlWeb _loader;
+
+    public ContentLoaderService(HtmlWeb pageLoader)
     {
-        private readonly HtmlWeb _loader;
+        _loader = pageLoader;
+    }
 
-        public ContentLoaderService(HtmlWeb pageLoader)
-        {
-            _loader = pageLoader;
-        }
-
-        public virtual HtmlDocument Load(Uri uri)
-        {
-            return _loader.Load(uri);
-        }
+    public virtual HtmlDocument Load(Uri uri)
+    {
+        return _loader.Load(uri);
     }
 }

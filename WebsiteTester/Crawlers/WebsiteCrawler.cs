@@ -1,38 +1,37 @@
 ﻿using WebsiteTester.Models;
 using WebsiteTester.Parsers;
-using WebsiteTester.Testers;
+using WebsiteTester.Services;
 
-namespace WebsiteTester.Crawlers
+namespace WebsiteTester.Crawlers;
+
+public class WebsiteCrawler
 {
-    public class WebsiteCrawler
+    private readonly PageRenderTimeMeterService _renderTimeMeter;
+    private readonly SitemapParser _siteMapParser;
+    private readonly PageCrawler _webCrawler;
+
+    public WebsiteCrawler(SitemapParser siteMapParser, PageCrawler webCrawler,
+        PageRenderTimeMeterService renderTimeMeter)
     {
-        private readonly WebPageTester _webTester;
-        private readonly PageCrawler _webCrawler;
-        private readonly SitemapParser _siteMapParser;
+        _renderTimeMeter = renderTimeMeter;
+        _webCrawler = webCrawler;
+        _siteMapParser = siteMapParser;
+    }
 
-        public WebsiteCrawler(SitemapParser siteMapParser, PageCrawler webCrawler, WebPageTester webPageTester)
-        {
-            _webTester = webPageTester;
-            _webCrawler = webCrawler;
-            _siteMapParser = siteMapParser;
-        }
+    public async Task<IEnumerable<WebLink>> GetUrls(string url)
+    {
+        var onPageUrls = _webCrawler.Crawl(url);
+        var sitemapUrls = _siteMapParser.Parse(url);
 
-        public async Task<IEnumerable<WebLink>> GetUrls(string url)
-        {
-            var onPageUrls = _webCrawler.Crawl(url);
-            var sitemapUrlps = _siteMapParser.Parse(url);
+        var uniqueUrls = onPageUrls.Concat(sitemapUrls)
+            .GroupBy(x => x.Url)
+            .Select(g => new WebLink
+            {
+                Url = g.Key,
+                IsInSitemap = g.Any(x => x.IsInSitemap),
+                IsInWebsite = g.Any(x => x.IsInWebsite)
+            });
 
-            var uniqueUrls = onPageUrls.Concat(sitemapUrlps)
-                .GroupBy(x => x.Url)
-                .Select(g =>
-                    new WebLink()
-                    {
-                        Url = g.Key,
-                        IsInSitemap = g.Any(x => x.IsInSitemap),
-                        IsInWebsite = g.Any(x => x.IsInWebsite)
-                    });
-
-            return await _webTester.TestRenderTime(uniqueUrls);
-        }
+        return await _renderTimeMeter.TestRenderTime(uniqueUrls);
     }
 }

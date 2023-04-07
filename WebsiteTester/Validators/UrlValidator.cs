@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace WebsiteTester.Validators;
 
-namespace WebsiteTester.Validators
+public class UrlValidator
 {
-    public class UrlValidator
+    public bool IsValid(string url)
     {
-        public bool IsValid(string url)
+        if (string.IsNullOrEmpty(url))
         {
-            if (string.IsNullOrEmpty(url))
-            {
-                return false;
-            }
-
-            var isWebLink = url.StartsWith("http://") || url.StartsWith("https://");
-            
-            if (url.StartsWith("/") || url.StartsWith("#") || isWebLink)
-            {
-                return true;
-            }
-
             return false;
         }
+
+        var isWebLink = url.StartsWith("http://") || url.StartsWith("https://");
+
+        if (url.StartsWith("/") || url.StartsWith("#") || isWebLink)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

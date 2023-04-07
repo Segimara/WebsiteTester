@@ -1,29 +1,32 @@
 ﻿using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
+using WebsiteTester.Wrappers;
 
 namespace WebsiteTester.Presentation
 {
     public class WebsiteTesterApplication
     {
         private readonly WebsiteCrawler _crawler;
+        private readonly ConsoleWrapper _console;
 
-        public WebsiteTesterApplication(WebsiteCrawler crawler)
+        public WebsiteTesterApplication(WebsiteCrawler crawler, ConsoleWrapper console)
         {
             _crawler = crawler;
+            _console = console;
         }
 
         public void Run()
         {
-            Console.WriteLine("Enter the website URL: ");
+            _console.WriteLine("Enter the website URL: ");
 
-            var url = Console.ReadLine();
+            var url = _console.ReadLine();
             
             GetResults(url);
         }
 
         private async void GetResults(string url)
         {
-            var linksFromUrl = (await _crawler.GetUrls(url)).ToList();
+            var linksFromUrl = (await _crawler.GetUrls(url));
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)
@@ -41,8 +44,8 @@ namespace WebsiteTester.Presentation
 
             OutputList("Timing", results);
 
-            Console.WriteLine($"Urls(html documents) found after crawling a website: {onlyInWebSite.Count()}");
-            Console.WriteLine($"Urls found in sitemap: {onlyInSitemap.Count()}");
+            _console.WriteLine($"Urls(html documents) found after crawling a website: {linksFromUrl.Count(u => u.IsInWebsite)}");
+            _console.WriteLine($"Urls found in sitemap: {linksFromUrl.Count(u => u.IsInSitemap)}");
         }
 
         private void OutputUrlsFromPage(IEnumerable<WebLink> onlyInWebSite, IEnumerable<WebLink> onlyInSitemap)
@@ -56,13 +59,13 @@ namespace WebsiteTester.Presentation
 
         private void OutputList(string message, IEnumerable<string> urls)
         {
-            int i = 1;
-            
-            Console.WriteLine(message);
+            var i = 1;
+
+            _console.WriteLine(message);
 
             foreach (var u in urls)
             {
-                Console.WriteLine($"{i++}) {u}");
+                _console.WriteLine($"{i++}) {u}");
             }
         }
     }
