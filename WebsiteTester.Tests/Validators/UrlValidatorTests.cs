@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WebsiteTester.Validators;
 using Xunit;
 
-namespace WebsiteTester.Tests
+namespace WebsiteTester.Tests.Validators
 {
     public class UrlValidatorTests
     {
@@ -39,11 +39,17 @@ namespace WebsiteTester.Tests
         }
 
         [Fact]
-        public void IsValid_WhenUrlIsValid_ShouldReturnTrue()
+        public void IsValid_WhenAbsoluteUrl_ShouldReturnTrue()
         {
             var result = _urlValidator.IsValid("http://www.google.com");
-            Assert.False(result);
+            Assert.True(result);
         }
 
+        [Fact]
+        public void IsValid_WhenRelativeUrl_ShouldReturnTrue()
+        {
+            var result = _urlValidator.IsValid("/test");
+            Assert.True(result);
+        }
     }
 }

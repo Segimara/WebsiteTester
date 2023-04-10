@@ -31,7 +31,7 @@ public class SitemapParser
         }
         catch (Exception)
         {
-            return null;
+            return Enumerable.Empty<WebLink>();
         }
 
         var sitemapDoc = new XmlDocument();
