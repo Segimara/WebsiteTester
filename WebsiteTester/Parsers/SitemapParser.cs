@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Net;
+using System.Xml;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Services;
@@ -60,7 +61,7 @@ public class SitemapParser
     {
         var response = await _httpClientService.GetAsync(new Uri(url, "/sitemap.xml"));
 
-        if (response.IsSuccessStatusCode)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             var content = await response.Content.ReadAsStringAsync();
 

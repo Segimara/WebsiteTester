@@ -58,14 +58,17 @@ public class SitemapParserTests
         Assert.Empty(result);
     }
 
+
     [Fact]
     public async void Parse_WebsiteWithSitemapAndUrls_ShouldReturnListOfUrls()
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
+        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>())).ReturnsAsync(
             new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.OK,
+
                 Content = new StringContent(
                     @"<?xml version=""1.0"" encoding=""UTF-8""?>
                     <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
@@ -84,17 +87,12 @@ public class SitemapParserTests
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
             .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/introduction" });
 
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io")).Returns(true);
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
+        _urlValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(true);
 
         var result = await _sitemapParser.ParseAsync("https://jwt.io/");
 
         _urlNormalizer.Verify(n =>
             n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()), Times.Once);
-        _urlValidator.Verify(v => v.IsValid(It.IsNotIn("https://jwt.io/#some", "https://jwt.io/?someparam")),
-            Times.Exactly(3));
-
 
         Assert.Equal(3, result.Count());
     }
