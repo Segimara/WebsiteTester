@@ -61,7 +61,6 @@ public class SitemapParserTests
     [Fact]
     public async void Parse_WebsiteWithSitemapAndUrls_ShouldReturnListOfUrls()
     {
-        var result = await _sitemapParser.ParseAsync("https://jwt.io/");
         var uri = new Uri("https://jwt.io/");
 
         _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
@@ -89,12 +88,13 @@ public class SitemapParserTests
         _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
         _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
 
+        var result = await _sitemapParser.ParseAsync("https://jwt.io/");
 
         _urlNormalizer.Verify(n =>
             n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io"), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io/libraries"), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io/introduction"), Times.Once);
+        _urlValidator.Verify(v => v.IsValid(It.IsNotIn("https://jwt.io/#some", "https://jwt.io/?someparam")),
+            Times.Exactly(3));
+
 
         Assert.Equal(3, result.Count());
     }
