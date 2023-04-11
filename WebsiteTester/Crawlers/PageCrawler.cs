@@ -12,9 +12,17 @@ public class PageCrawler
         _websiteParser = websiteParser;
     }
 
-    public IEnumerable<WebLink> Crawl(string url)
+    public virtual IEnumerable<WebLink> Crawl(string url)
     {
-        var startUrls = _websiteParser.Parse(url);
+        IEnumerable<string> startUrls;
+        try
+        {
+            startUrls = _websiteParser.Parse(url);
+        }
+        catch (Exception e)
+        {
+            return Enumerable.Empty<WebLink>();
+        }
 
         var visitedUrls = GetNestedUrls(startUrls);
 

@@ -1,15 +1,14 @@
 ﻿using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
-using WebsiteTester.Wrappers;
 
 namespace WebsiteTester.Presentation
 {
     public class WebsiteTesterApplication
     {
         private readonly WebsiteCrawler _crawler;
-        private readonly ConsoleWrapper _console;
+        private readonly ConsoleManager _console;
 
-        public WebsiteTesterApplication(WebsiteCrawler crawler, ConsoleWrapper console)
+        public WebsiteTesterApplication(WebsiteCrawler crawler, ConsoleManager console)
         {
             _crawler = crawler;
             _console = console;
@@ -21,12 +20,12 @@ namespace WebsiteTester.Presentation
 
             var url = _console.ReadLine();
             
-            GetResults(url);
+            GetResultsAsync(url);
         }
 
-        private async void GetResults(string url)
+        private async void GetResultsAsync(string url)
         {
-            var linksFromUrl = (await _crawler.GetUrls(url));
+            var linksFromUrl = (await _crawler.GetUrlsAsync(url));
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)

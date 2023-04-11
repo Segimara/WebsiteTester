@@ -18,7 +18,7 @@ public class WebsiteParser
         _contentLoaderService = contentLoaderService;
     }
 
-    public IEnumerable<string> Parse(string url)
+    public virtual IEnumerable<string> Parse(string url)
     {
         var doc = _contentLoaderService.Load(new Uri(url));
 

@@ -2,9 +2,9 @@
 
 public class UrlNormalizer
 {
-    public IEnumerable<string> NormalizeUrls(IEnumerable<string> urls, string baseUrl)
+    public virtual IEnumerable<string> NormalizeUrls(IEnumerable<string> urls, string baseUrl)
     {
-        if (string.IsNullOrEmpty(baseUrl))
+        if (string.IsNullOrEmpty(baseUrl) || urls == null)
         {
             return Enumerable.Empty<string>();
         }

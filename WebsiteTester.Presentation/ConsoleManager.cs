@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebsiteTester.Wrappers
+namespace WebsiteTester.Presentation
 {
-    public class ConsoleWrapper
+    public class ConsoleManager
     {
         public virtual void WriteLine(string message)
         {

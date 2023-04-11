@@ -3,21 +3,26 @@ using WebsiteTester.Models;
 
 namespace WebsiteTester.Services;
 
-public class PageRenderTimeMeterService
+public class TimeMeterService
 {
     private readonly HttpClientService _httpClientService;
 
-    public PageRenderTimeMeterService(HttpClientService httpClientService)
+    public TimeMeterService(HttpClientService httpClientService)
     {
         _httpClientService = httpClientService;
     }
 
-    public async Task<IEnumerable<WebLink>> TestRenderTime(IEnumerable<WebLink> urls)
+    public virtual async Task<IEnumerable<WebLink>> TestRenderTimeAsync(IEnumerable<WebLink> urls)
     {
-        return urls.Select(async url => await SetRenderTime(url)).Select(u => u.Result);
+        foreach (var url in urls)
+        {
+            await SetRenderTimeAsync(url);
+        }
+
+        return urls;
     }
 
-    private async Task<WebLink> SetRenderTime(WebLink url)
+    private async Task<WebLink> SetRenderTimeAsync(WebLink url)
     {
         var uri = new Uri(url.Url);
         var stopwatch = new Stopwatch();

@@ -19,7 +19,7 @@ public class SitemapParser
         _httpClientService = httpClientService;
     }
 
-    public IEnumerable<WebLink> Parse(string baseUrl)
+    public virtual async Task<IEnumerable<WebLink>> ParseAsync(string baseUrl)
     {
         var sitemapContent = "";
 
@@ -27,7 +27,7 @@ public class SitemapParser
 
         try
         {
-            sitemapContent = GetSitemapXml(baseUri).Result;
+            sitemapContent = await GetSitemapXml(baseUri);
         }
         catch (Exception)
         {

@@ -2,7 +2,7 @@
 
 public class UrlValidator
 {
-    public bool IsValid(string url)
+    public virtual bool IsValid(string url)
     {
         if (string.IsNullOrEmpty(url))
         {
