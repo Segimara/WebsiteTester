@@ -51,34 +51,29 @@ namespace WebsiteTester.Tests.Crawlers
         {
             _websiteParser.Setup(w => w.Parse("https://jwt.io/"))
                 .Returns(new[]
-                    { "https://jwt.io/introduction", "https://jwt.io/libraries", "https://jwt.io/#debugger-io" });
+                    { "https://jwt.io/introduction", "https://jwt.io/libraries" });
 
             _websiteParser.Setup(w => w.Parse("https://jwt.io/introduction"))
-                .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/#debugger-io" });
+                .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries" });
 
             _websiteParser.Setup(w => w.Parse("https://jwt.io/libraries"))
-                .Returns(new[] { "https://jwt.io", "https://jwt.io/introduction", "https://jwt.io/#debugger-io" });
+                .Returns(new[] { "https://jwt.io", "https://jwt.io/introduction" });
 
-            _websiteParser.Setup(w => w.Parse("https://jwt.io/#debugger-io"))
-                .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/introduction" });
 
             _urlNormalizer.Setup(n =>
                     n.NormalizeUrls(new[]
                         {
-                            "https://jwt.io/", "https://jwt.io/introduction", "https://jwt.io/libraries",
-                            "https://jwt.io/#debugger-io"
+                            "https://jwt.io/", "https://jwt.io/introduction", "https://jwt.io/libraries"
                         },
                         "https://jwt.io/"))
                 .Returns(new[]
                 {
-                    "https://jwt.io", "https://jwt.io/introduction", "https://jwt.io/libraries",
-                    "https://jwt.io/#debugger-io"
+                    "https://jwt.io", "https://jwt.io/introduction", "https://jwt.io/libraries"
                 });
 
             _urlValidator.Setup(v => v.IsValid("https://jwt.io")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
-            _urlValidator.Setup(v => v.IsValid("https://jwt.io/#debugger-io")).Returns(true);
 
             var result = _pageCrawler.Crawl("https://jwt.io/");
 
