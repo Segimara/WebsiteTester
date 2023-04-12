@@ -38,11 +38,11 @@ namespace WebsiteTester.Tests.Crawlers
         [Fact]
         public async Task Crawl_WhenUrlIsNullOrEmpty_ShouldReturnEmptyList()
         {
-            var result1 = await _websiteCrawler.GetUrlsAsync(null);
-            var result2 = await _websiteCrawler.GetUrlsAsync(string.Empty);
+            var resultForNull = await _websiteCrawler.GetUrlsAsync(null);
+            var resultForEmpty = await _websiteCrawler.GetUrlsAsync(string.Empty);
 
-            Assert.Empty(result1);
-            Assert.Empty(result2);
+            Assert.Empty(resultForNull);
+            Assert.Empty(resultForEmpty);
         }
 
         [Fact]

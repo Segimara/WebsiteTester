@@ -10,11 +10,11 @@ namespace WebsiteTester.Tests.Parsers
 {
     public class WebsiteParserTests
     {
-        Mock<ContentLoaderService> _contentLoaderService;
-        Mock<UrlValidator> _urlValidator;
-        Mock<UrlNormalizer> _urlNormalizer;
+        private readonly Mock<ContentLoaderService> _contentLoaderService;
+        private readonly Mock<UrlValidator> _urlValidator;
+        private readonly Mock<UrlNormalizer> _urlNormalizer;
 
-        WebsiteParser _websiteParser;
+        private readonly WebsiteParser _websiteParser;
 
         public WebsiteParserTests()
         {
@@ -32,7 +32,9 @@ namespace WebsiteTester.Tests.Parsers
         public void Parse_WhenUrlIsNotValid_ShouldReturnEmptyList()
         {
             var invalidUrl = "this is not a valid url";
-            _urlValidator.Setup(uv => uv.IsValid(invalidUrl)).Returns(false);
+
+            _urlValidator.Setup(uv => uv.IsValid(invalidUrl))
+                .Returns(false);
 
             Assert.Throws<UriFormatException>(() => _websiteParser.Parse(invalidUrl));
         }
@@ -41,13 +43,18 @@ namespace WebsiteTester.Tests.Parsers
         public void Parse_WhenUrlIsValid_ShouldReturnValidUrls()
         {
             var url = "https://example.com";
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(@"!<DOCTYPE html><html><body>
                                     <a href='https://example.com/page1'>Page 1</a>
                                     <a href='https://example.com/page2'>Page 2</a></body></html>");
-            _contentLoaderService.Setup(cls => cls.Load(new Uri(url))).Returns(htmlDoc);
+            _contentLoaderService.Setup(cls => cls.Load(new Uri(url)))
+                .Returns(htmlDoc);
+
             _urlValidator.Setup(uv => uv.IsValid(It.IsAny<string>())).Returns(true);
-            _urlNormalizer.Setup(un => un.NormalizeUrls(It.IsAny<IEnumerable<string>>(), url)).Returns(new List<string>() { "https://example.com/page1", "https://example.com/page2" });
+
+            _urlNormalizer.Setup(un => un.NormalizeUrls(It.IsAny<IEnumerable<string>>(), url))
+                .Returns(new List<string>() { "https://example.com/page1", "https://example.com/page2" });
 
             var result = _websiteParser.Parse(url);
 
@@ -61,7 +68,9 @@ namespace WebsiteTester.Tests.Parsers
         {
             var url = "https://example.com/image.png";
             var html = "<html><body><img src='https://example.com/image.png'></body></html>";
-            _contentLoaderService.Setup(cls => cls.Load(new Uri(url))).Returns(new HtmlDocument() { Text = html });
+
+            _contentLoaderService.Setup(cls => cls.Load(new Uri(url)))
+                .Returns(new HtmlDocument() { Text = html });
 
             Assert.Throws<Exception>(() => _websiteParser.Parse(url));
         }

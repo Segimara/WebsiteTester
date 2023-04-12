@@ -66,7 +66,8 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>())).ReturnsAsync(SetupHttpResponseMessage());
+        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>()))
+            .ReturnsAsync(SetupHttpResponseMessage());
 
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
             .Returns(SetupNormalizedUrls());

@@ -28,7 +28,8 @@ namespace WebsiteTester.Tests.Services
                 }
             };
 
-            _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>())).ReturnsAsync(() =>
+            _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>()))
+                .ReturnsAsync(() =>
             {
                 Task.Delay(TimeSpan.FromMilliseconds(1)).Wait();
                 return new HttpResponseMessage();
