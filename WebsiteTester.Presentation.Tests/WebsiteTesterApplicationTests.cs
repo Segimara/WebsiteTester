@@ -57,6 +57,21 @@ namespace WebsiteTester.Presentation.Tests
             _consoleMock.Verify(c => c.WriteLine("Urls found in sitemap: 2"), Times.Once);
         }
 
+        [Fact]
+        public async Task Run_InvalidUrl_DoesNotCrawlWebsiteAndEmptyOutput()
+        {
+            // Arrange
+            var url = "invalid-url";
 
+            _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ThrowsAsync(new ArgumentException("Invalid URL"));
+
+            // Act
+            await _websiteTester.Run();
+
+            // Assert
+            _consoleMock.Verify(c => c.WriteLine("Enter the website URL: "), Times.Once);
+            _consoleMock.Verify(c => c.ReadLine(), Times.Once);
+
+        }
     }
 }
