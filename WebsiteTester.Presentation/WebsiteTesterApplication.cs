@@ -14,16 +14,16 @@ namespace WebsiteTester.Presentation
             _console = console;
         }
 
-        public void Run()
+        public async Task Run()
         {
             _console.WriteLine("Enter the website URL: ");
 
             var url = _console.ReadLine();
-            
-            GetResultsAsync(url);
+
+            await GetResultsAsync(url);
         }
 
-        private async void GetResultsAsync(string url)
+        private async Task GetResultsAsync(string url)
         {
             var linksFromUrl = (await _crawler.GetUrlsAsync(url));
 
@@ -34,7 +34,7 @@ namespace WebsiteTester.Presentation
             var onlyInSitemap = linksFromUrl
                 .Where(l => l.IsInSitemap)
                 .Where(l => !l.IsInWebsite);
-            
+
             OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 
             var results = linksFromUrl
