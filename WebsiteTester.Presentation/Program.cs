@@ -22,7 +22,7 @@ namespace WebsiteTester.Presentation
             WebsiteParser parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
             SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
             TimeMeterService renderTimeMeter = new TimeMeterService(httpClientService);
-            
+
             PageCrawler webCrawler = new PageCrawler(parser);
 
             WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, renderTimeMeter);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebsiteTester.Validators;
+﻿using WebsiteTester.Validators;
 using Xunit;
 
 namespace WebsiteTester.Tests.Validators
@@ -21,6 +16,7 @@ namespace WebsiteTester.Tests.Validators
         public void IsValid_WhenUrlIsNull_ShouldReturnFalse()
         {
             var result = _urlValidator.IsValid(null);
+
             Assert.False(result);
         }
 
@@ -28,6 +24,7 @@ namespace WebsiteTester.Tests.Validators
         public void IsValid_WhenUrlIsEmpty_ShouldReturnFalse()
         {
             var result = _urlValidator.IsValid(string.Empty);
+
             Assert.False(result);
         }
 
@@ -35,6 +32,7 @@ namespace WebsiteTester.Tests.Validators
         public void IsValid_WhenUrlIsNotValid_ShouldReturnFalse()
         {
             var result = _urlValidator.IsValid("skype:someSkype");
+
             Assert.False(result);
         }
 
@@ -42,6 +40,7 @@ namespace WebsiteTester.Tests.Validators
         public void IsValid_WhenAbsoluteUrl_ShouldReturnTrue()
         {
             var result = _urlValidator.IsValid("http://www.google.com");
+
             Assert.True(result);
         }
 
@@ -49,6 +48,7 @@ namespace WebsiteTester.Tests.Validators
         public void IsValid_WhenRelativeUrl_ShouldReturnTrue()
         {
             var result = _urlValidator.IsValid("/test");
+
             Assert.True(result);
         }
     }
