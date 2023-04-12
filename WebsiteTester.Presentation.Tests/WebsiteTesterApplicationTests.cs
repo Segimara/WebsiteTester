@@ -43,7 +43,7 @@ namespace WebsiteTester.Presentation.Tests
         {
             var url = "https://example.com";
 
-            var webLinks = SetupTestData();
+            var webLinks = GetTestData();
 
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
@@ -66,7 +66,7 @@ namespace WebsiteTester.Presentation.Tests
         {
             var url = "https://example.com";
 
-            var webLinks = SetupTestData();
+            var webLinks = GetTestData();
 
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
@@ -85,7 +85,7 @@ namespace WebsiteTester.Presentation.Tests
         {
             var url = "https://example.com";
 
-            var webLinks = SetupTestData();
+            var webLinks = GetTestData();
 
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
@@ -112,7 +112,7 @@ namespace WebsiteTester.Presentation.Tests
             _consoleMock.Verify(c => c.ReadLine(), Times.Once);
 
         }
-        private IEnumerable<WebLink> SetupTestData()
+        private IEnumerable<WebLink> GetTestData()
         {
             return new List<WebLink>()
             {
