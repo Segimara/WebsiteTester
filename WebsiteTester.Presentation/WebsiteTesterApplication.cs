@@ -26,7 +26,7 @@ namespace WebsiteTester.Presentation
 
         private async Task GetResultsAsync(string url)
         {
-            var linksFromUrl = (await _crawler.GetUrlsAsync(url));
+            var linksFromUrl = await _crawler.GetUrlsAsync(url);
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)
