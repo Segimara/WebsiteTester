@@ -46,13 +46,9 @@ namespace WebsiteTester.Tests.Parsers
             // Arrange
             var url = "https://example.com";
             var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(@"!<DOCTYPE html>
-                            <html>
-                                <body>
+            htmlDoc.LoadHtml(@"!<DOCTYPE html><html><body>
                                     <a href='https://example.com/page1'>Page 1</a>
-                                    <a href='https://example.com/page2'>Page 2</a>
-                                </body>
-                            </html>");
+                                    <a href='https://example.com/page2'>Page 2</a></body></html>");
             _contentLoaderService.Setup(cls => cls.Load(new Uri(url))).Returns(htmlDoc);
             _urlValidator.Setup(uv => uv.IsValid(It.IsAny<string>())).Returns(true);
             _urlNormalizer.Setup(un => un.NormalizeUrls(It.IsAny<IEnumerable<string>>(), url)).Returns(new List<string>() { "https://example.com/page1", "https://example.com/page2" });

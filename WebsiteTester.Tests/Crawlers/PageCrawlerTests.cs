@@ -33,21 +33,25 @@ namespace WebsiteTester.Tests.Crawlers
         }
 
         [Fact]
-        public void Crawl_WhenUrlIsNull_ShouldReturnEmptyList()
+        public void Crawl_WhenUrlIsNullOrEmpty_ShouldReturnEmptyList()
         {
-            var result = _pageCrawler.Crawl(null);
-            Assert.Empty(result);
-        }
-
-        [Fact]
-        public void Crawl_WhenUrlIsEmpty_ShouldReturnEmptyList()
-        {
-            var result = _pageCrawler.Crawl(string.Empty);
-            Assert.Empty(result);
+            var result1 = _pageCrawler.Crawl(null);
+            var result2 = _pageCrawler.Crawl(string.Empty);
+            Assert.Empty(result1);
+            Assert.Empty(result2);
         }
 
         [Fact]
         public void Crawl_WhenUrlIsValid_ShouldReturnListOfUrls()
+        {
+            SetupDataForWebParserUrlNormalizerUrlValidator();
+
+            var result = _pageCrawler.Crawl("https://jwt.io/");
+
+            Assert.NotEmpty(result);
+        }
+
+        private void SetupDataForWebParserUrlNormalizerUrlValidator()
         {
             _websiteParser.Setup(w => w.Parse("https://jwt.io/"))
                 .Returns(new[]
@@ -74,10 +78,7 @@ namespace WebsiteTester.Tests.Crawlers
             _urlValidator.Setup(v => v.IsValid("https://jwt.io")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
-
-            var result = _pageCrawler.Crawl("https://jwt.io/");
-
-            Assert.NotEmpty(result);
         }
+
     }
 }

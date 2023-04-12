@@ -55,7 +55,31 @@ namespace WebsiteTester.Tests.Crawlers
             string url = "https://jwt.io/";
 
             _siteMapParser.Setup(s => s.ParseAsync(url))
-                .ReturnsAsync(new[]
+                .ReturnsAsync(GetWebLinksFromSitemap());
+            _pageCrawler.Setup(p => p.Crawl(url))
+                .Returns(GetWebLinksFromWebSite);
+
+            _renderTimeMeter.Setup(r =>
+                    r.TestRenderTimeAsync(It.IsAny<IEnumerable<WebLink>>()))
+                .ReturnsAsync(GetUniqueWebLinks());
+
+            var result = await _websiteCrawler.GetUrlsAsync(url);
+
+            _pageCrawler.Verify(p =>
+                p.Crawl("https://jwt.io/"), Times.Once);
+
+            _siteMapParser.Verify(s =>
+                s.ParseAsync(It.IsAny<string>()), Times.Once);
+
+            _renderTimeMeter.Verify(r =>
+                r.TestRenderTimeAsync(It.IsAny<IEnumerable<WebLink>>()), Times.Once);
+
+            Assert.Equal(3, result.Count());
+        }
+
+        private IEnumerable<WebLink> GetWebLinksFromSitemap()
+        {
+            return new[]
                 {
                     new WebLink
                     {
@@ -69,9 +93,12 @@ namespace WebsiteTester.Tests.Crawlers
                         IsInSitemap = true,
                         IsInWebsite = false
                     },
-                });
-            _pageCrawler.Setup(p => p.Crawl(url))
-                .Returns(new[]
+                };
+        }
+
+        private IEnumerable<WebLink> GetWebLinksFromWebSite()
+        {
+            return new[]
                 {
                     new WebLink
                     {
@@ -85,11 +112,12 @@ namespace WebsiteTester.Tests.Crawlers
                         IsInSitemap = false,
                         IsInWebsite = true
                     }
-                });
+                };
+        }
 
-            _renderTimeMeter.Setup(r =>
-                    r.TestRenderTimeAsync(It.IsAny<IEnumerable<WebLink>>()))
-                .ReturnsAsync(new[]
+        private IEnumerable<WebLink> GetUniqueWebLinks()
+        {
+            return new[]
                 {
                     new WebLink
                     {
@@ -112,20 +140,7 @@ namespace WebsiteTester.Tests.Crawlers
                         IsInWebsite = true,
                         RenderTimeMilliseconds = 12
                     }
-                });
-
-            var result = await _websiteCrawler.GetUrlsAsync(url);
-
-            _pageCrawler.Verify(p =>
-                p.Crawl("https://jwt.io/"), Times.Once);
-
-            _siteMapParser.Verify(s =>
-                s.ParseAsync(It.IsAny<string>()), Times.Once);
-
-            _renderTimeMeter.Verify(r =>
-                r.TestRenderTimeAsync(It.IsAny<IEnumerable<WebLink>>()), Times.Once);
-
-            Assert.Equal(3, result.Count());
+                };
         }
     }
 }

@@ -64,25 +64,7 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>())).ReturnsAsync(
-            new HttpResponseMessage()
-            {
-                StatusCode = System.Net.HttpStatusCode.OK,
-
-                Content = new StringContent(
-                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
-                    <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
-                        <url>
-                            <loc>https://jwt.io/</loc>
-                        </url>
-                        <url>
-                            <loc>https://jwt.io/libraries/</loc>
-                        </url>
-                        <url>
-                            <loc>https://jwt.io/introduction/</loc>
-                        </url>
-                    </urlset>")
-            });
+        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>())).ReturnsAsync(SetupHttpResponseMessage());
 
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
             .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/introduction" });
@@ -95,5 +77,27 @@ public class SitemapParserTests
             n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()), Times.Once);
 
         Assert.Equal(3, result.Count());
+    }
+
+    private HttpResponseMessage SetupHttpResponseMessage()
+    {
+        return new HttpResponseMessage()
+        {
+            StatusCode = System.Net.HttpStatusCode.OK,
+
+            Content = new StringContent(
+                @"<?xml version=""1.0"" encoding=""UTF-8""?>
+                    <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
+                        <url>
+                            <loc>https://jwt.io/</loc>
+                        </url>
+                        <url>
+                            <loc>https://jwt.io/libraries/</loc>
+                        </url>
+                        <url>
+                            <loc>https://jwt.io/introduction/</loc>
+                        </url>
+                    </urlset>")
+        };
     }
 }

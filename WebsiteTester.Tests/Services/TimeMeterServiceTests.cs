@@ -28,7 +28,11 @@ namespace WebsiteTester.Tests.Services
                 }
             };
 
-            _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>())).ReturnsAsync(new HttpResponseMessage());
+            _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>())).ReturnsAsync(() =>
+            {
+                Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                return new HttpResponseMessage();
+            });
 
             var result = await _renderTimeMeter.TestRenderTimeAsync(urls);
 
