@@ -14,18 +14,19 @@ namespace WebsiteTester.Presentation
             _console = console;
         }
 
-        public void Run()
+        public async Task Run()
         {
             _console.WriteLine("Enter the website URL: ");
 
             var url = _console.ReadLine();
 
-            GetResultsAsync(url);
+            await GetResultsAsync(url);
+
         }
 
-        private async void GetResultsAsync(string url)
+        private async Task GetResultsAsync(string url)
         {
-            var linksFromUrl = (await _crawler.GetUrlsAsync(url));
+            var linksFromUrl = await _crawler.GetUrlsAsync(url);
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)
