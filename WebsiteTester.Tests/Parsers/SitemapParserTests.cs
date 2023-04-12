@@ -28,8 +28,9 @@ public class SitemapParserTests
     [Fact]
     public async Task Parse_WebsiteWithoutSitemap_ShouldReturnEmpryList()
     {
-        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
         var uri = new Uri("https://jwt.io/");
+
+        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
 
         _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
             new HttpResponseMessage()
@@ -41,9 +42,8 @@ public class SitemapParserTests
     }
 
     [Fact]
-    public async Task Parse_WebsiteWithSitemapButWithoutUrls_ShouldReturnEmptyList()
+    public async Task Parse_WebsiteWithEmptySitemap_ShouldReturnEmptyList()
     {
-        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
         var uri = new Uri("https://jwt.io/");
 
         _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
@@ -55,19 +55,21 @@ public class SitemapParserTests
                     </urlset>")
             });
 
+        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
+
         Assert.Empty(result);
     }
 
 
     [Fact]
-    public async void Parse_WebsiteWithSitemapAndUrls_ShouldReturnListOfUrls()
+    public async void Parse_WebsiteWithSitemap_ShouldReturnListOfUrls()
     {
         var uri = new Uri("https://jwt.io/");
 
         _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>())).ReturnsAsync(SetupHttpResponseMessage());
 
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
-            .Returns(new[] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/introduction" });
+            .Returns(SetupNormalizedUrls());
 
         _urlValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(true);
 
@@ -77,6 +79,10 @@ public class SitemapParserTests
             n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()), Times.Once);
 
         Assert.Equal(3, result.Count());
+        Assert.True(result.All(u => u.IsInSitemap));
+        Assert.Contains(result, u => u.Url == "https://jwt.io");
+        Assert.Contains(result, u => u.Url == "https://jwt.io/libraries");
+        Assert.Contains(result, u => u.Url == "https://jwt.io/introduction");
     }
 
     private HttpResponseMessage SetupHttpResponseMessage()
@@ -98,6 +104,16 @@ public class SitemapParserTests
                             <loc>https://jwt.io/introduction/</loc>
                         </url>
                     </urlset>")
+        };
+    }
+
+    private IEnumerable<string> SetupNormalizedUrls()
+    {
+        return new List<string>()
+        {
+            "https://jwt.io",
+            "https://jwt.io/libraries",
+            "https://jwt.io/introduction"
         };
     }
 }

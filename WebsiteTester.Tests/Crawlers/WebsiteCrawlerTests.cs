@@ -36,28 +36,24 @@ namespace WebsiteTester.Tests.Crawlers
         }
 
         [Fact]
-        public async Task Crawl_WhenUrlIsNull_ShouldReturnEmptyList()
+        public async Task Crawl_WhenUrlIsNullOrEmpty_ShouldReturnEmptyList()
         {
-            var result = await _websiteCrawler.GetUrlsAsync(null);
-            Assert.Empty(result);
+            var result1 = await _websiteCrawler.GetUrlsAsync(null);
+            var result2 = await _websiteCrawler.GetUrlsAsync(string.Empty);
+
+            Assert.Empty(result1);
+            Assert.Empty(result2);
         }
 
         [Fact]
-        public async Task Crawl_WhenUrlIsEmpty_ShouldReturnEmptyList()
-        {
-            var result = await _websiteCrawler.GetUrlsAsync(string.Empty);
-            Assert.Empty(result);
-        }
-
-        [Fact]
-        public async void Crawl_WhenUrlContainsSomeUrls_ShouldReturnUniqueWebLinksWithRenderTime()
+        public async void Crawl_WhenPageContainsSomeUrls_ShouldReturnUniqueWebLinksWithRenderTime()
         {
             string url = "https://jwt.io/";
 
             _siteMapParser.Setup(s => s.ParseAsync(url))
                 .ReturnsAsync(GetWebLinksFromSitemap());
             _pageCrawler.Setup(p => p.Crawl(url))
-                .Returns(GetWebLinksFromWebSite);
+                .Returns(GetWebLinksFromWebSite());
 
             _renderTimeMeter.Setup(r =>
                     r.TestRenderTimeAsync(It.IsAny<IEnumerable<WebLink>>()))

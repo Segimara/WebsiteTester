@@ -37,6 +37,7 @@ namespace WebsiteTester.Tests.Crawlers
         {
             var result1 = _pageCrawler.Crawl(null);
             var result2 = _pageCrawler.Crawl(string.Empty);
+
             Assert.Empty(result1);
             Assert.Empty(result2);
         }
@@ -49,6 +50,11 @@ namespace WebsiteTester.Tests.Crawlers
             var result = _pageCrawler.Crawl("https://jwt.io/");
 
             Assert.NotEmpty(result);
+            Assert.Equal(3, result.Count());
+            Assert.True(result.All(u => u.IsInWebsite));
+            Assert.Contains(result, u => u.Url == "https://jwt.io");
+            Assert.Contains(result, u => u.Url == "https://jwt.io/libraries");
+            Assert.Contains(result, u => u.Url == "https://jwt.io/introduction");
         }
 
         private void SetupDataForWebParserUrlNormalizerUrlValidator()
@@ -70,15 +76,21 @@ namespace WebsiteTester.Tests.Crawlers
                             "https://jwt.io/", "https://jwt.io/introduction", "https://jwt.io/libraries"
                         },
                         "https://jwt.io/"))
-                .Returns(new[]
-                {
-                    "https://jwt.io", "https://jwt.io/introduction", "https://jwt.io/libraries"
-                });
+                .Returns(SetupNormalizedUrls());
 
             _urlValidator.Setup(v => v.IsValid("https://jwt.io")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
             _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
         }
 
+        private IEnumerable<string> SetupNormalizedUrls()
+        {
+            return new List<string>()
+            {
+                "https://jwt.io",
+                "https://jwt.io/libraries",
+                "https://jwt.io/introduction"
+            };
+        }
     }
 }

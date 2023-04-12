@@ -30,13 +30,13 @@ namespace WebsiteTester.Tests.Services
 
             _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>())).ReturnsAsync(() =>
             {
-                Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                Task.Delay(TimeSpan.FromMilliseconds(1)).Wait();
                 return new HttpResponseMessage();
             });
 
             var result = await _renderTimeMeter.TestRenderTimeAsync(urls);
 
-            Assert.NotEqual(0, result.First().RenderTimeMilliseconds);
+            Assert.True(result.All(u => u.RenderTimeMilliseconds > 0));
         }
 
     }
