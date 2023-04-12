@@ -13,6 +13,6 @@ public class ContentLoaderService
 
     public virtual HtmlDocument Load(Uri uri)
     {
-        return _loader.Load(uri);
+        return _loader.Load(uri.ToString());
     }
 }

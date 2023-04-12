@@ -19,7 +19,7 @@ namespace WebsiteTester.Presentation
             _console.WriteLine("Enter the website URL: ");
 
             var url = _console.ReadLine();
-            
+
             GetResultsAsync(url);
         }
 
@@ -34,7 +34,7 @@ namespace WebsiteTester.Presentation
             var onlyInSitemap = linksFromUrl
                 .Where(l => l.IsInSitemap)
                 .Where(l => !l.IsInWebsite);
-            
+
             OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 
             var results = linksFromUrl

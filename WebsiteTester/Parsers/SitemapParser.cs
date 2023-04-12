@@ -29,7 +29,7 @@ public class SitemapParser
         {
             sitemapContent = await GetSitemapXml(baseUri);
         }
-        catch (Exception)
+        catch (System.Exception)
         {
             return Enumerable.Empty<WebLink>();
         }
