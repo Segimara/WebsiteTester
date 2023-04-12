@@ -21,6 +21,7 @@ namespace WebsiteTester.Presentation
             var url = _console.ReadLine();
 
             await GetResultsAsync(url);
+
         }
 
         private async Task GetResultsAsync(string url)
