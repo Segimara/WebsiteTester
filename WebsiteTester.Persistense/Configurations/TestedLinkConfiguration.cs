@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WebsiteTester.Domain;
 
 namespace WebsiteTester.Persistense.Configurations
 {
-    internal class TestedLinkConfiguration
+    public class TestedLinkConfiguration : IEntityTypeConfiguration<TestedLink>
     {
+        public void Configure(EntityTypeBuilder<TestedLink> builder)
+        {
+            builder.HasKey(x => x.Url);
+            builder.Property(x => x.Url).IsRequired();
+            builder.HasMany(x => x.Links).WithOne(x => x.TestedLink).HasForeignKey(x => x.TestedLinkId);
+        }
     }
 }
