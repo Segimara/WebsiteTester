@@ -1,37 +1,20 @@
-﻿using HtmlAgilityPack;
-using WebsiteTester.Crawlers;
-using WebsiteTester.Normalizers;
-using WebsiteTester.Parsers;
-using WebsiteTester.Services;
-using WebsiteTester.Validators;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace WebsiteTester.Presentation
 {
-    internal class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HttpClient httpClient = new HttpClient();
-            ContentLoaderService contentLoaderService = new ContentLoaderService(htmlWeb);
-            HttpClientService httpClientService = new HttpClientService(httpClient);
+            var services = new ServiceCollection();
 
-            UrlValidator urlValidator = new UrlValidator();
-            UrlNormalizer urlNormalizer = new UrlNormalizer();
+            services.AddWebsiteTesterLogic();
+            services.AddWebsiteTesterPresentation();
 
-            WebsiteParser parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
-            SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
-            TimeMeterService renderTimeMeter = new TimeMeterService(httpClientService);
+            var servicesProvider = services.BuildServiceProvider();
 
-            PageCrawler webCrawler = new PageCrawler(parser);
-
-            WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, renderTimeMeter);
-
-            ConsoleManager console = new ConsoleManager();
-
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler, console);
-
-            await websiteTesterApplication.Run();
+            await servicesProvider.GetService<WebsiteTesterApplication>().RunAsync();
         }
+
     }
 }

@@ -14,7 +14,7 @@ namespace WebsiteTester.Presentation
             _console = console;
         }
 
-        public async Task Run()
+        public async Task RunAsync()
         {
             _console.WriteLine("Enter the website URL: ");
 

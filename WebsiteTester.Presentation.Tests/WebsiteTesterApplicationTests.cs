@@ -48,7 +48,7 @@ namespace WebsiteTester.Presentation.Tests
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
 
-            await _websiteTester.Run();
+            await _websiteTester.RunAsync();
 
             _consoleMock.Verify(c => c.WriteLine("Enter the website URL: "), Times.Once);
             _consoleMock.Verify(c => c.ReadLine(), Times.Once);
@@ -71,7 +71,7 @@ namespace WebsiteTester.Presentation.Tests
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
 
-            await _websiteTester.Run();
+            await _websiteTester.RunAsync();
 
             _consoleMock.Verify(c => c.WriteLine("Timing"), Times.Once);
             _consoleMock.Verify(c => c.WriteLine("1) https://example.com/page2 \t 100"), Times.Once);
@@ -90,7 +90,7 @@ namespace WebsiteTester.Presentation.Tests
             _consoleMock.Setup(c => c.ReadLine()).Returns(url);
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(webLinks);
 
-            await _websiteTester.Run();
+            await _websiteTester.RunAsync();
 
             _consoleMock.Verify(c => c.WriteLine("Urls(html documents) found after crawling a website: 3"), Times.Once);
             _consoleMock.Verify(c => c.WriteLine("Urls found in sitemap: 2"), Times.Once);
@@ -105,7 +105,7 @@ namespace WebsiteTester.Presentation.Tests
             _crawlerMock.Setup(c => c.GetUrlsAsync(url)).ReturnsAsync(Enumerable.Empty<WebLink>());
 
             // Act
-            await _websiteTester.Run();
+            await _websiteTester.RunAsync();
 
             // Assert
             _consoleMock.Verify(c => c.WriteLine("Enter the website URL: "), Times.Once);
