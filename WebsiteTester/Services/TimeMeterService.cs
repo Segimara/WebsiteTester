@@ -14,12 +14,15 @@ public class TimeMeterService
 
     public virtual async Task<IEnumerable<WebLink>> TestRenderTimeAsync(IEnumerable<WebLink> urls)
     {
+        List<WebLink> results = new List<WebLink>();
+
         foreach (var url in urls)
         {
-            await SetRenderTimeAsync(url);
+            WebLink result = await SetRenderTimeAsync(url);
+            results.Add(result);
         }
 
-        return urls;
+        return results;
     }
 
     private async Task<WebLink> SetRenderTimeAsync(WebLink url)

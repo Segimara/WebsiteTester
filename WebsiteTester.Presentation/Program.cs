@@ -9,7 +9,7 @@ namespace WebsiteTester.Presentation
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             HtmlWeb htmlWeb = new HtmlWeb();
             HttpClient httpClient = new HttpClient();
@@ -31,7 +31,7 @@ namespace WebsiteTester.Presentation
 
             WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler, console);
 
-            websiteTesterApplication.Run();
+            await websiteTesterApplication.Run();
         }
     }
 }
