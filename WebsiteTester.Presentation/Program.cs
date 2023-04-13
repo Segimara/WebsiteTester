@@ -1,4 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using HtmlAgilityPack;
+using Microsoft.Extensions.DependencyInjection;
 using WebsiteTester.Crawlers;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
@@ -7,31 +10,43 @@ using WebsiteTester.Validators;
 
 namespace WebsiteTester.Presentation
 {
-    internal class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HttpClient httpClient = new HttpClient();
-            ContentLoaderService contentLoaderService = new ContentLoaderService(htmlWeb);
-            HttpClientService httpClientService = new HttpClientService(httpClient);
+            var builder = new ContainerBuilder();
 
-            UrlValidator urlValidator = new UrlValidator();
-            UrlNormalizer urlNormalizer = new UrlNormalizer();
+            builder.Populate(ConfigureServices());
 
-            WebsiteParser parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
-            SitemapParser siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
-            TimeMeterService renderTimeMeter = new TimeMeterService(httpClientService);
+            var servicesContainer = builder.Build();
 
-            PageCrawler webCrawler = new PageCrawler(parser);
+            await servicesContainer.Resolve<WebsiteTesterApplication>().Run();
+        }
+        private static IServiceCollection ConfigureServices()
+        {
+            var services = new ServiceCollection();
 
-            WebsiteCrawler domainCrawler = new WebsiteCrawler(siteMapParser, webCrawler, renderTimeMeter);
 
-            ConsoleManager console = new ConsoleManager();
+            services.AddTransient<HtmlWeb>();
+            services.AddTransient<HttpClient>();
+            services.AddTransient<UrlValidator>();
+            services.AddTransient<UrlNormalizer>();
 
-            WebsiteTesterApplication websiteTesterApplication = new WebsiteTesterApplication(domainCrawler, console);
+            services.AddTransient<ContentLoaderService>();
+            services.AddTransient<HttpClientService>();
 
-            await websiteTesterApplication.Run();
+            services.AddTransient<WebsiteParser>();
+            services.AddTransient<SitemapParser>();
+            services.AddTransient<TimeMeterService>();
+
+            services.AddTransient<PageCrawler>();
+            services.AddTransient<WebsiteCrawler>();
+
+            services.AddTransient<ConsoleManager>();
+
+            services.AddTransient<WebsiteTesterApplication>();
+
+            return services;
         }
     }
 }
