@@ -11,6 +11,5 @@
 
         public string TestedLinkId { get; set; }
         public TestedLink TestedLink { get; set; }
-
     }
 }
