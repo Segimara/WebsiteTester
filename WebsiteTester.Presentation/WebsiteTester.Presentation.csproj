@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistenсe.csproj" />
     <ProjectReference Include="..\WebsiteTester.Persistense\WebsiteTester.Persistense.csproj" />
     <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.Persistense;
+using WebsiteTester.Persistenсe;
+
 namespace WebsiteTester.Presentation
 {
     public class Program
@@ -14,7 +15,7 @@ namespace WebsiteTester.Presentation
             services.AddWebsiteTesterLogic();
             services.AddWebsiteTesterPresentation();
 
-            services.AddWebsiteTesterPersistense(configuration);
+            services.AddWebsiteTesterPersistenсe(configuration);
 
             var servicesProvider = services.BuildServiceProvider();
 

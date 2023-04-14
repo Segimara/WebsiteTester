@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTester.Domain;
 using WebsiteTester.Models;
-using WebsiteTester.Persistense;
+using WebsiteTester.Persistenсe;
 using WebsiteTester.Services;
 using WebsiteTester.Tests.Common;
 using Xunit;

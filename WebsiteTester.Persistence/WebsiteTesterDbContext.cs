@@ -3,7 +3,7 @@ using System.Reflection;
 using WebsiteTester.Common.Interfaces;
 using WebsiteTester.Domain;
 
-namespace WebsiteTester.Persistense
+namespace WebsiteTester.Persistenсe
 {
     public class WebsiteTesterDbContext : DbContext, IWebsiteTesterDbContext
     {
@@ -22,7 +22,7 @@ namespace WebsiteTester.Persistense
 
         public Task<int> SaveChangesAsync()
         {
-            return this.SaveChangesAsync(CancellationToken.None);
+            return SaveChangesAsync(CancellationToken.None);
         }
     }
 }

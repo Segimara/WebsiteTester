@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTester.Persistense\WebsiteTester.Persistense.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistenсe.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Persistense\WebsiteTester.Persistenсe.csproj" />
     <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
   </ItemGroup>
 

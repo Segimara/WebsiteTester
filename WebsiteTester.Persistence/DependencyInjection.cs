@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebsiteTester.Common.Interfaces;
 
-namespace WebsiteTester.Persistense
+namespace WebsiteTester.Persistenсe
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddWebsiteTesterPersistense(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddWebsiteTesterPersistenсe(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration["DbConnection"];
 
