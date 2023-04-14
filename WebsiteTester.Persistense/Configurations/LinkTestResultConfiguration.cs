@@ -15,7 +15,6 @@ namespace WebsiteTester.Persistense.Configurations
             builder.Property(x => x.IsInWebsite).IsRequired();
             builder.Property(x => x.CreatedOn).IsRequired();
             builder.HasOne(x => x.TestedLink).WithMany(x => x.Links).HasForeignKey(x => x.TestedLinkId);
-
         }
     }
 }

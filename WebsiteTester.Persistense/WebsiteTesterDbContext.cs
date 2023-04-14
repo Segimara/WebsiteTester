@@ -9,6 +9,7 @@ namespace WebsiteTester.Persistense
     {
         public DbSet<TestedLink> TestedLink { get; set; }
         public DbSet<LinkTestResult> LinkTestResult { get; set; }
+
         public WebsiteTesterDbContext(DbContextOptions<WebsiteTesterDbContext> options) : base(options)
         {
             Database.EnsureCreated();

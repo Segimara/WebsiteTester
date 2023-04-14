@@ -62,7 +62,7 @@ public class WebsiteCrawler
             IsInWebsite = r.IsInWebsite,
             RenderTimeMilliseconds = r.RenderTimeMilliseconds,
             CreatedOn = DateTimeOffset.Now,
-        }).ToList(); // replace with to list async
+        });
 
         await _dbContext.LinkTestResult.AddRangeAsync(webLinks);
         await _dbContext.SaveChangesAsync(CancellationToken.None);
