@@ -1,6 +1,4 @@
-﻿using WebsiteTester.Common.Interfaces;
-using WebsiteTester.Domain;
-using WebsiteTester.Models;
+﻿using WebsiteTester.Models;
 using WebsiteTester.Parsers;
 using WebsiteTester.Services;
 
@@ -8,17 +6,17 @@ namespace WebsiteTester.Crawlers;
 
 public class WebsiteCrawler
 {
-    private readonly IWebsiteTesterDbContext _dbContext;
     private readonly TimeMeterService _renderTimeMeter;
+    private readonly ResultsSaverService _resultSaver;
     private readonly SitemapParser _siteMapParser;
     private readonly PageCrawler _webCrawler;
 
-    public WebsiteCrawler(IWebsiteTesterDbContext dbContext, SitemapParser siteMapParser, PageCrawler webCrawler,
+    public WebsiteCrawler(ResultsSaverService resultSaver, SitemapParser siteMapParser, PageCrawler webCrawler,
         TimeMeterService renderTimeMeter)
     {
-        _dbContext = dbContext;
         _renderTimeMeter = renderTimeMeter;
         _webCrawler = webCrawler;
+        _resultSaver = resultSaver;
         _siteMapParser = siteMapParser;
     }
 
@@ -38,33 +36,9 @@ public class WebsiteCrawler
 
         var testResults = await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
 
-        await SaveResultsAsync(url, testResults);
+        await _resultSaver.SaveResultsAsync(url, testResults);
 
         return testResults;
     }
-    private async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
-    {
-        var testedLink = _dbContext.TestedLink.FirstOrDefault(u => u.Url == testedUrl);
-        if (testedLink == null)
-        {
-            testedLink = new TestedLink
-            {
-                Url = testedUrl
-            };
-        }
 
-        var webLinks = testResults.Select(r => new LinkTestResult
-        {
-            TestedLink = testedLink,
-            Id = Guid.NewGuid(),
-            Url = r.Url,
-            IsInSitemap = r.IsInSitemap,
-            IsInWebsite = r.IsInWebsite,
-            RenderTimeMilliseconds = r.RenderTimeMilliseconds,
-            CreatedOn = DateTimeOffset.Now,
-        });
-
-        await _dbContext.LinkTestResult.AddRangeAsync(webLinks);
-        await _dbContext.SaveChangesAsync(CancellationToken.None);
-    }
 }

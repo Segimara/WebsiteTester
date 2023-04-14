@@ -8,6 +8,7 @@ namespace WebsiteTester.Common.Interfaces
         DbSet<TestedLink> TestedLink { get; set; }
         DbSet<LinkTestResult> LinkTestResult { get; set; }
 
+        Task<int> SaveChangesAsync();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
