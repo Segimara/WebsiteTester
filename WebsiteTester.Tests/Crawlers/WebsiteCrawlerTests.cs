@@ -1,10 +1,10 @@
 ﻿using HtmlAgilityPack;
 using Moq;
-using WebsiteTester.Common.Interfaces;
 using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
+using WebsiteTester.Persistenсe;
 using WebsiteTester.Services;
 using WebsiteTester.Validators;
 using Xunit;
@@ -16,8 +16,6 @@ namespace WebsiteTester.Tests.Crawlers
         private readonly Mock<TimeMeterService> _renderTimeMeter;
         private readonly Mock<SitemapParser> _siteMapParser;
         private readonly Mock<PageCrawler> _pageCrawler;
-
-        private readonly Mock<ResultsSaverService> _resultSaver;
 
         private readonly WebsiteCrawler _websiteCrawler;
 
@@ -35,9 +33,8 @@ namespace WebsiteTester.Tests.Crawlers
             _renderTimeMeter = new Mock<TimeMeterService>(httpClientService);
             _pageCrawler = new Mock<PageCrawler>(parser);
 
-            var dbContext = new Mock<IWebsiteTesterDbContext>();
-            _resultSaver = new Mock<ResultsSaverService>(dbContext.Object);
-            _websiteCrawler = new WebsiteCrawler(_resultSaver.Object, _siteMapParser.Object, _pageCrawler.Object, _renderTimeMeter.Object);
+            var dbContext = new Mock<WebsiteTesterDbContext>();
+            _websiteCrawler = new WebsiteCrawler(_siteMapParser.Object, _pageCrawler.Object, _renderTimeMeter.Object);
         }
 
         [Fact]

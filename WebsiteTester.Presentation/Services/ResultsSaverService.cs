@@ -1,26 +1,23 @@
-﻿using WebsiteTester.Common.Interfaces;
-using WebsiteTester.Domain;
+﻿using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
+using WebsiteTester.Persistenсe;
 
 namespace WebsiteTester.Services
 {
     public class ResultsSaverService
     {
-        private readonly IWebsiteTesterDbContext _dbContext;
-        public ResultsSaverService(IWebsiteTesterDbContext context)
+        private readonly WebsiteTesterDbContext _dbContext;
+        public ResultsSaverService(WebsiteTesterDbContext context)
         {
             _dbContext = context;
         }
         public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
-            var testedLink = _dbContext.TestedLink.FirstOrDefault(u => u.Url == testedUrl);
-            if (testedLink == null)
+
+            var testedLink = new TestedLink
             {
-                testedLink = new TestedLink
-                {
-                    Url = testedUrl
-                };
-            }
+                Url = testedUrl
+            };
 
             var webLinks = testResults.Select(r => new LinkTestResult
             {

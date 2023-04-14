@@ -23,7 +23,6 @@ namespace WebsiteTester
             services.AddTransient<WebsiteParser>();
             services.AddTransient<SitemapParser>();
             services.AddTransient<TimeMeterService>();
-            services.AddTransient<ResultsSaverService>();
 
             services.AddTransient<PageCrawler>();
             services.AddTransient<WebsiteCrawler>();

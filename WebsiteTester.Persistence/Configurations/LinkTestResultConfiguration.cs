@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WebsiteTester.Domain;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Persistenсe.Configurations
 {

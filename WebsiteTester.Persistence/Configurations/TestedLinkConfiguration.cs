@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WebsiteTester.Domain;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Persistenсe.Configurations
 {
@@ -8,7 +8,7 @@ namespace WebsiteTester.Persistenсe.Configurations
     {
         public void Configure(EntityTypeBuilder<TestedLink> builder)
         {
-            builder.HasKey(x => x.Url);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Url)
                 .IsRequired();

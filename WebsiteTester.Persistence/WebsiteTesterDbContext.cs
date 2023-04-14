@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using WebsiteTester.Common.Interfaces;
-using WebsiteTester.Domain;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Persistenсe
 {
-    public class WebsiteTesterDbContext : DbContext, IWebsiteTesterDbContext
+    public class WebsiteTesterDbContext : DbContext
     {
         public DbSet<TestedLink> TestedLink { get; set; }
         public DbSet<LinkTestResult> LinkTestResult { get; set; }
+
+        public WebsiteTesterDbContext() { }
 
         public WebsiteTesterDbContext(DbContextOptions<WebsiteTesterDbContext> options) : base(options)
         {

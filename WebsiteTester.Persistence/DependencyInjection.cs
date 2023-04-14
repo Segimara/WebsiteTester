@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.Common.Interfaces;
 
 namespace WebsiteTester.Persistenсe
 {
@@ -13,9 +12,6 @@ namespace WebsiteTester.Persistenсe
 
             services.AddDbContext<WebsiteTesterDbContext>(options =>
                            options.UseSqlite(connectionString));
-
-            services.AddScoped<IWebsiteTesterDbContext>(provider =>
-                provider.GetService<WebsiteTesterDbContext>());
 
             return services;
         }

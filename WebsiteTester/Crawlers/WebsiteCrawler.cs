@@ -7,16 +7,14 @@ namespace WebsiteTester.Crawlers;
 public class WebsiteCrawler
 {
     private readonly TimeMeterService _renderTimeMeter;
-    private readonly ResultsSaverService _resultSaver;
     private readonly SitemapParser _siteMapParser;
     private readonly PageCrawler _webCrawler;
 
-    public WebsiteCrawler(ResultsSaverService resultSaver, SitemapParser siteMapParser, PageCrawler webCrawler,
+    public WebsiteCrawler(SitemapParser siteMapParser, PageCrawler webCrawler,
         TimeMeterService renderTimeMeter)
     {
         _renderTimeMeter = renderTimeMeter;
         _webCrawler = webCrawler;
-        _resultSaver = resultSaver;
         _siteMapParser = siteMapParser;
     }
 
@@ -35,8 +33,6 @@ public class WebsiteCrawler
             });
 
         var testResults = await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
-
-        await _resultSaver.SaveResultsAsync(url, testResults);
 
         return testResults;
     }

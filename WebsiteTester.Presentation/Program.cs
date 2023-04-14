@@ -25,10 +25,7 @@ namespace WebsiteTester.Presentation
         private static IConfiguration GetConfig()
         {
             return new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string>
-            {
-                {"DbConnection", $"Data Source = WebsiteTester.db"}
-            })
+            .AddJsonFile("appsettings.json", false, true)
             .Build();
         }
     }
