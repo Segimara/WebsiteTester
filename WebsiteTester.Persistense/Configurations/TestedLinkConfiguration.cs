@@ -9,8 +9,13 @@ namespace WebsiteTester.Persistense.Configurations
         public void Configure(EntityTypeBuilder<TestedLink> builder)
         {
             builder.HasKey(x => x.Url);
-            builder.Property(x => x.Url).IsRequired();
-            builder.HasMany(x => x.Links).WithOne(x => x.TestedLink).HasForeignKey(x => x.TestedLinkId);
+
+            builder.Property(x => x.Url)
+                .IsRequired();
+
+            builder.HasMany(x => x.Links)
+                .WithOne(x => x.TestedLink)
+                .HasForeignKey(x => x.TestedLinkId);
         }
     }
 }

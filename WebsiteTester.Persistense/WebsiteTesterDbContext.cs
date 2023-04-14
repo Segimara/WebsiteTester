@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using WebsiteTester.Common.Interfaces;
 using WebsiteTester.Domain;
-using WebsiteTester.Persistense.Configurations;
 
 namespace WebsiteTester.Persistense
 {
@@ -17,8 +17,7 @@ namespace WebsiteTester.Persistense
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new TestedLinkConfiguration());
-            modelBuilder.ApplyConfiguration(new LinkTestResultConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

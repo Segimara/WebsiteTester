@@ -4,5 +4,10 @@
     {
         public string Url { get; set; }
         public ICollection<LinkTestResult> Links { get; set; }
+
+        public TestedLink()
+        {
+            Links = new List<LinkTestResult>();
+        }
     }
 }
