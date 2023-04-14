@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using Moq;
+using WebsiteTester.Common.Interfaces;
 using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
@@ -32,7 +33,10 @@ namespace WebsiteTester.Presentation.Tests
 
             var webCrawler = new PageCrawler(parser);
 
-            _crawlerMock = new Mock<WebsiteCrawler>(siteMapParser, webCrawler, renderTimeMeter);
+            var dbContext = new Mock<IWebsiteTesterDbContext>();
+            var resultSaver = new ResultsSaverService(dbContext.Object);
+
+            _crawlerMock = new Mock<WebsiteCrawler>(resultSaver, siteMapParser, webCrawler, renderTimeMeter);
             _consoleMock = new Mock<ConsoleManager>();
 
             _websiteTester = new WebsiteTesterApplication(_crawlerMock.Object, _consoleMock.Object);

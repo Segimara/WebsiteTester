@@ -19,5 +19,10 @@ namespace WebsiteTester.Persistense
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return this.SaveChangesAsync(CancellationToken.None);
+        }
     }
 }

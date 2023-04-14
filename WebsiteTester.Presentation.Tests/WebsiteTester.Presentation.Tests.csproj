@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebsiteTester.Presentation\WebsiteTester.Presentation.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Tests\WebsiteTester.Tests.csproj" />
     <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
   </ItemGroup>
 
