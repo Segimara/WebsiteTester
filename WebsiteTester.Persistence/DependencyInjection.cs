@@ -11,7 +11,7 @@ namespace WebsiteTester.Persistenсe
             var connectionString = configuration["DbConnection"];
 
             services.AddDbContext<WebsiteTesterDbContext>(options =>
-                           options.UseSqlite(connectionString));
+                           options.UseSqlServer(connectionString));
 
             return services;
         }

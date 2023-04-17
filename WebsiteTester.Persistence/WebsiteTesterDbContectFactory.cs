@@ -15,9 +15,9 @@ namespace WebsiteTester.Persistenсe
             var dbContextBuilder = new DbContextOptionsBuilder<WebsiteTesterDbContext>();
 
             //todo understand how to load config from other project
-            var connectionString = "Data Source = WebsiteTester.db;";
+            var connectionString = "Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;";
 
-            dbContextBuilder.UseSqlite(connectionString);
+            dbContextBuilder.UseSqlServer(connectionString);
 
             return new WebsiteTesterDbContext(dbContextBuilder.Options);
         }
