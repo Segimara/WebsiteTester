@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WebsiteTester.Persistenсe": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trusted_Connection=True;"
+      }
+    }
+  }
+}

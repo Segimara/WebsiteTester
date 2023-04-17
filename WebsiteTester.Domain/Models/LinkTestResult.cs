@@ -9,7 +9,7 @@
         public bool IsInSitemap { get; set; }
         public bool IsInWebsite { get; set; }
 
-        public Guid TestedLinkId { get; set; }
-        public TestedLink TestedLink { get; set; }
+        public Guid LinkId { get; set; }
+        public Link Link { get; set; }
     }
 }

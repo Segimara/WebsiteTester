@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using WebsiteTester.Persistenсe;
 
 namespace WebsiteTester.Presentation
@@ -8,25 +7,16 @@ namespace WebsiteTester.Presentation
     {
         static async Task Main(string[] args)
         {
-            var configuration = GetConfig();
-
             var services = new ServiceCollection();
 
             services.AddWebsiteTesterLogic();
             services.AddWebsiteTesterPresentation();
 
-            services.AddWebsiteTesterPersistenсe(configuration);
+            services.AddWebsiteTesterPersistenсe(Environment.GetEnvironmentVariable("DB_CONNECTION"));
 
             var servicesProvider = services.BuildServiceProvider();
 
             await servicesProvider.GetService<WebsiteTesterApplication>().RunAsync();
-        }
-
-        private static IConfiguration GetConfig()
-        {
-            return new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", false, true)
-            .Build();
         }
     }
 }

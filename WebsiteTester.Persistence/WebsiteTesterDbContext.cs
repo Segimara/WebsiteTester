@@ -6,7 +6,7 @@ namespace WebsiteTester.Persistenсe
 {
     public class WebsiteTesterDbContext : DbContext
     {
-        public DbSet<TestedLink> TestedLinks { get; set; }
+        public DbSet<Link> Links { get; set; }
         public DbSet<LinkTestResult> LinkTestResults { get; set; }
 
         public WebsiteTesterDbContext(DbContextOptions<WebsiteTesterDbContext> options) : base(options)

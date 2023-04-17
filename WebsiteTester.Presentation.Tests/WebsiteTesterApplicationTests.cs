@@ -35,7 +35,7 @@ namespace WebsiteTester.Presentation.Tests
 
             var webCrawler = new PageCrawler(parser);
 
-            _context = WebsiteTesterContextFactory.Create();
+            _context = null;
 
             _crawlerMock = new Mock<WebsiteCrawler>(siteMapParser, webCrawler, renderTimeMeter);
             _consoleMock = new Mock<ConsoleManager>();

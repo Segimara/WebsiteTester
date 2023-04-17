@@ -13,19 +13,19 @@ namespace WebsiteTester.Services
             _dbContext = context;
         }
 
-        public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
+        public virtual async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
-            var testedLink = new TestedLink
+            var testedLink = new Link
             {
                 Url = testedUrl
             };
 
-            await _dbContext.TestedLinks.AddAsync(testedLink);
+            await _dbContext.Links.AddAsync(testedLink);
 
             var webLinks = testResults.Select(r => new LinkTestResult
             {
-                TestedLink = testedLink,
-                Id = Guid.NewGuid(),
+                LinkId = testedLink.Id,
+                Link = testedLink,
                 Url = r.Url,
                 IsInSitemap = r.IsInSitemap,
                 IsInWebsite = r.IsInWebsite,
