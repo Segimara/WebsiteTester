@@ -8,7 +8,6 @@ namespace WebsiteTester.Services
     {
         private readonly WebsiteTesterDbContext _dbContext;
 
-        public ResultsSaverService() { }
         public ResultsSaverService(WebsiteTesterDbContext context)
         {
             _dbContext = context;
@@ -21,6 +20,8 @@ namespace WebsiteTester.Services
                 Url = testedUrl
             };
 
+            await _dbContext.TestedLinks.AddAsync(testedLink);
+
             var webLinks = testResults.Select(r => new LinkTestResult
             {
                 TestedLink = testedLink,
@@ -29,11 +30,11 @@ namespace WebsiteTester.Services
                 IsInSitemap = r.IsInSitemap,
                 IsInWebsite = r.IsInWebsite,
                 RenderTimeMilliseconds = r.RenderTimeMilliseconds,
-                CreatedOn = DateTimeOffset.Now,
+                CreatedOn = DateTimeOffset.UtcNow,
             });
 
-            await _dbContext.LinkTestResult.AddRangeAsync(webLinks);
-            await _dbContext.SaveChangesAsync(CancellationToken.None);
+            await _dbContext.LinkTestResults.AddRangeAsync(webLinks);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -15,7 +15,8 @@ namespace WebsiteTester.Persistenсe.Configurations
 
             builder.HasMany(x => x.Links)
                 .WithOne(x => x.TestedLink)
-                .HasForeignKey(x => x.TestedLinkId);
+                .HasForeignKey(x => x.TestedLinkId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

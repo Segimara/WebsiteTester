@@ -1,21 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTester.Domain.Models;
+using WebsiteTester.Persistenсe.Configurations;
 
 namespace WebsiteTester.Persistenсe
 {
     public class WebsiteTesterDbContext : DbContext
     {
-        public DbSet<TestedLink> TestedLink { get; set; }
-        public DbSet<LinkTestResult> LinkTestResult { get; set; }
+        public DbSet<TestedLink> TestedLinks { get; set; }
+        public DbSet<LinkTestResult> LinkTestResults { get; set; }
 
         public WebsiteTesterDbContext(DbContextOptions<WebsiteTesterDbContext> options) : base(options)
         {
-            //Database.EnsureCreated();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(IEntityTypeConfiguration<>).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(LinkTestResultConfiguration).Assembly);
         }
     }
 }
