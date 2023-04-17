@@ -7,13 +7,15 @@ namespace WebsiteTester.Services
     public class ResultsSaverService
     {
         private readonly WebsiteTesterDbContext _dbContext;
+
+        public ResultsSaverService() { }
         public ResultsSaverService(WebsiteTesterDbContext context)
         {
             _dbContext = context;
         }
+
         public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
-
             var testedLink = new TestedLink
             {
                 Url = testedUrl

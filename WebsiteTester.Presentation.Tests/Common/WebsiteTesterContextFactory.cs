@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTester.Persistenсe;
 
-namespace WebsiteTester.Tests.Common
+namespace WebsiteTester.Presentation.Tests
 {
     public class WebsiteTesterContextFactory
     {
