@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Presentation.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Domain", "WebsiteTester.Domain\WebsiteTester.Domain.csproj", "{C65E29E9-8A3D-4D94-91E2-4126F60D70D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Persistenсe", "WebsiteTester.Persistence\WebsiteTester.Persistenсe.csproj", "{30AB6E84-7BFB-4B28-9316-E8BC91920A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Persistence", "WebsiteTester.Persistence\WebsiteTester.Persistence.csproj", "{30AB6E84-7BFB-4B28-9316-E8BC91920A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteTester.MVC", "WebsiteTester.MVC\WebsiteTester.MVC.csproj", "{59703290-A843-404C-B71F-0A15F2DA6591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.MVC", "WebsiteTester.MVC\WebsiteTester.MVC.csproj", "{59703290-A843-404C-B71F-0A15F2DA6591}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

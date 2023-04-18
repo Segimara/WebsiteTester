@@ -1,5 +1,5 @@
 ﻿using WebsiteTester.MVC.Models;
-using WebsiteTester.Persistenсe;
+using WebsiteTester.Persistence;
 
 namespace WebsiteTester.MVC.Services
 {

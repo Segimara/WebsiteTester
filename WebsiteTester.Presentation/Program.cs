@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.Persistenсe;
+using WebsiteTester.Persistence;
 
 namespace WebsiteTester.Presentation
 {

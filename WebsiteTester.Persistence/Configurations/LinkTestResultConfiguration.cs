@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WebsiteTester.Domain.Models;
 
-namespace WebsiteTester.Persistenсe.Configurations
+namespace WebsiteTester.Persistence.Configurations
 {
     public class LinkTestResultConfiguration : IEntityTypeConfiguration<LinkTestResult>
     {

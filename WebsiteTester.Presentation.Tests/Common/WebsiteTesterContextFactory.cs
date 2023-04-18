@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebsiteTester.Persistenсe;
+using WebsiteTester.Persistence;
 
 namespace WebsiteTester.Presentation.Tests.Common
 {
