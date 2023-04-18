@@ -1,11 +1,10 @@
-﻿@model TestDetail
+﻿@model Link
 
 @{
-    var notAtSitemap = Model.TestResults.Where(x => x.IsInWebsite && !x.IsInSitemap);
-    var notAtWebsite = Model.TestResults.Where(x => x.IsInSitemap && !x.IsInWebsite);
+
 }
 
-<h2 class="mt-5">@Model.TestedUrl</h2>
+<h2 class="mt-5">@Model.Url</h2>
 
 @if (Model.TestResults.Any())
 {
@@ -39,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var result in notAtWebsite)
+                @foreach (var result in Model.TestResults.Where(x => x.IsInSitemap && !x.IsInWebsite))
                 {
                     <tr>
                         <td>@result.Url</td>
@@ -57,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var result in notAtSitemap)
+                @foreach (var result in Model.TestResults.Where(x => x.IsInWebsite && !x.IsInSitemap))
                 {
                     <tr>
                         <td>@result.Url</td>

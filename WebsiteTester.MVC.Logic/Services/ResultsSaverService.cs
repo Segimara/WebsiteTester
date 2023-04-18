@@ -2,7 +2,7 @@
 using WebsiteTester.Models;
 using WebsiteTester.Persistence;
 
-namespace WebsiteTester.MVC.Services
+namespace WebsiteTester.MVC.Logic.Services
 {
     public class ResultsSaverService
     {

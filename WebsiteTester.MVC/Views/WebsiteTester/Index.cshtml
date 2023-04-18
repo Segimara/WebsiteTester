@@ -4,7 +4,8 @@
 
 @model IEnumerable<Link>
 
-<form class="d-flex flex-row gap-3 mt-5" asp-controller="WebsiteTester" asp-action="Index" method="post">
+<form class="d-flex flex-row gap-3 mt-5" asp-controller="WebsiteTester" asp-action="TestUrl" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group d-flex align-items-center flex-row w-100">
         <label for="url" class="w-25">Enter a website</label>
         <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">

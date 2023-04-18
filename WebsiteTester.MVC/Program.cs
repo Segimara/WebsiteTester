@@ -1,4 +1,4 @@
-using WebsiteTester.MVC.Services;
+using WebsiteTester.MVC.Logic;
 using WebsiteTester.Persistence;
 
 namespace WebsiteTester.MVC
@@ -16,8 +16,7 @@ namespace WebsiteTester.MVC
 
             builder.Services.AddWebsiteTesterPersistenñe(Environment.GetEnvironmentVariable("DB_CONNECTION"));
 
-            builder.Services.AddScoped<ResultsSaverService>();
-            builder.Services.AddScoped<ResultsReceiverService>();
+            builder.Services.AddMvcLogic();
 
             var app = builder.Build();
 

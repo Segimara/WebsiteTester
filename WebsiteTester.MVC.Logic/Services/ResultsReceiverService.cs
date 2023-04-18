@@ -1,7 +1,6 @@
 ﻿using WebsiteTester.MVC.Models;
 using WebsiteTester.Persistence;
-
-namespace WebsiteTester.MVC.Services
+namespace WebsiteTester.MVC.Logic.Services
 {
     public class ResultsReceiverService
     {
@@ -18,14 +17,15 @@ namespace WebsiteTester.MVC.Services
             {
                 Id = l.Id,
                 Url = l.Url,
-                CreatedOn = l.CreatedOn
+                CreatedOn = l.CreatedOn,
+                TestResults = null
             })
                .AsEnumerable();
 
             return links;
         }
 
-        public async Task<TestDetail> GetTestDetailAsync(string id)
+        public async Task<Link> GetTestDetailAsync(string id)
         {
             var link = _dbContext.Links
                 .Where(l => l.Id == Guid.Parse(id))
@@ -38,13 +38,10 @@ namespace WebsiteTester.MVC.Services
                 })
                 .FirstOrDefault();
 
+            //todo check other possible solutions
             if (link == null)
             {
-                return new TestDetail
-                {
-                    TestedUrl = "There is no url to this id",
-                    TestResults = Enumerable.Empty<TestResult>()
-                };
+                throw new Exception("Link by that id not found");
             }
 
             var testResults = _dbContext.LinkTestResults
@@ -60,9 +57,9 @@ namespace WebsiteTester.MVC.Services
                 })
                 .AsEnumerable();
 
-            var testDetail = new TestDetail
+            var testDetail = new Link
             {
-                TestedUrl = link.Url,
+                Url = link.Url,
                 TestResults = testResults
             };
 
