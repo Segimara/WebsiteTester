@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Domain", "Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebsiteTester.Persistenсe", "WebsiteTester.Persistence\WebsiteTester.Persistenсe.csproj", "{30AB6E84-7BFB-4B28-9316-E8BC91920A68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteTester.MVC", "WebsiteTester.MVC\WebsiteTester.MVC.csproj", "{59703290-A843-404C-B71F-0A15F2DA6591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{30AB6E84-7BFB-4B28-9316-E8BC91920A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30AB6E84-7BFB-4B28-9316-E8BC91920A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30AB6E84-7BFB-4B28-9316-E8BC91920A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59703290-A843-404C-B71F-0A15F2DA6591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59703290-A843-404C-B71F-0A15F2DA6591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59703290-A843-404C-B71F-0A15F2DA6591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59703290-A843-404C-B71F-0A15F2DA6591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

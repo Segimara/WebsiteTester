@@ -1,0 +1,70 @@
+﻿@model TestDetail
+
+@{
+    var notAtSitemap = Model.TestResults.Where(x => x.IsInWebsite && !x.IsInSitemap);
+    var notAtWebsite = Model.TestResults.Where(x => x.IsInSitemap && !x.IsInWebsite);
+}
+
+<h2 class="mt-5">@Model.TestedUrl</h2>
+
+@if (Model.TestResults.Any())
+{
+    <div class="mt-5">
+        <h2>PERFOMANCE</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                    <th>Timing</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.TestResults)
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                        <td>@result.RenderTimeMilliseconds</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-5">
+        <h2>URLs NOT FOUND AT WEBSITE</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in notAtWebsite)
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-5">
+        <h2>URLs NOT FOUND AT SITEMAP</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in notAtSitemap)
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

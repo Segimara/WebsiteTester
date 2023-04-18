@@ -2,7 +2,7 @@
 using WebsiteTester.Models;
 using WebsiteTester.Persistenсe;
 
-namespace WebsiteTester.Services
+namespace WebsiteTester.Presentation.Services
 {
     public class ResultsSaverService
     {

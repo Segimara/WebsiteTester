@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<Link>
+
+<form class="d-flex flex-row gap-3 mt-5" asp-controller="WebsiteTester" asp-action="Index" method="post">
+    <div class="form-group d-flex align-items-center flex-row w-100">
+        <label for="url" class="w-25">Enter a website</label>
+        <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
+    </div>
+    <div class="p-1">
+        <button type="submit" class="btn btn-primary">TEST</button>
+    </div>
+</form>
+
+
+<div>
+<h2 class="mt-5">Test Results</h2>
+<table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Website</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var link in Model)
+            {
+                <tr>
+                    <td>@link.Url</td>
+                    <td>@link.CreatedOn.ToLocalTime().ToString("g")</td>
+                    <td><a asp-controller="WebsiteTester" asp-action="Details" asp-route-id ="@link.Id">see details</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -5,6 +5,8 @@ using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Persistenñe;
+using WebsiteTester.Presentation.Services;
+using WebsiteTester.Presentation.Tests.Common;
 using WebsiteTester.Services;
 using WebsiteTester.Validators;
 using Xunit;
