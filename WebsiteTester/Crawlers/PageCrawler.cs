@@ -45,7 +45,6 @@ public class PageCrawler
             IEnumerable<string> linksToParse = null;
 
             var urlToParse = urlsToVisit.Dequeue();
-            visitedUrls.Add(urlToParse);
 
             try
             {
@@ -57,6 +56,8 @@ public class PageCrawler
             {
                 continue;
             }
+
+            visitedUrls.Add(urlToParse);
 
             foreach (var link in linksToParse)
             {

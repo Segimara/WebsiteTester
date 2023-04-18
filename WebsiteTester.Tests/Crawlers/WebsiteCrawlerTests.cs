@@ -4,6 +4,7 @@ using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
+using WebsiteTester.Persistenсe;
 using WebsiteTester.Services;
 using WebsiteTester.Validators;
 using Xunit;
@@ -32,6 +33,7 @@ namespace WebsiteTester.Tests.Crawlers
             _renderTimeMeter = new Mock<TimeMeterService>(httpClientService);
             _pageCrawler = new Mock<PageCrawler>(parser);
 
+            var dbContext = new Mock<WebsiteTesterDbContext>();
             _websiteCrawler = new WebsiteCrawler(_siteMapParser.Object, _pageCrawler.Object, _renderTimeMeter.Object);
         }
 

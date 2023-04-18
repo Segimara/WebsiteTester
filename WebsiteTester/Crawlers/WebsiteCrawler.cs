@@ -32,6 +32,9 @@ public class WebsiteCrawler
                 IsInWebsite = g.Any(x => x.IsInWebsite)
             });
 
-        return await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
+        var testResults = await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
+
+        return testResults;
     }
+
 }

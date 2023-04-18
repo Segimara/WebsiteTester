@@ -4,16 +4,19 @@ using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
+using WebsiteTester.Persistenñe;
 using WebsiteTester.Services;
 using WebsiteTester.Validators;
 using Xunit;
 
 namespace WebsiteTester.Presentation.Tests
 {
-    public class WebsiteTesterApplicationTests
+    public class WebsiteTesterApplicationTests : IDisposable
     {
         private readonly Mock<WebsiteCrawler> _crawlerMock;
         private readonly Mock<ConsoleManager> _consoleMock;
+        private readonly Mock<ResultsSaverService> _resultSaver;
+        private readonly WebsiteTesterDbContext _context;
         private readonly WebsiteTesterApplication _websiteTester;
 
         public WebsiteTesterApplicationTests()
@@ -32,10 +35,13 @@ namespace WebsiteTester.Presentation.Tests
 
             var webCrawler = new PageCrawler(parser);
 
+            _context = null;
+
             _crawlerMock = new Mock<WebsiteCrawler>(siteMapParser, webCrawler, renderTimeMeter);
             _consoleMock = new Mock<ConsoleManager>();
+            _resultSaver = new Mock<ResultsSaverService>(_context);
 
-            _websiteTester = new WebsiteTesterApplication(_crawlerMock.Object, _consoleMock.Object);
+            _websiteTester = new WebsiteTesterApplication(_crawlerMock.Object, _consoleMock.Object, _resultSaver.Object);
         }
 
         [Fact]
@@ -121,6 +127,11 @@ namespace WebsiteTester.Presentation.Tests
                 new WebLink() { Url = "https://example.com/page3", IsInWebsite = true, IsInSitemap = true, RenderTimeMilliseconds = 200 },
                 new WebLink() { Url = "https://example.com/page4", IsInWebsite = false, IsInSitemap = true, RenderTimeMilliseconds = 300 }
             };
+        }
+
+        public void Dispose()
+        {
+            WebsiteTesterContextFactory.Destroy(_context);
         }
     }
 }
