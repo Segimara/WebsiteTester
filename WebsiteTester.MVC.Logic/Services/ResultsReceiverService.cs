@@ -37,7 +37,6 @@ namespace WebsiteTester.MVC.Logic.Services
                 })
                 .FirstOrDefaultAsync();
 
-            //todo check other possible solutions
             if (link == null)
             {
                 throw new Exception("Link by that id not found");

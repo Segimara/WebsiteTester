@@ -1,13 +1,14 @@
-﻿@page
-@model WebsiteTester.MVC.Views.WebsiteTester.IndexModel
+﻿@model IEnumerable<Link>
+
 @{
 }
-<form class="" method="post" asp-page-handler="OnPostAsync">
+
+<form class="" method="post" asp-action="TestUrl">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="d-flex flex-row gap-3 mt-5">
         <div class="form-group d-flex align-items-center flex-row w-100">
-            <label asp-for="@Model.UrlForTest.Url" class="w-25">Enter a website</label>
-            <input asp-for="@Model.UrlForTest.Url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
+            <label for="url" class="w-25">Enter a website</label>
+            <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
         </div>
         <div class="p-1">
             <button type="submit" class="btn btn-primary">TEST</button>
@@ -26,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var link in Model.Links)
+            @foreach (var link in Model)
             {
                 <tr>
                     <td>@link.Url</td>

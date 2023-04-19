@@ -20,27 +20,20 @@ namespace WebsiteTester.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var indexModel = new IndexModel
-            {
-                Links = await _resultsReceiverService.GetResultsAsync(),
-                UrlForTest = new UrlForTest()
-            };
-            return View(indexModel);
+            return View(await _resultsReceiverService.GetResultsAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> TestUrl(UrlForTest url)
+        public async Task<IActionResult> TestUrl(string url)
         {
-            if (!ModelState.IsValid)
+            var urlModel = new UrlForTest { Url = url };
+
+            if (!TryValidateModel(urlModel))
             {
-                var indexModel = new IndexModel
-                {
-                    Links = await _resultsReceiverService.GetResultsAsync(),
-                    UrlForTest = new UrlForTest()
-                };
-                return View("Index", indexModel);
+                return View("Index", await _resultsReceiverService.GetResultsAsync());
             }
-            _resultsSaverService.GetAndSaveResultsAsync(url.Url);
+
+            _resultsSaverService.GetAndSaveResultsAsync(urlModel.Url);
 
             return RedirectToAction("Index");
         }
