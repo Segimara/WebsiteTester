@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
 
-namespace WebsiteTester.Domain.Validators
+namespace WebsiteTester.MVC.Domain.Validators
 {
-    public class UrlForTestValidationAttribute : ValidationAttribute
+    public class UrlValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

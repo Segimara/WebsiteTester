@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebsiteTester.Crawlers;
-using WebsiteTester.Domain.Validators;
+using WebsiteTester.MVC.Domain.Models;
 using WebsiteTester.MVC.Logic.Services;
 
 namespace WebsiteTester.MVC.Controllers
@@ -20,20 +20,27 @@ namespace WebsiteTester.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _resultsReceiverService.GetResultsAsync());
+            var indexModel = new IndexModel
+            {
+                Links = await _resultsReceiverService.GetResultsAsync(),
+                UrlForTest = new UrlForTest()
+            };
+            return View(indexModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> TestUrl([UrlForTestValidation] string url)
+        public async Task<IActionResult> TestUrl(UrlForTest url)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", await _resultsReceiverService.GetResultsAsync());
+                var indexModel = new IndexModel
+                {
+                    Links = await _resultsReceiverService.GetResultsAsync(),
+                    UrlForTest = new UrlForTest()
+                };
+                return View("Index", indexModel);
             }
-
-            var links = await _websiteCrawler.GetUrlsAsync(url);
-
-            await _resultsSaverService.SaveResultsAsync(url, links);
+            _resultsSaverService.GetAndSaveResultsAsync(url.Url);
 
             return RedirectToAction("Index");
         }

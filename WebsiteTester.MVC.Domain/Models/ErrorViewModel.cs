@@ -1,4 +1,4 @@
-namespace WebsiteTester.MVC.Models
+namespace WebsiteTester.MVC.Domain.Models
 {
     public class ErrorViewModel
     {

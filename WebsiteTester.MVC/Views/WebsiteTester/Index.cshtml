@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Link>
-
-<form class="" asp-controller="WebsiteTester" asp-action="TestUrl" method="post">
+﻿@page
+@model WebsiteTester.MVC.Views.WebsiteTester.IndexModel
+@{
+}
+<form class="" method="post" asp-page-handler="OnPostAsync">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="d-flex flex-row gap-3 mt-5">
         <div class="form-group d-flex align-items-center flex-row w-100">
-            <label for="url" class="w-25">Enter a website</label>
-            <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
+            <label asp-for="@Model.UrlForTest.Url" class="w-25">Enter a website</label>
+            <input asp-for="@Model.UrlForTest.Url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
         </div>
         <div class="p-1">
             <button type="submit" class="btn btn-primary">TEST</button>
@@ -14,25 +16,24 @@
 </form>
 
 <div>
-<h2 class="mt-5">Test Results</h2>
-<table class="table mt-5">
+    <h2 class="mt-5">Test Results</h2>
+    <table class="table mt-5">
         <thead>
             <tr>
                 <th scope="col">Website</th>
                 <th scope="col">Date</th>
-                <th scope="col"></th> 
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var link in Model)
+            @foreach (var link in Model.Links)
             {
                 <tr>
                     <td>@link.Url</td>
                     <td>@link.CreatedOn.ToLocalTime().ToString("g")</td>
-                    <td><a asp-controller="WebsiteTester" asp-action="Details" asp-route-id ="@link.Id">see details</a></td>
+                    <td><a asp-controller="WebsiteTester" asp-action="Details" asp-route-id="@link.Id">see details</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-

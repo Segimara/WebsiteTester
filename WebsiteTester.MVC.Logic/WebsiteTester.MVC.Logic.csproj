@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTester.MVC.Models\WebsiteTester.MVC.Models.csproj" />
+    <ProjectReference Include="..\WebsiteTester.MVC.Domain\WebsiteTester.MVC.Domain.csproj" />
     <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistence.csproj" />
   </ItemGroup>
 

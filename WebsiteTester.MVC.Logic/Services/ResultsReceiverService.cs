@@ -1,4 +1,5 @@
-﻿using WebsiteTester.MVC.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using WebsiteTester.MVC.Domain.Models;
 using WebsiteTester.Persistence;
 namespace WebsiteTester.MVC.Logic.Services
 {
@@ -12,31 +13,29 @@ namespace WebsiteTester.MVC.Logic.Services
 
         public async Task<IEnumerable<Link>> GetResultsAsync()
         {
-            var links = _dbContext.Links.Select(l =>
-            new Link
+            var links = await _dbContext.Links.Select(l => new Link
             {
                 Id = l.Id,
                 Url = l.Url,
                 CreatedOn = l.CreatedOn,
                 TestResults = null
             })
-               .AsEnumerable();
+               .ToListAsync();
 
             return links;
         }
 
         public async Task<Link> GetTestDetailAsync(string id)
         {
-            var link = _dbContext.Links
+            var link = await _dbContext.Links
                 .Where(l => l.Id == Guid.Parse(id))
-                .Select(l =>
-                new Link
+                .Select(l => new Link
                 {
                     Id = l.Id,
                     Url = l.Url,
                     CreatedOn = l.CreatedOn
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             //todo check other possible solutions
             if (link == null)
@@ -44,10 +43,9 @@ namespace WebsiteTester.MVC.Logic.Services
                 throw new Exception("Link by that id not found");
             }
 
-            var testResults = _dbContext.LinkTestResults
+            var testResults = await _dbContext.LinkTestResults
                 .Where(l => l.LinkId == Guid.Parse(id))
-                .Select(l =>
-                new TestResult
+                .Select(l => new TestResult
                 {
                     Url = l.Url,
                     IsInSitemap = l.IsInSitemap,
@@ -55,7 +53,7 @@ namespace WebsiteTester.MVC.Logic.Services
                     RenderTimeMilliseconds = l.RenderTimeMilliseconds,
                     CreatedOn = l.CreatedOn
                 })
-                .AsEnumerable();
+                .ToListAsync();
 
             var testDetail = new Link
             {

@@ -1,4 +1,5 @@
-﻿using WebsiteTester.Domain.Models;
+﻿using WebsiteTester.Crawlers;
+using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
 using WebsiteTester.Persistence;
 
@@ -7,13 +8,22 @@ namespace WebsiteTester.MVC.Logic.Services
     public class ResultsSaverService
     {
         private readonly WebsiteTesterDbContext _dbContext;
+        private readonly WebsiteCrawler _websiteCrawler;
 
-        public ResultsSaverService(WebsiteTesterDbContext context)
+        public ResultsSaverService(WebsiteTesterDbContext context, WebsiteCrawler websiteCrawler)
         {
             _dbContext = context;
+            _websiteCrawler = websiteCrawler;
         }
 
-        public virtual async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
+        public async Task GetAndSaveResultsAsync(string url)
+        {
+            var links = await _websiteCrawler.GetUrlsAsync(url);
+
+            await SaveResultsAsync(url, links);
+        }
+
+        public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
             var testedLink = new Link
             {
