@@ -1,6 +1,6 @@
 ﻿using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore;
-using WebsiteTester.MVC.Domain.Models;
+using WebsiteTester.MVC.Logic.Models;
 using WebsiteTester.Persistence;
 namespace WebsiteTester.MVC.Logic.Services
 {

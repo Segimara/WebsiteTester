@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.MVC.Domain.Validators;
 using WebsiteTester.MVC.Logic.Services;
+using WebsiteTester.MVC.Logic.Validators;
 
 namespace WebsiteTester.MVC.Logic
 {

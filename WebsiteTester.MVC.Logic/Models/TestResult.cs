@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.MVC.Domain.Models
+﻿namespace WebsiteTester.MVC.Logic.Models
 {
     public class TestResult
     {

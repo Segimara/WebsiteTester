@@ -2,7 +2,7 @@
 using WebsiteTester.Crawlers;
 using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
-using WebsiteTester.MVC.Domain.Validators;
+using WebsiteTester.MVC.Logic.Validators;
 using WebsiteTester.Persistence;
 
 namespace WebsiteTester.MVC.Logic.Services

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
 
-namespace WebsiteTester.MVC.Domain.Validators
+namespace WebsiteTester.MVC.Logic.Validators
 {
     public class UrlValidator
     {
