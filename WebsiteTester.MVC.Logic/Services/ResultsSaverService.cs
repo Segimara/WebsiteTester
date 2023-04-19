@@ -1,6 +1,8 @@
-﻿using WebsiteTester.Crawlers;
+﻿using LanguageExt.Common;
+using WebsiteTester.Crawlers;
 using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
+using WebsiteTester.MVC.Domain.Validators;
 using WebsiteTester.Persistence;
 
 namespace WebsiteTester.MVC.Logic.Services
@@ -9,18 +11,30 @@ namespace WebsiteTester.MVC.Logic.Services
     {
         private readonly WebsiteTesterDbContext _dbContext;
         private readonly WebsiteCrawler _websiteCrawler;
+        private readonly UrlValidator _urlValidator;
 
-        public ResultsSaverService(WebsiteTesterDbContext context, WebsiteCrawler websiteCrawler)
+        public ResultsSaverService(WebsiteTesterDbContext context, WebsiteCrawler websiteCrawler, UrlValidator urlValidator)
         {
             _dbContext = context;
             _websiteCrawler = websiteCrawler;
+            _urlValidator = urlValidator;
         }
 
-        public async Task GetAndSaveResultsAsync(string url)
+        public async Task<Result<bool>> GetAndSaveResultsAsync(string url)
         {
+            try
+            {
+                _urlValidator.IsValid(url);
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool>(ex);
+            }
+
             var links = await _websiteCrawler.GetUrlsAsync(url);
 
             await SaveResultsAsync(url, links);
+            return true;
         }
 
         public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)

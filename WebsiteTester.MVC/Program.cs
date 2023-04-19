@@ -9,13 +9,9 @@ namespace WebsiteTester.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
-
             builder.Services.AddWebsiteTesterLogic();
-
             builder.Services.AddWebsiteTesterPersistenñe(Environment.GetEnvironmentVariable("DB_CONNECTION"));
-
             builder.Services.AddMvcLogic();
 
             var app = builder.Build();

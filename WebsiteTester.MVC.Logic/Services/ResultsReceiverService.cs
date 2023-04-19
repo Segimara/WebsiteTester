@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LanguageExt.Common;
+using Microsoft.EntityFrameworkCore;
 using WebsiteTester.MVC.Domain.Models;
 using WebsiteTester.Persistence;
 namespace WebsiteTester.MVC.Logic.Services
@@ -13,7 +14,7 @@ namespace WebsiteTester.MVC.Logic.Services
 
         public async Task<IEnumerable<Link>> GetResultsAsync()
         {
-            var links = await _dbContext.Links.Select(l => new Link
+            return await _dbContext.Links.Select(l => new Link
             {
                 Id = l.Id,
                 Url = l.Url,
@@ -21,11 +22,9 @@ namespace WebsiteTester.MVC.Logic.Services
                 TestResults = null
             })
                .ToListAsync();
-
-            return links;
         }
 
-        public async Task<Link> GetTestDetailAsync(string id)
+        public async Task<Result<Link>> GetTestDetailAsync(string id)
         {
             var link = await _dbContext.Links
                 .Where(l => l.Id == Guid.Parse(id))
@@ -39,7 +38,7 @@ namespace WebsiteTester.MVC.Logic.Services
 
             if (link == null)
             {
-                throw new Exception("Link by that id not found");
+                return new Result<Link>(new Exception("Link by that id not found"));
             }
 
             var testResults = await _dbContext.LinkTestResults
@@ -54,13 +53,11 @@ namespace WebsiteTester.MVC.Logic.Services
                 })
                 .ToListAsync();
 
-            var testDetail = new Link
+            return new Link
             {
                 Url = link.Url,
                 TestResults = testResults
             };
-
-            return testDetail;
         }
     }
 }
