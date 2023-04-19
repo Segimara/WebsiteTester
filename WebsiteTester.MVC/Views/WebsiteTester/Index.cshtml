@@ -1,20 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Link>
 
-@model IEnumerable<Link>
-
-<form class="d-flex flex-row gap-3 mt-5" asp-controller="WebsiteTester" asp-action="TestUrl" method="post">
+<form class="" asp-controller="WebsiteTester" asp-action="TestUrl" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group d-flex align-items-center flex-row w-100">
-        <label for="url" class="w-25">Enter a website</label>
-        <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
-    </div>
-    <div class="p-1">
-        <button type="submit" class="btn btn-primary">TEST</button>
+    <div class="d-flex flex-row gap-3 mt-5">
+        <div class="form-group d-flex align-items-center flex-row w-100">
+            <label for="url" class="w-25">Enter a website</label>
+            <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
+        </div>
+        <div class="p-1">
+            <button type="submit" class="btn btn-primary">TEST</button>
+        </div>
     </div>
 </form>
-
 
 <div>
 <h2 class="mt-5">Test Results</h2>

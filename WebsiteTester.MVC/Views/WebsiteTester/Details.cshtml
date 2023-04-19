@@ -1,9 +1,4 @@
 ﻿@model Link
-
-@{
-
-}
-
 <h2 class="mt-5">@Model.Url</h2>
 
 @if (Model.TestResults.Any())
@@ -47,6 +42,7 @@
             </tbody>
         </table>
     </div>
+
     <div class="mt-5">
         <h2>URLs NOT FOUND AT SITEMAP</h2>
         <table class="table">

@@ -28,7 +28,7 @@ namespace WebsiteTester.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                return View("Index", await _resultsReceiverService.GetResultsAsync());
             }
 
             var links = await _websiteCrawler.GetUrlsAsync(url);
