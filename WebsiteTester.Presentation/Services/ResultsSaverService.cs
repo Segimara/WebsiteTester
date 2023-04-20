@@ -1,8 +1,8 @@
 ﻿using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
-using WebsiteTester.Persistenсe;
+using WebsiteTester.Persistence;
 
-namespace WebsiteTester.Services
+namespace WebsiteTester.Presentation.Services
 {
     public class ResultsSaverService
     {

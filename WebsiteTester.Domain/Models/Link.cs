@@ -9,6 +9,8 @@
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Url { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
+
         public ICollection<LinkTestResult> LinkTestResults { get; set; }
     }
 }

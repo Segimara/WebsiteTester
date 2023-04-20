@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTester.Domain.Models;
-using WebsiteTester.Persistenсe.Configurations;
+using WebsiteTester.Persistence.Configurations;
 
-namespace WebsiteTester.Persistenсe
+namespace WebsiteTester.Persistence
 {
     public class WebsiteTesterDbContext : DbContext
     {

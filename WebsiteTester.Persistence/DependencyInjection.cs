@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebsiteTester.Persistenсe
+namespace WebsiteTester.Persistence
 {
     public static class DependencyInjection
     {

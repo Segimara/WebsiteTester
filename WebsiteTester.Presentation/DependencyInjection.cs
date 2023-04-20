@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.Presentation;
-using WebsiteTester.Services;
+using WebsiteTester.Presentation.Services;
 
-namespace WebsiteTester
+namespace WebsiteTester.Presentation
 {
     public static class DependencyInjection
     {
