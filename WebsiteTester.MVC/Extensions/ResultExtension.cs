@@ -1,6 +1,7 @@
 ﻿using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebsiteTester.MVC.Extensions
 {
@@ -22,13 +23,7 @@ namespace WebsiteTester.MVC.Extensions
                     };
                 }, ex =>
                 {
-                    dataDir["Error"] = ex.Message;
-
-                    return new ViewResult
-                    {
-                        ViewName = viewName,
-                        ViewData = viewDataDir,
-                    };
+                    return GetViewResultBasedOnError(viewName, dataDir, viewDataDir, ex);
                 });
         }
         public static IActionResult ToRedirectResult<TResult>(
@@ -48,6 +43,27 @@ namespace WebsiteTester.MVC.Extensions
 
                     return new RedirectToActionResult(actionName, controllerName, null);
                 });
+        }
+        public static IActionResult GetViewResultBasedOnError(string viewName, ITempDataDictionary tempData, ViewDataDictionary viewData, Exception exception)
+        {
+            switch (exception)
+            {
+                case ValidationException validationException:
+                    tempData["Error"] = validationException.Message;
+
+                    return new ViewResult
+                    {
+                        ViewName = viewName,
+                        ViewData = viewData
+                    };
+                default:
+                    {
+                        tempData["Error"] = exception.Message;
+
+                        return new BadRequestObjectResult(exception.Message);
+                    }
+            }
+
         }
     }
 }
