@@ -1,4 +1,5 @@
-﻿using WebsiteTester.Models;
+﻿using Microsoft.Extensions.Logging;
+using WebsiteTester.Models;
 using WebsiteTester.Parsers;
 
 namespace WebsiteTester.Crawlers;
@@ -6,10 +7,12 @@ namespace WebsiteTester.Crawlers;
 public class PageCrawler
 {
     private readonly WebsiteParser _websiteParser;
+    private readonly ILogger _logger;
 
-    public PageCrawler(WebsiteParser websiteParser)
+    public PageCrawler(WebsiteParser websiteParser, ILogger logger)
     {
         _websiteParser = websiteParser;
+        _logger = logger;
     }
 
     public virtual IEnumerable<WebLink> Crawl(string url)
@@ -19,8 +22,10 @@ public class PageCrawler
         {
             startUrls = _websiteParser.Parse(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex.Message);
+
             return Enumerable.Empty<WebLink>();
         }
 
@@ -52,8 +57,10 @@ public class PageCrawler
                     .Except(visitedUrls)
                     .Except(urlsToVisit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogTrace(ex.Message);
+
                 continue;
             }
 

@@ -11,7 +11,7 @@ namespace WebsiteTester.MVC
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddWebsiteTesterLogic();
-            builder.Services.AddWebsiteTesterPersistenñe(Environment.GetEnvironmentVariable("DB_CONNECTION"));
+            builder.Services.AddWebsiteTesterPersistence(Environment.GetEnvironmentVariable("DB_CONNECTION"));
             builder.Services.AddMvcLogic();
 
             var app = builder.Build();

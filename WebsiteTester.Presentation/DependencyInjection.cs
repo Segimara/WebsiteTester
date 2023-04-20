@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WebsiteTester.Presentation.Services;
 
 namespace WebsiteTester.Presentation
@@ -10,6 +11,15 @@ namespace WebsiteTester.Presentation
             services.AddTransient<ConsoleManager>();
             services.AddTransient<ResultsSaverService>();
             services.AddTransient<WebsiteTesterApplication>();
+
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                .AddConsole()
+                .SetMinimumLevel(LogLevel.Information);
+            });
+
+            services.AddSingleton(loggerFactory.CreateLogger("Program"));
 
             return services;
         }

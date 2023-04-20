@@ -39,7 +39,7 @@ namespace WebsiteTester.MVC.Extensions
                 },
                 ex =>
                 {
-                    return GetRedirectResultBasedOnError(Te)
+                    return GetRedirectResultBasedOnError(tempData, actionName, controllerName, ex);
                 });
         }
         public static IActionResult GetViewResultBasedOnError(string viewName,
