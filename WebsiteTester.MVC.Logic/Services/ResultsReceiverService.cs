@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebsiteTester.MVC.Logic.Models;
 using WebsiteTester.Persistence;
+
 namespace WebsiteTester.MVC.Logic.Services
 {
     public class ResultsReceiverService
@@ -19,7 +20,6 @@ namespace WebsiteTester.MVC.Logic.Services
                 Id = l.Id,
                 Url = l.Url,
                 CreatedOn = l.CreatedOn,
-                TestResults = null
             })
                .ToListAsync();
         }
