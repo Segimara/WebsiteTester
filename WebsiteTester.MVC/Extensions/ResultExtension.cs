@@ -28,7 +28,7 @@ namespace WebsiteTester.MVC.Extensions
         }
         public static IActionResult ToRedirectResult<TResult>(
         this Result<TResult> result,
-        ITempDataDictionary dataDir,
+        ITempDataDictionary tempData,
         string actionName,
         string controllerName)
         {
@@ -39,12 +39,13 @@ namespace WebsiteTester.MVC.Extensions
                 },
                 ex =>
                 {
-                    dataDir["Error"] = ex.Message;
-
-                    return new RedirectToActionResult(actionName, controllerName, null);
+                    return GetRedirectResultBasedOnError(Te)
                 });
         }
-        public static IActionResult GetViewResultBasedOnError(string viewName, ITempDataDictionary tempData, ViewDataDictionary viewData, Exception exception)
+        public static IActionResult GetViewResultBasedOnError(string viewName,
+            ITempDataDictionary tempData,
+            ViewDataDictionary viewData
+            , Exception exception)
         {
             switch (exception)
             {
@@ -60,7 +61,27 @@ namespace WebsiteTester.MVC.Extensions
                     {
                         tempData["Error"] = exception.Message;
 
-                        return new BadRequestObjectResult(exception.Message);
+                        return new StatusCodeResult(500);
+                    }
+            }
+
+        }
+        public static IActionResult GetRedirectResultBasedOnError(ITempDataDictionary tempData,
+        string actionName,
+        string controllerName,
+        Exception exception)
+        {
+            switch (exception)
+            {
+                case ValidationException validationException:
+                    tempData["Error"] = exception.Message;
+
+                    return new RedirectToActionResult(actionName, controllerName, null);
+                default:
+                    {
+                        tempData["Error"] = exception.Message;
+
+                        return new StatusCodeResult(500);
                     }
             }
 
