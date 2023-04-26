@@ -9,6 +9,15 @@ namespace WebsiteTester.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                .AddConsole()
+                .SetMinimumLevel(LogLevel.Trace);
+            });
+
+            builder.Services.AddSingleton(loggerFactory.CreateLogger("Program"));
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddWebsiteTesterLogic();
             builder.Services.AddWebsiteTesterPersistence(Environment.GetEnvironmentVariable("DB_CONNECTION"));
