@@ -1,9 +1,9 @@
 ﻿using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore;
-using WebsiteTester.MVC.Logic.Models;
 using WebsiteTester.Persistence;
+using WebsiteTester.Web.Logic.Models;
 
-namespace WebsiteTester.MVC.Logic.Services
+namespace WebsiteTester.Web.Logic.Services
 {
     public class ResultsReceiverService
     {

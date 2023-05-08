@@ -9,7 +9,7 @@ public class PageCrawler
     private readonly WebsiteParser _websiteParser;
     private readonly ILogger _logger;
 
-    public PageCrawler(WebsiteParser websiteParser, ILogger logger)
+    public PageCrawler(WebsiteParser websiteParser, ILogger<PageCrawler> logger)
     {
         _websiteParser = websiteParser;
         _logger = logger;

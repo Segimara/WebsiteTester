@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebsiteTester.MVC.Extensions;
-using WebsiteTester.MVC.Logic.Services;
+using WebsiteTester.Web.Logic.Services;
 
 namespace WebsiteTester.MVC.Controllers
 {

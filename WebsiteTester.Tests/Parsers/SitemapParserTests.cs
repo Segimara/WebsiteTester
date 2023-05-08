@@ -22,7 +22,7 @@ public class SitemapParserTests
         _httpClientService = new Mock<HttpClientService>(httpClient);
         _urlNormalizer = new Mock<UrlNormalizer>();
         _urlValidator = new Mock<UrlValidator>();
-        var logger = new Mock<ILogger>();
+        var logger = new Mock<ILogger<SitemapParser>>();
 
         _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object, logger.Object);
     }

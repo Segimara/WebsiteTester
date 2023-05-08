@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WebsiteTester.MVC.Logic.Services;
-using WebsiteTester.MVC.Logic.Validators;
+using WebsiteTester.Web.Logic.Services;
+using WebsiteTester.Web.Logic.Validators;
 
-namespace WebsiteTester.MVC.Logic
+namespace WebsiteTester.Web.Logic
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMvcLogic(this IServiceCollection services)
+        public static IServiceCollection AddWebLogic(this IServiceCollection services)
         {
             services.AddScoped<ResultsSaverService>();
             services.AddScoped<ResultsReceiverService>();

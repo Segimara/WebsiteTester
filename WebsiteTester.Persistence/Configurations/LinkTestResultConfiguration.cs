@@ -23,7 +23,7 @@ namespace WebsiteTester.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(x => x.CreatedOn)
-                .IsRequired();
+                .HasDefaultValueSql("GETUTCDATE()");
 
             builder.HasOne(x => x.Link)
                 .WithMany(x => x.LinkTestResults)

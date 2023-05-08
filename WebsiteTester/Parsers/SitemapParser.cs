@@ -14,7 +14,7 @@ public class SitemapParser
     private readonly UrlNormalizer _urlNormalizer;
     private readonly UrlValidator _urlValidator;
 
-    public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, HttpClientService httpClientService, ILogger logger)
+    public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, HttpClientService httpClientService, ILogger<SitemapParser> logger)
     {
         _urlValidator = urlValidator;
         _urlNormalizer = urlNormalizer;

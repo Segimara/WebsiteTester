@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebsiteTester.Crawlers;
+using WebsiteTester.Parsers;
 using WebsiteTester.Presentation.Services;
 
 namespace WebsiteTester.Presentation
@@ -19,8 +21,8 @@ namespace WebsiteTester.Presentation
                 .SetMinimumLevel(LogLevel.Information);
             });
 
-            services.AddSingleton(loggerFactory.CreateLogger("Program"));
-
+            services.AddSingleton(loggerFactory.CreateLogger<SitemapParser>());
+            services.AddSingleton(loggerFactory.CreateLogger<PageCrawler>());
             return services;
         }
     }
