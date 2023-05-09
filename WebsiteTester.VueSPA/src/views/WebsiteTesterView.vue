@@ -5,7 +5,11 @@
             <input v-model="formUrl" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
         </div>
         <div class="p-1">
-            <button type="submit" class="btn btn-primary" @click="testUrl" id="testUrlButton">TEST</button>
+            <button type="submit" class="btn btn-primary" @click="testUrl" id="testUrlButton" :disabled="isTesting"
+                data-loading-text="Loading...">
+                TEST
+                <span v-if="isTesting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
     <div>
@@ -23,7 +27,7 @@
                     <td>{{ link.url }}</td>
                     <td>{{ link.createdOn }}</td>
                     <td>
-                        <RouterLink :to="{name: 'TestDetails', params: {id: link.id}}">see details</RouterLink>
+                        <RouterLink :to="{ name: 'TestDetails', params: { id: link.id } }">see details</RouterLink>
                     </td>
                 </tr>
             </tbody>
@@ -41,7 +45,13 @@ export default defineComponent({
     setup() {
         const store = useWebsiteTesterStore();
         const testUrl = () => {
-            store.testUrl(formUrl.value);
+            store.testUrl(formUrl.value).then((data) => {
+                if (data) {
+                    formUrl.value = "";
+                    fetchLinks();
+                }
+            })
+
         }
         const fetchLinks = () => {
             store.fetchLinks();
