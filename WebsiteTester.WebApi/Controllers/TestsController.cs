@@ -43,8 +43,8 @@ namespace WebsiteTester.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        /// <param name="url">Url for performance testing </param>
+        /// <returns>True if url was tested</returns>
         [HttpPost("test/")]
         public async Task<ActionResult<bool>> TestWebsite([FromBody] TestUrlRequest url)
         {

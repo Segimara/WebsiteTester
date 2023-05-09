@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults">
+        <tr v-for="result in testDetails?.testResults?.slice().sort((a, b) => a.renderTimeMilliseconds - b.renderTimeMilliseconds)">
           <td>{{ result.url }}</td>
           <td>{{ result.renderTimeMilliseconds }}</td>
         </tr>
@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults?.filter(x => x.isInSitemap && !x.isInWebsite)">
+        <tr v-for="result in testDetails?.testResults?.slice().filter(x => x.isInSitemap && !x.isInWebsite)">
           <td>{{ result.url }}</td>
         </tr>
       </tbody>
@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults?.filter(x => x.isInWebsite && !x.isInSitemap)">
+        <tr v-for="result in testDetails?.testResults?.slice().filter(x => x.isInWebsite && !x.isInSitemap)">
           <td>{{ result.url }}</td>
         </tr>
       </tbody>
