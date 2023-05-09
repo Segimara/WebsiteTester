@@ -3,7 +3,7 @@ import { WebsiteTesterApiClient } from "@/services/WebsiteTesterApiClient";
 import { defineStore } from "pinia";
 import { ref, type Ref } from "vue";
 
-const WebsiteTesterApiBaseUrl ="https://localhost:44324/api"
+const WebsiteTesterApiBaseUrl = "https://localhost:44324/api"
 
 export const useWebsiteTesterStore = defineStore({
   id: "websiteTester",
@@ -19,7 +19,7 @@ export const useWebsiteTesterStore = defineStore({
       this.links = links;
     },
 
-    async fetchTestDetatils(link: string): Promise<Link> {
+    async fetchTestDetails(link: string): Promise<Link> {
       const client = new WebsiteTesterApiClient(WebsiteTesterApiBaseUrl);
       return await client.getLink(link);
     },

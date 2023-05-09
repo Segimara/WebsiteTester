@@ -10,7 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults?.slice().sort((a, b) => a.renderTimeMilliseconds - b.renderTimeMilliseconds)">
+        <tr
+          v-for="result in testDetails?.testResults?.slice().sort((a, b) => a.renderTimeMilliseconds - b.renderTimeMilliseconds)">
           <td>{{ result.url }}</td>
           <td>{{ result.renderTimeMilliseconds }}</td>
         </tr>
@@ -61,18 +62,19 @@ export default {
   props: ['id'],
   data() {
     return {
+      store: useWebsiteTesterStore(),
       testDetails: ref<Link>()
     }
   },
-  created() {
-    const store = useWebsiteTesterStore();
-    const fetchDetatils = () => {
-      store.fetchTestDetatils(this.id).then((data) => {
+  methods: {
+    fetchDetails() {
+      this.store.fetchTestDetails(this.id).then((data) => {
         this.testDetails = data;
       });
     }
-
-    fetchDetatils();
+  },
+  created() {
+    this.fetchDetails();
   }
 }
 
