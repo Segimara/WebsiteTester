@@ -2,36 +2,53 @@
 using WebsiteTester.Web.Logic.Models;
 using WebsiteTester.Web.Logic.Services;
 using WebsiteTester.WebApi.Extensions;
+using WebsiteTester.WebApi.Models;
 
 namespace WebsiteTester.WebApi.Controllers
 {
-    public class WebsiteTesterController : BaseController
+    [Route("/api/[controller]")]
+    public class TestsController : BaseController
     {
         private readonly ResultsSaverService _resultsSaverService;
         private readonly ResultsReceiverService _resultsReceiverService;
-        public WebsiteTesterController(ResultsReceiverService resultsReceiverService, ResultsSaverService resultsSaverService)
+        public TestsController(ResultsReceiverService resultsReceiverService, ResultsSaverService resultsSaverService)
         {
             _resultsSaverService = resultsSaverService;
             _resultsReceiverService = resultsReceiverService;
         }
 
-        [HttpGet("/tests")]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Link>>> TestResults()
         {
             var result = await _resultsReceiverService.GetResultsAsync();
             return Ok(result);
         }
-        [HttpGet("/tests/{id}")]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
         public async Task<ActionResult<Link>> TestDetails(Guid id)
         {
             var result = await _resultsReceiverService.GetTestDetailAsync(id.ToString());
             return result.ToApiResponseResult();
         }
 
-        [HttpPost("/test/{url}")]
-        public async Task<ActionResult<bool>> TestWebsite(string url)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        [HttpPost("test/")]
+        public async Task<ActionResult<bool>> TestWebsite([FromBody] TestUrlRequest url)
         {
-            var result = await _resultsSaverService.GetAndSaveResultsAsync(System.Web.HttpUtility.UrlDecode(url));
+            var result = await _resultsSaverService.GetAndSaveResultsAsync(System.Web.HttpUtility.UrlDecode(url.Url));
             return result.ToApiResponseResult();
         }
 
