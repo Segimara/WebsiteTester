@@ -3,7 +3,7 @@ import { WebsiteTesterApiClient } from "@/services/WebsiteTesterApiClient";
 import { defineStore } from "pinia";
 import { ref, type Ref } from "vue";
 
-const WebsiteTesterApiBaseUrl = "https://localhost:44324/api"
+const WebsiteTesterApiBaseUrl = import.meta.env.VITE_APP_BASEURL;
 
 export const useWebsiteTesterStore = defineStore({
   id: "websiteTester",
