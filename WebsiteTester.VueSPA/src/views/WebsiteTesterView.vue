@@ -44,17 +44,26 @@
 <script lang="ts">
 import { computed } from '@vue/reactivity';
 import { useWebsiteTesterStore } from '../stores/WebsiteTesterStore';
+import type { Link } from '@/models/Link';
 export default {
     data() {
         const store = useWebsiteTesterStore();
 
         return {
             store,
-            links: computed(() => store.$state.links),
             formUrl: "",
-            url: computed(() => store.$state.testingUrl),
-            isTesting: computed(() => store.$state.isUrlBeingTested)
         };
+    },
+    computed: {
+        links(): Link[] {
+            return this.store.$state.links;
+        },
+        url (): string {
+            return this.store.$state.testingUrl ?? "";
+        },
+        isTesting (): boolean {
+            return this.store.$state.isUrlBeingTested;
+        }
     },
     methods:
     {
