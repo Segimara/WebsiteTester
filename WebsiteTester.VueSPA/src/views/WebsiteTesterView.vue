@@ -25,8 +25,12 @@
             <tbody>
                 <tr v-for="link in links" :key="link.id">
                     <td>{{ link.url }}</td>
-                    <td>{{ new Date(link.createdOn).toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' }) + " " +
-                        new Date(link.createdOn).toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: 'numeric' })
+                    <td>{{ new Date(link.createdOn).toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' }) +
+                        " " +
+                        new Date(link.createdOn).toLocaleDateString('default', {
+                            day: '2-digit', month: '2-digit', year:
+                                'numeric'
+                        })
                     }}</td>
                     <td>
                         <RouterLink :to="{ name: 'TestDetails', params: { id: link.id } }">see details</RouterLink>
@@ -38,35 +42,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed } from '@vue/reactivity';
 import { useWebsiteTesterStore } from '../stores/WebsiteTesterStore';
-import { computed, ref } from '@vue/reactivity';
-export default defineComponent({
-
-    setup() {
+export default {
+    data() {
         const store = useWebsiteTesterStore();
-        const testUrl = () => {
-            store.testUrl(formUrl.value).then((data) => {
+
+        return {
+            store,
+            links: computed(() => store.$state.links),
+            formUrl: "",
+            url: computed(() => store.$state.testingUrl),
+            isTesting: computed(() => store.$state.isUrlBeingTested)
+        };
+    },
+    methods:
+    {
+        fetchLinks() {
+            this.store.fetchLinks();
+        },
+        testUrl() {
+            this.store.testUrl(this.formUrl).then((data) => {
                 if (data) {
-                    formUrl.value = "";
-                    fetchLinks();
+                    this.formUrl = "";
+                    this.fetchLinks();
                 }
             })
-
         }
-        const fetchLinks = () => {
-            store.fetchLinks();
-        }
-        const links = computed(() => store.$state.links);
-
-        let isTesting = computed(() => store.$state.isUrlBeingTested);
-
-        const url = store.$state.testingUrl;
-        const formUrl = ref("");
-        return { links, formUrl, url, isTesting, testUrl, fetchLinks };
     },
-    created() {
+    mounted() {
         this.fetchLinks();
     },
-});
+}
 </script>
