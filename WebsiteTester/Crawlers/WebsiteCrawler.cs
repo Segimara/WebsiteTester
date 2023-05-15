@@ -18,7 +18,7 @@ public class WebsiteCrawler
         _siteMapParser = siteMapParser;
     }
 
-    public async Task<IEnumerable<WebLink>> GetUrlsAsync(string url)
+    public virtual async Task<IEnumerable<WebLink>> GetUrlsAsync(string url)
     {
         var onPageUrls = _webCrawler.Crawl(url);
         var sitemapUrls = await _siteMapParser.ParseAsync(url);
@@ -32,6 +32,9 @@ public class WebsiteCrawler
                 IsInWebsite = g.Any(x => x.IsInWebsite)
             });
 
-        return await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
+        var testResults = await _renderTimeMeter.TestRenderTimeAsync(uniqueUrls);
+
+        return testResults;
     }
+
 }

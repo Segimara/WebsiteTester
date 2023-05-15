@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebsiteTester.MVC.Logic\WebsiteTester.Web.Logic.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistence.csproj" />
+    <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -11,11 +11,10 @@ public class UrlValidator
 
         var isWebLink = url.StartsWith("http://") || url.StartsWith("https://");
 
-        if (url.StartsWith("/") || url.StartsWith("#") || isWebLink)
-        {
-            return true;
-        }
+        var isLocalLink = url.StartsWith("/");
 
-        return false;
+        var isLinkWithParameterOrSections = url.Contains("?") || url.Contains("#");
+
+        return (isLocalLink || isWebLink) && !isLinkWithParameterOrSections;
     }
 }

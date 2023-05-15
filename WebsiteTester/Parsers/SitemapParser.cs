@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using Microsoft.Extensions.Logging;
+using System.Xml;
 using WebsiteTester.Models;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Services;
@@ -9,14 +10,16 @@ namespace WebsiteTester.Parsers;
 public class SitemapParser
 {
     private readonly HttpClientService _httpClientService;
+    private readonly ILogger _logger;
     private readonly UrlNormalizer _urlNormalizer;
     private readonly UrlValidator _urlValidator;
 
-    public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, HttpClientService httpClientService)
+    public SitemapParser(UrlValidator urlValidator, UrlNormalizer urlNormalizer, HttpClientService httpClientService, ILogger<SitemapParser> logger)
     {
         _urlValidator = urlValidator;
         _urlNormalizer = urlNormalizer;
         _httpClientService = httpClientService;
+        _logger = logger;
     }
 
     public virtual async Task<IEnumerable<WebLink>> ParseAsync(string baseUrl)
@@ -29,8 +32,10 @@ public class SitemapParser
         {
             sitemapContent = await GetSitemapXml(baseUri);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex.Message);
+
             return Enumerable.Empty<WebLink>();
         }
 

@@ -1,5 +1,6 @@
 ﻿using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
+using WebsiteTester.Presentation.Services;
 
 namespace WebsiteTester.Presentation
 {
@@ -7,25 +8,28 @@ namespace WebsiteTester.Presentation
     {
         private readonly WebsiteCrawler _crawler;
         private readonly ConsoleManager _console;
+        private readonly ResultsSaverService _resultsSaver;
 
-        public WebsiteTesterApplication(WebsiteCrawler crawler, ConsoleManager console)
+        public WebsiteTesterApplication(WebsiteCrawler crawler, ConsoleManager console, ResultsSaverService resultsSaver)
         {
             _crawler = crawler;
             _console = console;
+            _resultsSaver = resultsSaver;
         }
 
-        public void Run()
+        public async Task RunAsync()
         {
             _console.WriteLine("Enter the website URL: ");
 
             var url = _console.ReadLine();
-            
-            GetResultsAsync(url);
+
+            await GetResultsAsync(url);
+
         }
 
-        private async void GetResultsAsync(string url)
+        private async Task GetResultsAsync(string url)
         {
-            var linksFromUrl = (await _crawler.GetUrlsAsync(url));
+            var linksFromUrl = await _crawler.GetUrlsAsync(url);
 
             var onlyInWebSite = linksFromUrl
                 .Where(l => l.IsInWebsite)
@@ -34,7 +38,7 @@ namespace WebsiteTester.Presentation
             var onlyInSitemap = linksFromUrl
                 .Where(l => l.IsInSitemap)
                 .Where(l => !l.IsInWebsite);
-            
+
             OutputUrlsFromPage(onlyInWebSite, onlyInSitemap);
 
             var results = linksFromUrl
@@ -45,6 +49,8 @@ namespace WebsiteTester.Presentation
 
             _console.WriteLine($"Urls(html documents) found after crawling a website: {linksFromUrl.Count(u => u.IsInWebsite)}");
             _console.WriteLine($"Urls found in sitemap: {linksFromUrl.Count(u => u.IsInSitemap)}");
+
+            await _resultsSaver.SaveResultsAsync(url, linksFromUrl);
         }
 
         private void OutputUrlsFromPage(IEnumerable<WebLink> onlyInWebSite, IEnumerable<WebLink> onlyInSitemap)

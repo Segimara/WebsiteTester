@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Services;
@@ -21,48 +22,101 @@ public class SitemapParserTests
         _httpClientService = new Mock<HttpClientService>(httpClient);
         _urlNormalizer = new Mock<UrlNormalizer>();
         _urlValidator = new Mock<UrlValidator>();
+        var logger = new Mock<ILogger<SitemapParser>>();
 
-        _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object);
+        _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object, logger.Object);
     }
 
     [Fact]
-    public void Parse_WebsiteWithoutSitemap_ShouldReturnEmpryList()
+    public async Task Parse_WebsiteWithoutSitemap_ShouldReturnEmpryList()
     {
-        var result = _sitemapParser.Parse("https://learn.microsoft.com/");
+        var uri = new Uri("https://jwt.io/");
+
+        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
+
+        _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
+            new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.BadGateway
+            });
 
         Assert.Empty(result);
     }
 
     [Fact]
-    public void Parse_WebsiteWithSitemapButWithoutUrls_ShouldReturnEmptyList()
+    public async Task Parse_WebsiteWithEmptySitemap_ShouldReturnEmptyList()
     {
-        var result = _sitemapParser.Parse("https://www.google.com/");
+        var uri = new Uri("https://jwt.io/");
 
-        Assert.NotEmpty(result);
+        _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
+            new HttpResponseMessage()
+            {
+                Content = new StringContent(
+                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
+                    <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
+                    </urlset>")
+            });
+
+        var result = await _sitemapParser.ParseAsync("https://www.google.com/");
+
+        Assert.Empty(result);
     }
 
+
     [Fact]
-    public void Parse_WebsiteWithSitemapAndUrls_ShouldReturnListOfUrls()
+    public async void Parse_WebsiteWithSitemap_ShouldReturnListOfUrls()
     {
-        var result = _sitemapParser.Parse("https://jwt.io/");
+        var uri = new Uri("https://jwt.io/");
 
-        _urlNormalizer.Setup(n =>
-                n.NormalizeUrls(new [] { "https://jwt.io/", "https://jwt.io/libraries/", "https://jwt.io/introduction/" },
-                    "https://jwt.io/"))
-            .Returns(new [] { "https://jwt.io", "https://jwt.io/libraries", "https://jwt.io/introduction" });
-        
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io")).Returns(true);
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io/libraries")).Returns(true);
-        _urlValidator.Setup(v => v.IsValid("https://jwt.io/introduction")).Returns(true);
+        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>()))
+            .ReturnsAsync(SetupHttpResponseMessage());
 
+        _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
+            .Returns(SetupNormalizedUrls());
+
+        _urlValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(true);
+
+        var result = await _sitemapParser.ParseAsync("https://jwt.io/");
 
         _urlNormalizer.Verify(n =>
-                           n.NormalizeUrls(new[] { "https://jwt.io/", "https://jwt.io/libraries/", "https://jwt.io/introduction/" },
-                                                  "https://jwt.io/"), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io"), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io/libraries"), Times.Once);
-        _urlValidator.Verify(v => v.IsValid("https://jwt.io/introduction"), Times.Once);
+            n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()), Times.Once);
 
         Assert.Equal(3, result.Count());
+        Assert.True(result.All(u => u.IsInSitemap));
+        Assert.Contains(result, u => u.Url == "https://jwt.io");
+        Assert.Contains(result, u => u.Url == "https://jwt.io/libraries");
+        Assert.Contains(result, u => u.Url == "https://jwt.io/introduction");
+    }
+
+    private HttpResponseMessage SetupHttpResponseMessage()
+    {
+        return new HttpResponseMessage()
+        {
+            StatusCode = System.Net.HttpStatusCode.OK,
+
+            Content = new StringContent(
+                @"<?xml version=""1.0"" encoding=""UTF-8""?>
+                    <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
+                        <url>
+                            <loc>https://jwt.io/</loc>
+                        </url>
+                        <url>
+                            <loc>https://jwt.io/libraries/</loc>
+                        </url>
+                        <url>
+                            <loc>https://jwt.io/introduction/</loc>
+                        </url>
+                    </urlset>")
+        };
+    }
+
+    private IEnumerable<string> SetupNormalizedUrls()
+    {
+        return new List<string>()
+        {
+            "https://jwt.io",
+            "https://jwt.io/libraries",
+            "https://jwt.io/introduction"
+        };
     }
 }

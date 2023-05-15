@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebsiteTester.Domain\WebsiteTester.Domain.csproj" />
+    <ProjectReference Include="..\WebsiteTester.MVC.Logic\WebsiteTester.Web.Logic.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistence.csproj" />
+    <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
+  </ItemGroup>
+
+</Project>
