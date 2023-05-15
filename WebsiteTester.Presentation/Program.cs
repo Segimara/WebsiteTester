@@ -12,7 +12,7 @@ namespace WebsiteTester.Presentation
             services.AddWebsiteTesterLogic();
             services.AddWebsiteTesterPresentation();
 
-            services.AddWebsiteTesterPersistenсe(Environment.GetEnvironmentVariable("DB_CONNECTION"));
+            services.AddWebsiteTesterPersistence(Environment.GetEnvironmentVariable("DB_CONNECTION"));
 
             var servicesProvider = services.BuildServiceProvider();
 

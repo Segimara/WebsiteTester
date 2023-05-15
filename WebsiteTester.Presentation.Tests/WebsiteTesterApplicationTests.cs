@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Moq;
 using WebsiteTester.Crawlers;
 using WebsiteTester.Models;
@@ -6,14 +7,13 @@ using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Persistence;
 using WebsiteTester.Presentation.Services;
-using WebsiteTester.Presentation.Tests.Common;
 using WebsiteTester.Services;
 using WebsiteTester.Validators;
 using Xunit;
 
 namespace WebsiteTester.Presentation.Tests
 {
-    public class WebsiteTesterApplicationTests : IDisposable
+    public class WebsiteTesterApplicationTests
     {
         private readonly Mock<WebsiteCrawler> _crawlerMock;
         private readonly Mock<ConsoleManager> _consoleMock;
@@ -31,11 +31,13 @@ namespace WebsiteTester.Presentation.Tests
             var urlValidator = new UrlValidator();
             var urlNormalizer = new UrlNormalizer();
 
+            var logger = new Mock<ILogger>();
+
             var parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
-            var siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService);
+            var siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService, logger.Object);
             var renderTimeMeter = new TimeMeterService(httpClientService);
 
-            var webCrawler = new PageCrawler(parser);
+            var webCrawler = new PageCrawler(parser, logger.Object);
 
             _context = null;
 
@@ -129,11 +131,6 @@ namespace WebsiteTester.Presentation.Tests
                 new WebLink() { Url = "https://example.com/page3", IsInWebsite = true, IsInSitemap = true, RenderTimeMilliseconds = 200 },
                 new WebLink() { Url = "https://example.com/page4", IsInWebsite = false, IsInSitemap = true, RenderTimeMilliseconds = 300 }
             };
-        }
-
-        public void Dispose()
-        {
-            WebsiteTesterContextFactory.Destroy(_context);
         }
     }
 }

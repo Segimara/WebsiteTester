@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using WebsiteTester.Normalizers;
 using WebsiteTester.Parsers;
 using WebsiteTester.Services;
@@ -21,8 +22,9 @@ public class SitemapParserTests
         _httpClientService = new Mock<HttpClientService>(httpClient);
         _urlNormalizer = new Mock<UrlNormalizer>();
         _urlValidator = new Mock<UrlValidator>();
+        var logger = new Mock<ILogger>();
 
-        _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object);
+        _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object, logger.Object);
     }
 
     [Fact]

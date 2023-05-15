@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Moq;
 using WebsiteTester.Crawlers;
 using WebsiteTester.Normalizers;
@@ -29,7 +30,9 @@ namespace WebsiteTester.Tests.Crawlers
             _websiteParser = new Mock<WebsiteParser>(_urlValidator.Object, _urlNormalizer.Object,
                 _contentLoaderService.Object);
 
-            _pageCrawler = new PageCrawler(_websiteParser.Object);
+            var logger = new Mock<ILogger>();
+
+            _pageCrawler = new PageCrawler(_websiteParser.Object, logger.Object);
         }
 
         [Fact]
