@@ -1,11 +1,10 @@
 ﻿using LanguageExt.Common;
 using WebsiteTester.Crawlers;
-using WebsiteTester.Domain.Models;
 using WebsiteTester.Models;
-using WebsiteTester.MVC.Logic.Validators;
 using WebsiteTester.Persistence;
+using WebsiteTester.Web.Logic.Validators;
 
-namespace WebsiteTester.MVC.Logic.Services
+namespace WebsiteTester.Web.Logic.Services
 {
     public class ResultsSaverService
     {
@@ -39,7 +38,7 @@ namespace WebsiteTester.MVC.Logic.Services
 
         public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
-            var testedLink = new Link
+            var testedLink = new Domain.Models.Link
             {
                 Url = testedUrl,
                 CreatedOn = DateTimeOffset.UtcNow,
@@ -47,7 +46,7 @@ namespace WebsiteTester.MVC.Logic.Services
 
             await _dbContext.Links.AddAsync(testedLink);
 
-            var webLinks = testResults.Select(r => new LinkTestResult
+            var webLinks = testResults.Select(r => new Domain.Models.LinkTestResult
             {
                 LinkId = testedLink.Id,
                 Link = testedLink,

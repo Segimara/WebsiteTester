@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.MVC.Logic.Models
+﻿namespace WebsiteTester.Web.Logic.Models
 {
     public class Link
     {

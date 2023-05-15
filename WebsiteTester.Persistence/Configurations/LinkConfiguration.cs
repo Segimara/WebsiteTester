@@ -13,6 +13,9 @@ namespace WebsiteTester.Persistence.Configurations
             builder.Property(x => x.Url)
                 .IsRequired();
 
+            builder.Property(x => x.CreatedOn)
+                .HasDefaultValueSql("GETUTCDATE()");
+
             builder.HasMany(x => x.LinkTestResults)
                 .WithOne(x => x.Link)
                 .HasForeignKey(x => x.LinkId)

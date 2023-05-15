@@ -30,7 +30,7 @@ namespace WebsiteTester.Tests.Crawlers
             _websiteParser = new Mock<WebsiteParser>(_urlValidator.Object, _urlNormalizer.Object,
                 _contentLoaderService.Object);
 
-            var logger = new Mock<ILogger>();
+            var logger = new Mock<ILogger<PageCrawler>>();
 
             _pageCrawler = new PageCrawler(_websiteParser.Object, logger.Object);
         }

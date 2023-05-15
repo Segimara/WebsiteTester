@@ -31,13 +31,14 @@ namespace WebsiteTester.Presentation.Tests
             var urlValidator = new UrlValidator();
             var urlNormalizer = new UrlNormalizer();
 
-            var logger = new Mock<ILogger>();
+            var logger_PageCrawler = new Mock<ILogger<PageCrawler>>();
+            var logger_SitemapParser = new Mock<ILogger<SitemapParser>>();
 
             var parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
-            var siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService, logger.Object);
+            var siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService, logger_SitemapParser.Object);
             var renderTimeMeter = new TimeMeterService(httpClientService);
 
-            var webCrawler = new PageCrawler(parser, logger.Object);
+            var webCrawler = new PageCrawler(parser, logger_PageCrawler.Object);
 
             _context = null;
 
