@@ -3,8 +3,8 @@
 namespace WebsiteTester.WebApi.Controllers
 {
     [ApiController]
-    [Route("api")]
     [Produces("application/json")]
+    [Route("/api/[controller]")]
     public class BaseController : Controller
     {
 

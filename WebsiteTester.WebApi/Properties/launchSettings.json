@@ -1,34 +1,25 @@
-﻿{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:20160",
-      "sslPort": 44324
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5199",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5199"
     },
     "https": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7060;http://localhost:5199",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trusted_Connection=True;"
-      }
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7060;http://localhost:5199"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -38,6 +29,28 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trusted_Connection=True;"
       }
+    },
+    "IIS": {
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Encrypt = False;Trust Server Certificate = True;User ID = websitetester_api_pool; Password = 123qwe;"
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://websitetester.ua",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:20160",
+      "sslPort": 44324
     }
   }
 }
