@@ -8,7 +8,9 @@ namespace WebsiteTester.Persistence
         public static IServiceCollection AddWebsiteTesterPersistence(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<WebsiteTesterDbContext>(options =>
-                           options.UseSqlServer(connectionString));
+                           //options.UseSqlServer(connectionString)
+                           options.UseNpgsql(connectionString)
+                           );
 
             return services;
         }
