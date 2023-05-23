@@ -20,8 +20,8 @@ namespace WebsiteTester.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LinkTestResultConfiguration).Assembly);
         }
 
-        IQueryable<Link> IWebsiteTesterDbContext.Links => Links;
-        IQueryable<LinkTestResult> IWebsiteTesterDbContext.LinkTestResults => LinkTestResults;
+        IQueryable<Link> IWebsiteTesterDbContext.Links => Links.AsQueryable<Link>();
+        IQueryable<LinkTestResult> IWebsiteTesterDbContext.LinkTestResults => LinkTestResults.AsQueryable<LinkTestResult>();
 
     }
 }
