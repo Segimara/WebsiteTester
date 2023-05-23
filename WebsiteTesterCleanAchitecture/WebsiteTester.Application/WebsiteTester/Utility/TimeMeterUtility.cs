@@ -1,12 +1,13 @@
-﻿using WebsiteTester.Application.WebsiteTester.Models;
+﻿using WebsiteTester.Application.WebsiteTester.Interfaces;
+using WebsiteTester.Application.WebsiteTester.Models;
 
-namespace WebsiteTester.Services;
+namespace WebsiteTester.Application.WebsiteTester.Utility;
 
-public class TimeMeterService
+public class TimeMeterUtility
 {
     private readonly IHttpClientService _httpClientService;
 
-    public TimeMeterService(IHttpClientService httpClientService)
+    public TimeMeterUtility(IHttpClientService httpClientService)
     {
         _httpClientService = httpClientService;
     }

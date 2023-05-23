@@ -2,7 +2,7 @@
 using System.Net;
 using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
 
-namespace WebsiteTester.Web.Logic.Validators
+namespace WebsiteTester.Application.WebsiteTester.Validators
 {
     public class ComplexUrlValidator : IComplexUrlValidator
     {

@@ -6,5 +6,7 @@ namespace WebsiteTester.Application.Common.Interfaces
     {
         IQueryable<Link> Links { get; }
         IQueryable<LinkTestResult> LinkTestResults { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

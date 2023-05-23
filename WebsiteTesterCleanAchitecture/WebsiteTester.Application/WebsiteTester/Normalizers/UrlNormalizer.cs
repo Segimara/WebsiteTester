@@ -1,6 +1,4 @@
-﻿using WebsiteTester.Application.Normalizers;
-
-namespace WebsiteTester.Normalizers;
+﻿namespace WebsiteTester.Application.WebsiteTester.Normalizers;
 
 public class UrlNormalizer : IUrlNormalizer
 {

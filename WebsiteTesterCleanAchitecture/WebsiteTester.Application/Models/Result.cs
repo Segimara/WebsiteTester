@@ -6,27 +6,18 @@ public class Result<T>
     private Exception _error;
     private bool _isSuccess;
 
-    private Result(T value)
+    public Result(T value)
     {
         _value = value;
         _isSuccess = true;
     }
 
-    private Result(Exception error)
+    public Result(Exception error)
     {
         _error = error ?? throw new ArgumentNullException(nameof(error));
         _isSuccess = false;
     }
 
-    public static Result<T> Success(T value)
-    {
-        return new Result<T>(value);
-    }
-
-    public static Result<T> Failure(Exception error)
-    {
-        return new Result<T>(error);
-    }
 
     public static implicit operator Result<T>(Exception error)
     {

@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Services;
+﻿namespace WebsiteTester.Application.WebsiteTester.Interfaces;
 
 public interface IHttpClientService
 {

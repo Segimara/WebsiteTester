@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Xml;
-using WebsiteTester.Application.Normalizers;
+using WebsiteTester.Application.WebsiteTester.Interfaces;
 using WebsiteTester.Application.WebsiteTester.Models;
+using WebsiteTester.Application.WebsiteTester.Normalizers;
 using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
-using WebsiteTester.Services;
 
-namespace WebsiteTester.Parsers;
+namespace WebsiteTester.Application.WebsiteTester.Parsers;
 
 public class SitemapParser
 {

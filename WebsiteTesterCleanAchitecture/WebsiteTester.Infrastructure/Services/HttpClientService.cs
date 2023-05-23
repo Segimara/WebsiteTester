@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System.Text;
-using WebsiteTester.Services;
+using WebsiteTester.Application.WebsiteTester.Interfaces;
 
 namespace WebsiteTester.Infrastructure.Services;
 

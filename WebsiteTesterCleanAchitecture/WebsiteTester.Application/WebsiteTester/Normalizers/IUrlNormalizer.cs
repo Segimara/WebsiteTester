@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.Normalizers
+﻿namespace WebsiteTester.Application.WebsiteTester.Normalizers
 {
     public interface IUrlNormalizer
     {
