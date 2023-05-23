@@ -2,9 +2,9 @@
 using WebsiteTester.Application.Models;
 using WebsiteTester.Application.WebsiteTester.ViewModels;
 
-namespace WebsiteTester.Web.Logic.Services
+namespace WebsiteTester.Application.WebsiteTester.Services
 {
-    public class ResultsReceiverService
+    public class ResultsReceiverService : IResultsReceiverService
     {
         private readonly IWebsiteTesterDbContext _dbContext;
         public ResultsReceiverService(IWebsiteTesterDbContext dbContext)
@@ -25,7 +25,7 @@ namespace WebsiteTester.Web.Logic.Services
 
         public async Task<Result<Link>> GetTestDetailAsync(string id)
         {
-            var link = await _dbContext.Links
+            var link = _dbContext.Links
                 .Where(l => l.Id == Guid.Parse(id))
                 .Select(l => new Link
                 {
@@ -40,7 +40,7 @@ namespace WebsiteTester.Web.Logic.Services
                 return new Result<Link>(new Exception("Link by that id not found"));
             }
 
-            var testResults = await _dbContext.LinkTestResults
+            var testResults = _dbContext.LinkTestResults
                 .Where(l => l.LinkId == Guid.Parse(id))
                 .Select(l => new TestResult
                 {
@@ -50,7 +50,7 @@ namespace WebsiteTester.Web.Logic.Services
                     RenderTimeMilliseconds = l.RenderTimeMilliseconds,
                     CreatedOn = l.CreatedOn
                 })
-                .ToListAsync();
+                .ToList();
 
             return new Link
             {

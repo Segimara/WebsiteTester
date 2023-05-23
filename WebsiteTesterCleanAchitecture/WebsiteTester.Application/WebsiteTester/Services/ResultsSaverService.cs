@@ -4,9 +4,9 @@ using WebsiteTester.Application.WebsiteTester.Crawlers;
 using WebsiteTester.Application.WebsiteTester.Models;
 using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
 
-namespace WebsiteTester.Web.Logic.Services
+namespace WebsiteTester.Application.WebsiteTester.Services
 {
-    public class ResultsSaverService
+    public class ResultsSaverService : IResultsSaverService
     {
         private readonly IWebsiteTesterDbContext _dbContext;
         private readonly WebsiteCrawler _websiteCrawler;
