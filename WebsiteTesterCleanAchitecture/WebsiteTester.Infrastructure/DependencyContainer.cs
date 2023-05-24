@@ -13,8 +13,8 @@ using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Utility;
 using WebsiteTester.Crawler.Validators;
 using WebsiteTester.Crawler.Validators.Interfaces;
-using WebsiteTester.Infrastructure.Persistence;
 using WebsiteTester.Infrastructure.Services;
+using WebsiteTester.Persistance;
 
 namespace WebsiteTester.Infrastructure
 {

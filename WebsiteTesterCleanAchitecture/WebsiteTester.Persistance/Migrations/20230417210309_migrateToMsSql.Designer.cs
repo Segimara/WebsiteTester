@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebsiteTester.Infrastructure.Persistence;
+using WebsiteTester.Persistance;
 
 #nullable disable
 
 namespace WebsiteTester.Persistenсe.Migrations
 {
     [DbContext(typeof(WebsiteTesterDbContext))]
-    [Migration("20230418102626_init")]
-    partial class init
+    [Migration("20230417210309_migrateToMsSql")]
+    partial class migrateToMsSql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,9 +29,6 @@ namespace WebsiteTester.Persistenсe.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Url")
                         .IsRequired()

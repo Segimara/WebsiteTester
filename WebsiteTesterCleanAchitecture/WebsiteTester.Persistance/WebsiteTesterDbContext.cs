@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTester.Application.Common.Interfaces;
 using WebsiteTester.Domain.Models;
-using WebsiteTester.Infrastructure.Persistence.Configurations;
+using WebsiteTester.Persistance.Configurations;
 
-namespace WebsiteTester.Infrastructure.Persistence
+namespace WebsiteTester.Persistance
 {
     public class WebsiteTesterDbContext : DbContext, IWebsiteTesterDbContext
     {

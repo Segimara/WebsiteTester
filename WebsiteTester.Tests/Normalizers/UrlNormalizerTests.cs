@@ -1,4 +1,4 @@
-﻿using WebsiteTester.Normalizers;
+﻿using WebsiteTester.Crawler.Normalizers;
 using Xunit;
 
 namespace WebsiteTester.Tests.Normalizers

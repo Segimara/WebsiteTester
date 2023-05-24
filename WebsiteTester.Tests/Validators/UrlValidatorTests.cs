@@ -1,15 +1,15 @@
-﻿using WebsiteTester.Validators;
+﻿using WebsiteTester.Crawler.Validators;
 using Xunit;
 
 namespace WebsiteTester.Tests.Validators
 {
     public class UrlValidatorTests
     {
-        private readonly UrlValidator _urlValidator;
+        private readonly SimpleUrlValidator _urlValidator;
 
         public UrlValidatorTests()
         {
-            _urlValidator = new UrlValidator();
+            _urlValidator = new SimpleUrlValidator();
         }
 
         [Fact]

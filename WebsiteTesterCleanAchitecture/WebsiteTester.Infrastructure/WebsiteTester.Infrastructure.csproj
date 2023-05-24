@@ -32,5 +32,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\WebsiteTester.Application\WebsiteTester.Application.csproj" />
 		<ProjectReference Include="..\WebsiteTester.Domain\WebsiteTester.Domain.csproj" />
+		<ProjectReference Include="..\WebsiteTester.Persistance\WebsiteTester.Persistance.csproj" />
 	</ItemGroup>
 </Project>

@@ -1,31 +1,29 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Moq;
-using WebsiteTester.Crawlers;
-using WebsiteTester.Normalizers;
-using WebsiteTester.Parsers;
-using WebsiteTester.Services;
-using WebsiteTester.Validators;
+using WebsiteTester.Crawler.Crawlers;
+using WebsiteTester.Crawler.Interfaces;
+using WebsiteTester.Crawler.Normalizers;
+using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Validators.Interfaces;
 using Xunit;
 
 namespace WebsiteTester.Tests.Crawlers
 {
     public class PageCrawlerTests
     {
-        private readonly Mock<ContentLoaderService> _contentLoaderService;
-        private readonly Mock<UrlNormalizer> _urlNormalizer;
-        private readonly Mock<UrlValidator> _urlValidator;
+        private readonly Mock<IHttpClientService> _contentLoaderService;
+        private readonly Mock<IUrlNormalizer> _urlNormalizer;
+        private readonly Mock<ISimpleUrlValidator> _urlValidator;
         private readonly Mock<WebsiteParser> _websiteParser;
 
         private readonly PageCrawler _pageCrawler;
 
         public PageCrawlerTests()
         {
-            var htmlWeb = new HtmlWeb();
-
-            _contentLoaderService = new Mock<ContentLoaderService>(htmlWeb);
-            _urlNormalizer = new Mock<UrlNormalizer>();
-            _urlValidator = new Mock<UrlValidator>();
+            _contentLoaderService = new Mock<IHttpClientService>();
+            _urlNormalizer = new Mock<IUrlNormalizer>();
+            _urlValidator = new Mock<ISimpleUrlValidator>();
 
             _websiteParser = new Mock<WebsiteParser>(_urlValidator.Object, _urlNormalizer.Object,
                 _contentLoaderService.Object);
