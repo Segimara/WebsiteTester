@@ -1,5 +1,5 @@
 ﻿using WebsiteTester.Application.Models;
-using WebsiteTester.Application.WebsiteTester.Models;
+using WebsiteTester.Crawler.Models;
 
 namespace WebsiteTester.Application.WebsiteTester.Services
 {

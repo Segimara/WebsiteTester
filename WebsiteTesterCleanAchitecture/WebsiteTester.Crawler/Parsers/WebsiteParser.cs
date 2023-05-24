@@ -1,8 +1,8 @@
-﻿using WebsiteTester.Application.WebsiteTester.Interfaces;
-using WebsiteTester.Application.WebsiteTester.Normalizers;
-using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
+﻿using WebsiteTester.Crawler.Interfaces;
+using WebsiteTester.Crawler.Normalizers;
+using WebsiteTester.Crawler.Validators.Interfaces;
 
-namespace WebsiteTester.Application.WebsiteTester.Parsers;
+namespace WebsiteTester.Crawler.Parsers;
 
 public class WebsiteParser
 {

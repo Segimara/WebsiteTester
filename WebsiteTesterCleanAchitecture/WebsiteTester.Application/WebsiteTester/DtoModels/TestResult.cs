@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.WebsiteTester.ViewModels
+﻿namespace WebsiteTester.Application.WebsiteTester.DtoModels
 {
     public class TestResult
     {

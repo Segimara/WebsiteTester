@@ -1,6 +1,6 @@
-﻿using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
+﻿using WebsiteTester.Crawler.Validators.Interfaces;
 
-namespace WebsiteTester.Application.WebsiteTester.Validators;
+namespace WebsiteTester.Crawler.Validators;
 
 public class SimpleUrlValidator : ISimpleUrlValidator
 {

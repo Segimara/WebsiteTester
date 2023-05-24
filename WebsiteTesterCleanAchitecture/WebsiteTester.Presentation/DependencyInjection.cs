@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebsiteTester.Application.WebsiteTester.Crawlers;
-using WebsiteTester.Application.WebsiteTester.Parsers;
+using WebsiteTester.Crawler.Crawlers;
+using WebsiteTester.Crawler.Parsers;
 
 namespace WebsiteTester.Presentation
 {

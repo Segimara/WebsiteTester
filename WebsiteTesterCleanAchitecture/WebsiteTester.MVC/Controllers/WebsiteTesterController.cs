@@ -32,8 +32,24 @@ namespace WebsiteTester.MVC.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var result = await _resultsReceiverService.GetTestDetailAsync(id);
-
-            return result.ToViewResult(TempData, ViewData, "Details");
+            var mapper = delegate (Application.WebsiteTester.DtoModels.Link link)
+            {
+                return new ViewModels.Link
+                {
+                    CreatedOn = link.CreatedOn,
+                    Id = link.Id,
+                    Url = link.Url,
+                    TestResults = link.TestResults.Select(l => new ViewModels.TestResult
+                    {
+                        CreatedOn = l.CreatedOn,
+                        Url = l.Url,
+                        IsInSitemap = l.IsInSitemap,
+                        IsInWebsite = l.IsInWebsite,
+                        RenderTimeMilliseconds = l.RenderTimeMilliseconds,
+                    }),
+                };
+            };
+            return result.ToViewResult(TempData, ViewData, "Details", mapper);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using WebsiteTester.Application.WebsiteTester.Interfaces;
-using WebsiteTester.Application.WebsiteTester.Models;
+﻿using WebsiteTester.Crawler.Interfaces;
+using WebsiteTester.Crawler.Models;
 
-namespace WebsiteTester.Application.WebsiteTester.Utility;
+namespace WebsiteTester.Crawler.Utility;
 
 public class TimeMeterUtility
 {

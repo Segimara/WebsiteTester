@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using WebsiteTester.Application.WebsiteTester.Models;
-using WebsiteTester.Application.WebsiteTester.Parsers;
+using WebsiteTester.Crawler.Models;
+using WebsiteTester.Crawler.Parsers;
 
-namespace WebsiteTester.Application.WebsiteTester.Crawlers;
+namespace WebsiteTester.Crawler.Crawlers;
 
 public class PageCrawler
 {

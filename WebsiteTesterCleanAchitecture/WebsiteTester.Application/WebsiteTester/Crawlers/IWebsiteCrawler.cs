@@ -1,4 +1,4 @@
-﻿using WebsiteTester.Application.WebsiteTester.Models;
+﻿using WebsiteTester.Crawler.Models;
 
 namespace WebsiteTester.Application.WebsiteTester.Crawlers
 {

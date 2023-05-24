@@ -1,8 +1,8 @@
 ﻿using WebsiteTester.Application.Common.Interfaces;
 using WebsiteTester.Application.Models;
-using WebsiteTester.Application.WebsiteTester.Crawlers;
-using WebsiteTester.Application.WebsiteTester.Models;
 using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
+using WebsiteTester.Crawler.Crawlers;
+using WebsiteTester.Crawler.Models;
 
 namespace WebsiteTester.Application.WebsiteTester.Services
 {

@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.WebsiteTester.Models;
+﻿namespace WebsiteTester.Crawler.Models;
 
 public class WebLink
 {

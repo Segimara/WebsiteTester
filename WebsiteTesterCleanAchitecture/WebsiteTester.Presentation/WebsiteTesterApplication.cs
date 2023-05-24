@@ -1,6 +1,6 @@
 ﻿using WebsiteTester.Application.WebsiteTester.Crawlers;
-using WebsiteTester.Application.WebsiteTester.Models;
 using WebsiteTester.Application.WebsiteTester.Services;
+using WebsiteTester.Crawler.Models;
 
 namespace WebsiteTester.Presentation
 {

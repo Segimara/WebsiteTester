@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.WebsiteTester.Validators.Interfaces
+﻿namespace WebsiteTester.Crawler.Validators.Interfaces
 {
     public interface ISimpleUrlValidator
     {

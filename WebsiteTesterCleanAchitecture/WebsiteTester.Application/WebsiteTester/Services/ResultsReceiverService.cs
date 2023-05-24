@@ -1,6 +1,6 @@
 ﻿using WebsiteTester.Application.Common.Interfaces;
 using WebsiteTester.Application.Models;
-using WebsiteTester.Application.WebsiteTester.ViewModels;
+using WebsiteTester.Application.WebsiteTester.DtoModels;
 
 namespace WebsiteTester.Application.WebsiteTester.Services
 {

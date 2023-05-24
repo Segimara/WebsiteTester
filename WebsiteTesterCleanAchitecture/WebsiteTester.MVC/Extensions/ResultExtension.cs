@@ -7,14 +7,14 @@ namespace WebsiteTester.MVC.Extensions
 {
     public static class ResultExtension
     {
-        public static IActionResult ToViewResult<TResult>(this Result<TResult> result,
+        public static IActionResult ToViewResult<TResult, TContract>(this Result<TResult> result,
             ITempDataDictionary dataDir,
-            ViewDataDictionary viewDataDir,
-            string viewName)
+        ViewDataDictionary viewDataDir,
+            string viewName, Func<TResult, TContract> mapper)
         {
             return result.Match<IActionResult>(r =>
                 {
-                    viewDataDir.Model = r;
+                    viewDataDir.Model = mapper(r);
 
                     return new ViewResult
                     {

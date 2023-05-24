@@ -8,10 +8,14 @@ namespace WebsiteTester.WebApi.Extensions
 {
     public static class ResultExtention
     {
-        public static ActionResult<TResult> ToApiResponseResult<TResult>(this Result<TResult> result)
+        public static ActionResult<TContract> ToApiResponseResult<TResult, TContract>(this Result<TResult> result, Func<TResult, TContract> mapper)
         {
-            return result.Match<ActionResult<TResult>>(
-            onSuccess: value => new OkObjectResult(value),
+            return result.Match<ActionResult<TContract>>(
+            onSuccess: value =>
+            {
+                var result = mapper(value);
+                return new OkObjectResult(result);
+            },
             onFailure: error =>
             {
                 var code = HttpStatusCode.InternalServerError;

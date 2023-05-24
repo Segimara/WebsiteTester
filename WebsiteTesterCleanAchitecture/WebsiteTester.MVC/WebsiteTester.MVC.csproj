@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTester.Application\WebsiteTester.Application.csproj" />
     <ProjectReference Include="..\WebsiteTester.Infrastructure\WebsiteTester.Infrastructure.csproj" />
   </ItemGroup>
 

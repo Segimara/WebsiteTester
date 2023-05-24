@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebsiteTester.Application.WebsiteTester.DtoModels;
 using WebsiteTester.Application.WebsiteTester.Services;
-using WebsiteTester.Application.WebsiteTester.ViewModels;
 using WebsiteTester.WebApi.Extensions;
 using WebsiteTester.WebApi.Models;
 
@@ -43,10 +43,27 @@ namespace WebsiteTester.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Link>> TestDetails(Guid id)
+        public async Task<ActionResult<ViewModels.Link>> TestDetails(Guid id)
         {
             var result = await _resultsReceiverService.GetTestDetailAsync(id.ToString());
-            return result.ToApiResponseResult();
+            var mapper = delegate (Link link)
+            {
+                return new ViewModels.Link
+                {
+                    CreatedOn = link.CreatedOn,
+                    Id = link.Id,
+                    Url = link.Url,
+                    TestResults = link.TestResults.Select(l => new ViewModels.TestResult
+                    {
+                        CreatedOn = l.CreatedOn,
+                        Url = l.Url,
+                        IsInSitemap = l.IsInSitemap,
+                        IsInWebsite = l.IsInWebsite,
+                        RenderTimeMilliseconds = l.RenderTimeMilliseconds,
+                    }),
+                };
+            };
+            return result.ToApiResponseResult(mapper);
         }
 
         /// <summary>
@@ -64,7 +81,8 @@ namespace WebsiteTester.WebApi.Controllers
         public async Task<ActionResult<bool>> TestWebsite([FromBody] TestUrlRequest url)
         {
             var result = await _resultsSaverService.GetAndSaveResultsAsync(System.Web.HttpUtility.UrlDecode(url.Url));
-            return result.ToApiResponseResult();
+
+            return result.ToApiResponseResult(b => b);
         }
 
     }

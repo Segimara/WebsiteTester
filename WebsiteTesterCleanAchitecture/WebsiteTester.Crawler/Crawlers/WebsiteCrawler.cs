@@ -1,8 +1,8 @@
-﻿using WebsiteTester.Application.WebsiteTester.Models;
-using WebsiteTester.Application.WebsiteTester.Parsers;
-using WebsiteTester.Application.WebsiteTester.Utility;
+﻿using WebsiteTester.Crawler.Models;
+using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Utility;
 
-namespace WebsiteTester.Application.WebsiteTester.Crawlers;
+namespace WebsiteTester.Crawler.Crawlers;
 
 public class WebsiteCrawler
 {
