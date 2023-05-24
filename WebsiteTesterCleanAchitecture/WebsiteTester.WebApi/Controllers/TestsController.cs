@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebsiteTester.Application.WebsiteTester.DtoModels;
-using WebsiteTester.Application.WebsiteTester.Services;
+using WebsiteTester.Application.Features.WebsiteTester.DtoModels;
+using WebsiteTester.Application.Features.WebsiteTester.Services;
 using WebsiteTester.WebApi.Extensions;
 using WebsiteTester.WebApi.Models;
 
@@ -25,7 +25,7 @@ namespace WebsiteTester.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Link>>> TestResults()
+        public async Task<ActionResult<IEnumerable<ViewModels.Link>>> TestResults()
         {
             var result = await _resultsReceiverService.GetResultsAsync();
             return Ok(result);

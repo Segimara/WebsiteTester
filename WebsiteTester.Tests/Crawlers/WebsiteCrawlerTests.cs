@@ -1,14 +1,13 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Moq;
-using WebsiteTester.Application.Common.Interfaces;
 using WebsiteTester.Crawler.Crawlers;
-using WebsiteTester.Crawler.Interfaces;
-using WebsiteTester.Crawler.Models;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Utility;
 using WebsiteTester.Crawler.Validators.Interfaces;
+using WebsiteTester.Domain.Models;
 using Xunit;
 
 namespace WebsiteTester.Tests.Crawlers
@@ -23,19 +22,18 @@ namespace WebsiteTester.Tests.Crawlers
 
         public WebsiteCrawlerTests()
         {
-            var htmlWeb = new HtmlWeb();
-            var httpClient = new HttpClient();
-            var contentLoaderService = new Mock<IHttpClientService>(htmlWeb);
+            var htmlWeb = new Mock<HtmlWeb>();
+            var httpClientService = new Mock<HttpClientService>(htmlWeb.Object);
             var urlValidator = new Mock<ISimpleUrlValidator>();
             var urlNormalizer = new Mock<IUrlNormalizer>();
-            var parser = new WebsiteParser(urlValidator.Object, urlNormalizer.Object, contentLoaderService.Object);
-            var logger = new Mock<ILogger>();
+            var parser = new Mock<WebsiteParser>(urlValidator.Object, urlNormalizer.Object, httpClientService.Object);
+            var loggerSitemap = new Mock<ILogger<SitemapParser>>();
+            var loggerPage = new Mock<ILogger<PageCrawler>>();
 
-            _siteMapParser = new Mock<SitemapParser>(urlValidator.Object, urlNormalizer.Object, contentLoaderService.Object, logger.Object);
-            _renderTimeMeter = new Mock<TimeMeterUtility>(contentLoaderService.Object);
-            _pageCrawler = new Mock<PageCrawler>(parser, logger.Object);
+            _siteMapParser = new Mock<SitemapParser>(urlValidator.Object, urlNormalizer.Object, httpClientService.Object, loggerSitemap.Object);
+            _renderTimeMeter = new Mock<TimeMeterUtility>(httpClientService.Object);
+            _pageCrawler = new Mock<PageCrawler>(parser.Object, loggerPage.Object);
 
-            var dbContext = new Mock<IWebsiteTesterDbContext>();
             _websiteCrawler = new WebsiteCrawler(_siteMapParser.Object, _pageCrawler.Object, _renderTimeMeter.Object);
         }
 

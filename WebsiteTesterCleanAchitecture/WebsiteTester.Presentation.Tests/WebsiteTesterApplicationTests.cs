@@ -1,40 +1,24 @@
 using Moq;
+using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
+using WebsiteTester.Application.Features.WebsiteTester.Services;
+using WebsiteTester.Domain.Models;
 using Xunit;
 
 namespace WebsiteTester.Presentation.Tests
 {
     public class WebsiteTesterApplicationTests
     {
-        private readonly Mock<WebsiteCrawler> _crawlerMock;
+        private readonly Mock<IWebsiteCrawler> _crawlerMock;
         private readonly Mock<ConsoleManager> _consoleMock;
-        private readonly Mock<ResultsSaverService> _resultSaver;
-        private readonly WebsiteTesterDbContext _context;
+        private readonly Mock<IResultsSaverService> _resultSaver;
+
         private readonly WebsiteTesterApplication _websiteTester;
 
         public WebsiteTesterApplicationTests()
         {
-            var htmlWeb = new HtmlWeb();
-            var httpClient = new HttpClient();
-            var contentLoaderService = new ContentLoaderService(htmlWeb);
-            var httpClientService = new HttpClientService(httpClient);
-
-            var urlValidator = new UrlValidator();
-            var urlNormalizer = new UrlNormalizer();
-
-            var logger_PageCrawler = new Mock<ILogger<PageCrawler>>();
-            var logger_SitemapParser = new Mock<ILogger<SitemapParser>>();
-
-            var parser = new WebsiteParser(urlValidator, urlNormalizer, contentLoaderService);
-            var siteMapParser = new SitemapParser(urlValidator, urlNormalizer, httpClientService, logger_SitemapParser.Object);
-            var renderTimeMeter = new TimeMeterService(httpClientService);
-
-            var webCrawler = new PageCrawler(parser, logger_PageCrawler.Object);
-
-            _context = null;
-
-            _crawlerMock = new Mock<WebsiteCrawler>(siteMapParser, webCrawler, renderTimeMeter);
+            _crawlerMock = new Mock<IWebsiteCrawler>();
             _consoleMock = new Mock<ConsoleManager>();
-            _resultSaver = new Mock<ResultsSaverService>(_context);
+            _resultSaver = new Mock<IResultsSaverService>();
 
             _websiteTester = new WebsiteTesterApplication(_crawlerMock.Object, _consoleMock.Object, _resultSaver.Object);
         }

@@ -1,10 +1,11 @@
-﻿using WebsiteTester.Crawler.Models;
+﻿using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
 using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Utility;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Crawler.Crawlers;
 
-public class WebsiteCrawler
+public class WebsiteCrawler : IWebsiteCrawler
 {
     private readonly TimeMeterUtility _renderTimeMeter;
     private readonly SitemapParser _siteMapParser;

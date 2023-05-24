@@ -1,7 +1,7 @@
 ﻿using WebsiteTester.Application.Models;
-using WebsiteTester.Crawler.Models;
+using WebsiteTester.Domain.Models;
 
-namespace WebsiteTester.Application.WebsiteTester.Services
+namespace WebsiteTester.Application.Features.WebsiteTester.Services
 {
     public interface IResultsSaverService
     {

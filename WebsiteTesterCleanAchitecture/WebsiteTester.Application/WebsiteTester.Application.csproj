@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTester.Crawler\WebsiteTester.Crawler.csproj" />
     <ProjectReference Include="..\WebsiteTester.Domain\WebsiteTester.Domain.csproj" />
   </ItemGroup>
 

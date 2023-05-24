@@ -1,18 +1,18 @@
 ﻿using WebsiteTester.Application.Common.Interfaces;
+using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
+using WebsiteTester.Application.Features.WebsiteTester.Validators.Interfaces;
 using WebsiteTester.Application.Models;
-using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
-using WebsiteTester.Crawler.Crawlers;
-using WebsiteTester.Crawler.Models;
+using WebsiteTester.Domain.Models;
 
-namespace WebsiteTester.Application.WebsiteTester.Services
+namespace WebsiteTester.Application.Features.WebsiteTester.Services
 {
     public class ResultsSaverService : IResultsSaverService
     {
         private readonly IWebsiteTesterDbContext _dbContext;
-        private readonly WebsiteCrawler _websiteCrawler;
+        private readonly IWebsiteCrawler _websiteCrawler;
         private readonly IComplexUrlValidator _urlValidator;
 
-        public ResultsSaverService(IWebsiteTesterDbContext context, WebsiteCrawler websiteCrawler, IComplexUrlValidator urlValidator)
+        public ResultsSaverService(IWebsiteTesterDbContext context, IWebsiteCrawler websiteCrawler, IComplexUrlValidator urlValidator)
         {
             _dbContext = context;
             _websiteCrawler = websiteCrawler;
@@ -27,7 +27,7 @@ namespace WebsiteTester.Application.WebsiteTester.Services
             }
             catch (Exception ex)
             {
-                return new Result<bool>(ex);
+                return ex;
             }
 
             var links = await _websiteCrawler.GetUrlsAsync(url);
@@ -38,7 +38,7 @@ namespace WebsiteTester.Application.WebsiteTester.Services
 
         public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
         {
-            var testedLink = new Domain.Models.Link
+            var testedLink = new Link
             {
                 Url = testedUrl,
                 CreatedOn = DateTimeOffset.UtcNow,
@@ -46,7 +46,7 @@ namespace WebsiteTester.Application.WebsiteTester.Services
 
             _dbContext.Links.Append(testedLink);
 
-            var webLinks = testResults.Select(r => new Domain.Models.LinkTestResult
+            var webLinks = testResults.Select(r => new LinkTestResult
             {
                 LinkId = testedLink.Id,
                 Link = testedLink,

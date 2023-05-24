@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.WebsiteTester.Validators.Interfaces
+﻿namespace WebsiteTester.Application.Features.WebsiteTester.Validators.Interfaces
 {
     public interface IComplexUrlValidator
     {

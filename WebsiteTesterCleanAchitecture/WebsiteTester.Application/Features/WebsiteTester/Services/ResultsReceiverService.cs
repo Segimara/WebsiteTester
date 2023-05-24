@@ -1,8 +1,8 @@
 ﻿using WebsiteTester.Application.Common.Interfaces;
+using WebsiteTester.Application.Features.WebsiteTester.DtoModels;
 using WebsiteTester.Application.Models;
-using WebsiteTester.Application.WebsiteTester.DtoModels;
 
-namespace WebsiteTester.Application.WebsiteTester.Services
+namespace WebsiteTester.Application.Features.WebsiteTester.Services
 {
     public class ResultsReceiverService : IResultsReceiverService
     {
@@ -37,7 +37,7 @@ namespace WebsiteTester.Application.WebsiteTester.Services
 
             if (link == null)
             {
-                return new Result<Link>(new Exception("Link by that id not found"));
+                return new Exception("Link by that id not found");
             }
 
             var testResults = _dbContext.LinkTestResults

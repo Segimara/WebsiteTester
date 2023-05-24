@@ -1,17 +1,17 @@
-﻿using WebsiteTester.Crawler.Interfaces;
-using WebsiteTester.Crawler.Normalizers;
+﻿using WebsiteTester.Crawler.Normalizers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Validators.Interfaces;
 
 namespace WebsiteTester.Crawler.Parsers;
 
 public class WebsiteParser
 {
-    private readonly IHttpClientService _contentLoaderService;
+    private readonly HttpClientService _contentLoaderService;
     private readonly IUrlNormalizer _urlNormalizer;
     private readonly ISimpleUrlValidator _urlValidator;
 
     public WebsiteParser(ISimpleUrlValidator urlValidator, IUrlNormalizer urlNormalizer,
-        IHttpClientService contentLoaderService)
+        HttpClientService contentLoaderService)
     {
         _urlValidator = urlValidator;
         _urlNormalizer = urlNormalizer;

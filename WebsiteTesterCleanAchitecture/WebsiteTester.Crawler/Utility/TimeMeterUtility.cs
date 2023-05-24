@@ -1,13 +1,14 @@
-﻿using WebsiteTester.Crawler.Interfaces;
-using WebsiteTester.Crawler.Models;
+﻿
+using WebsiteTester.Crawler.Services;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Crawler.Utility;
 
 public class TimeMeterUtility
 {
-    private readonly IHttpClientService _httpClientService;
+    private readonly HttpClientService _httpClientService;
 
-    public TimeMeterUtility(IHttpClientService httpClientService)
+    public TimeMeterUtility(HttpClientService httpClientService)
     {
         _httpClientService = httpClientService;
     }

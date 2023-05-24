@@ -1,20 +1,20 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Xml;
-using WebsiteTester.Crawler.Interfaces;
-using WebsiteTester.Crawler.Models;
 using WebsiteTester.Crawler.Normalizers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Validators.Interfaces;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Crawler.Parsers;
 
 public class SitemapParser
 {
-    private readonly IHttpClientService _httpClientService;
+    private readonly HttpClientService _httpClientService;
     private readonly ILogger _logger;
     private readonly IUrlNormalizer _urlNormalizer;
     private readonly ISimpleUrlValidator _urlValidator;
 
-    public SitemapParser(ISimpleUrlValidator urlValidator, IUrlNormalizer urlNormalizer, IHttpClientService httpClientService, ILogger<SitemapParser> logger)
+    public SitemapParser(ISimpleUrlValidator urlValidator, IUrlNormalizer urlNormalizer, HttpClientService httpClientService, ILogger<SitemapParser> logger)
     {
         _urlValidator = urlValidator;
         _urlNormalizer = urlNormalizer;

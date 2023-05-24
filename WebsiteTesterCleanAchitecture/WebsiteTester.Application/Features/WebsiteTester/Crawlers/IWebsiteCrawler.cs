@@ -1,6 +1,6 @@
-﻿using WebsiteTester.Crawler.Models;
+﻿using WebsiteTester.Domain.Models;
 
-namespace WebsiteTester.Application.WebsiteTester.Crawlers
+namespace WebsiteTester.Application.Features.WebsiteTester.Crawlers
 {
     public interface IWebsiteCrawler
     {

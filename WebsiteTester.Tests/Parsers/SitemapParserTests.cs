@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
-using WebsiteTester.Crawler.Interfaces;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Validators.Interfaces;

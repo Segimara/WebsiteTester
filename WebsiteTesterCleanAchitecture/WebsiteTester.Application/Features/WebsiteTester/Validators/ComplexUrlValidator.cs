@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
-using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
+using WebsiteTester.Application.Features.WebsiteTester.Validators.Interfaces;
 
-namespace WebsiteTester.Application.WebsiteTester.Validators
+namespace WebsiteTester.Application.Features.WebsiteTester.Validators
 {
     public class ComplexUrlValidator : IComplexUrlValidator
     {

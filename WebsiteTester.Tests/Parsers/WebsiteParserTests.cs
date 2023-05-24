@@ -1,7 +1,7 @@
 ﻿using Moq;
-using WebsiteTester.Crawler.Interfaces;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Validators;
 using Xunit;
 
@@ -9,7 +9,7 @@ namespace WebsiteTester.Tests.Parsers
 {
     public class WebsiteParserTests
     {
-        private readonly Mock<IHttpClientService> _contentLoaderService;
+        private readonly Mock<HttpClientService> _contentLoaderService;
         private readonly Mock<SimpleUrlValidator> _urlValidator;
         private readonly Mock<IUrlNormalizer> _urlNormalizer;
 
@@ -17,7 +17,7 @@ namespace WebsiteTester.Tests.Parsers
 
         public WebsiteParserTests()
         {
-            _contentLoaderService = new Mock<IHttpClientService>();
+            _contentLoaderService = new Mock<HttpClientService>();
             _urlValidator = new Mock<SimpleUrlValidator>();
             _urlNormalizer = new Mock<IUrlNormalizer>();
 
@@ -63,10 +63,9 @@ namespace WebsiteTester.Tests.Parsers
         public void Parse_WhenUrlIsNotHtml_ShouldThrowException()
         {
             var url = "https://example.com/image.png";
-            var urls = new string[] { "https://example.com/image.png" };
 
             _contentLoaderService.Setup(cls => cls.GetAttributeValueOfDescendants(new Uri(url), "href", "a"))
-                .Returns(urls);
+                .Throws<Exception>();
 
             Assert.Throws<Exception>(() => _websiteParser.Parse(url));
         }

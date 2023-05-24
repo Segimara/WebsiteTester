@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Application.WebsiteTester.DtoModels
+﻿namespace WebsiteTester.Application.Features.WebsiteTester.DtoModels
 {
     public class Link
     {

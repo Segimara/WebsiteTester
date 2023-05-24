@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using WebsiteTester.Crawler.Models;
 using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Crawler.Crawlers;
 

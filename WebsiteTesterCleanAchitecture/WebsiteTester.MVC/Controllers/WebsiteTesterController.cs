@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebsiteTester.Application.WebsiteTester.Services;
+using WebsiteTester.Application.Features.WebsiteTester.DtoModels;
+using WebsiteTester.Application.Features.WebsiteTester.Services;
 using WebsiteTester.MVC.Extensions;
 
 namespace WebsiteTester.MVC.Controllers
@@ -32,7 +33,7 @@ namespace WebsiteTester.MVC.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var result = await _resultsReceiverService.GetTestDetailAsync(id);
-            var mapper = delegate (Application.WebsiteTester.DtoModels.Link link)
+            var mapper = delegate (Link link)
             {
                 return new ViewModels.Link
                 {

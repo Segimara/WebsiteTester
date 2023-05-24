@@ -3,17 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebsiteTester.Application.Common.Interfaces;
-using WebsiteTester.Application.WebsiteTester.Services;
-using WebsiteTester.Application.WebsiteTester.Validators;
-using WebsiteTester.Application.WebsiteTester.Validators.Interfaces;
+using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
+using WebsiteTester.Application.Features.WebsiteTester.Services;
+using WebsiteTester.Application.Features.WebsiteTester.Validators;
+using WebsiteTester.Application.Features.WebsiteTester.Validators.Interfaces;
 using WebsiteTester.Crawler.Crawlers;
-using WebsiteTester.Crawler.Interfaces;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Utility;
 using WebsiteTester.Crawler.Validators;
 using WebsiteTester.Crawler.Validators.Interfaces;
-using WebsiteTester.Infrastructure.Services;
 using WebsiteTester.Persistance;
 
 namespace WebsiteTester.Infrastructure
@@ -38,14 +38,14 @@ namespace WebsiteTester.Infrastructure
             services.AddScoped<IComplexUrlValidator, ComplexUrlValidator>();
             services.AddScoped<IUrlNormalizer, UrlNormalizer>();
 
-            services.AddScoped<IHttpClientService, HttpClientService>();
+            services.AddScoped<HttpClientService, HttpClientService>();
 
             services.AddScoped<WebsiteParser>();
             services.AddScoped<SitemapParser>();
             services.AddScoped<TimeMeterUtility>();
 
             services.AddScoped<PageCrawler>();
-            services.AddScoped<WebsiteCrawler>();
+            services.AddScoped<IWebsiteCrawler, WebsiteCrawler>();
 
             services.AddScoped<IResultsReceiverService, ResultsReceiverService>();
             services.AddScoped<IResultsSaverService, ResultsSaverService>();

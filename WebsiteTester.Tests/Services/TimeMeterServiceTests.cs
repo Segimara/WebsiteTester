@@ -1,6 +1,4 @@
 ﻿using Moq;
-using WebsiteTester.Crawler.Interfaces;
-using WebsiteTester.Crawler.Models;
 using WebsiteTester.Crawler.Utility;
 using Xunit;
 

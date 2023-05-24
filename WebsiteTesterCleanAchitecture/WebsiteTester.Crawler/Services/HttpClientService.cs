@@ -1,10 +1,9 @@
 ﻿using HtmlAgilityPack;
 using System.Text;
-using WebsiteTester.Crawler.Interfaces;
 
-namespace WebsiteTester.Infrastructure.Services;
+namespace WebsiteTester.Crawler.Services;
 
-public class HttpClientService : IHttpClientService
+public class HttpClientService
 {
     private readonly HtmlWeb _loader;
 
@@ -39,7 +38,7 @@ public class HttpClientService : IHttpClientService
     {
         var stringBuilder = new StringBuilder();
 
-        using (var stringWriter = new System.IO.StringWriter(stringBuilder))
+        using (var stringWriter = new StringWriter(stringBuilder))
         {
             htmlDocument.Save(stringWriter);
         }
