@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Moq;
 using WebsiteTester.Crawler.Crawlers;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Validators.Interfaces;
 using Xunit;
 
@@ -10,7 +12,7 @@ namespace WebsiteTester.Tests.Crawlers
 {
     public class PageCrawlerTests
     {
-        private readonly Mock<IHttpClientService> _contentLoaderService;
+        private readonly Mock<HttpClientService> _contentLoaderService;
         private readonly Mock<IUrlNormalizer> _urlNormalizer;
         private readonly Mock<ISimpleUrlValidator> _urlValidator;
         private readonly Mock<WebsiteParser> _websiteParser;
@@ -19,7 +21,8 @@ namespace WebsiteTester.Tests.Crawlers
 
         public PageCrawlerTests()
         {
-            _contentLoaderService = new Mock<IHttpClientService>();
+            var htmlweb = new Mock<HtmlWeb>();
+            _contentLoaderService = new Mock<HttpClientService>(htmlweb.Object);
             _urlNormalizer = new Mock<IUrlNormalizer>();
             _urlValidator = new Mock<ISimpleUrlValidator>();
 

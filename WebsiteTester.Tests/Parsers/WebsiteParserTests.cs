@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using HtmlAgilityPack;
+using Moq;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Services;
@@ -17,7 +18,9 @@ namespace WebsiteTester.Tests.Parsers
 
         public WebsiteParserTests()
         {
-            _contentLoaderService = new Mock<HttpClientService>();
+
+            var htmlweb = new Mock<HtmlWeb>();
+            _contentLoaderService = new Mock<HttpClientService>(htmlweb.Object);
             _urlValidator = new Mock<SimpleUrlValidator>();
             _urlNormalizer = new Mock<IUrlNormalizer>();
 

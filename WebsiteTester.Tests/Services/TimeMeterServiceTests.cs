@@ -1,17 +1,22 @@
-﻿using Moq;
+﻿using HtmlAgilityPack;
+using Moq;
+using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Utility;
+using WebsiteTester.Domain.Models;
 using Xunit;
 
 namespace WebsiteTester.Tests.Services
 {
     public class TimeMeterServiceTests
     {
-        private readonly Mock<IHttpClientService> _httpClientService;
+
+        private readonly Mock<HttpClientService> _httpClientService;
         private readonly TimeMeterUtility _renderTimeMeter;
 
         public TimeMeterServiceTests()
         {
-            _httpClientService = new Mock<IHttpClientService>();
+            var htmlweb = new Mock<HtmlWeb>();
+            _httpClientService = new Mock<HttpClientService>(htmlweb.Object);
             _renderTimeMeter = new TimeMeterUtility(_httpClientService.Object);
         }
 

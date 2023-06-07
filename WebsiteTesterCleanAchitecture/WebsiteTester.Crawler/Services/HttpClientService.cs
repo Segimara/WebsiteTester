@@ -27,7 +27,7 @@ public class HttpClientService
             .Select(a => a.GetAttributeValue(attribute, null));
     }
 
-    public HttpResponseMessage GetContent(Uri uri)
+    public virtual HttpResponseMessage GetContent(Uri uri)
     {
         var htmlDocResponse = _loader.Load(uri);
 
@@ -51,7 +51,7 @@ public class HttpClientService
         return response;
     }
 
-    public int GetRenderTime(Uri uri)
+    public virtual int GetRenderTime(Uri uri)
     {
         _loader.Load(uri);
         return _loader.RequestDuration;
