@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTesterCleanAchitecture\WebsiteTester.Application\WebsiteTester.Application.csproj" />
-    <ProjectReference Include="..\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\WebsiteTester.Crawler.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Crawler\WebsiteTester.Crawler.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Application\WebsiteTester.Application.csproj" />
   </ItemGroup>
 
 </Project>
