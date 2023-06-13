@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
@@ -26,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteTesterCleanAchitecture\WebsiteTester.Application\WebsiteTester.Application.csproj" />
-    <ProjectReference Include="..\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\WebsiteTester.Crawler.csproj" />
+    <ProjectReference Include="..\WebsiteTester.Persistence\WebsiteTester.Persistence.csproj" />
+    <ProjectReference Include="..\WebsiteTester\WebsiteTester.csproj" />
   </ItemGroup>
 
 </Project>

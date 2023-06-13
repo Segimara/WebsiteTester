@@ -1,10 +1,9 @@
-﻿using HtmlAgilityPack;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
-using WebsiteTester.Crawler.Normalizers;
-using WebsiteTester.Crawler.Parsers;
-using WebsiteTester.Crawler.Services;
-using WebsiteTester.Crawler.Validators.Interfaces;
+using WebsiteTester.Normalizers;
+using WebsiteTester.Parsers;
+using WebsiteTester.Services;
+using WebsiteTester.Validators;
 using Xunit;
 
 namespace WebsiteTester.Tests.Parsers;
@@ -13,16 +12,16 @@ public class SitemapParserTests
 {
     private readonly Mock<HttpClientService> _httpClientService;
     private readonly SitemapParser _sitemapParser;
-    private readonly Mock<IUrlNormalizer> _urlNormalizer;
-    private readonly Mock<ISimpleUrlValidator> _urlValidator;
+    private readonly Mock<UrlNormalizer> _urlNormalizer;
+    private readonly Mock<UrlValidator> _urlValidator;
 
     public SitemapParserTests()
     {
+        var httpClient = new HttpClient();
 
-        var htmlweb = new Mock<HtmlWeb>();
-        _httpClientService = new Mock<HttpClientService>(htmlweb.Object);
-        _urlNormalizer = new Mock<IUrlNormalizer>();
-        _urlValidator = new Mock<ISimpleUrlValidator>();
+        _httpClientService = new Mock<HttpClientService>(httpClient);
+        _urlNormalizer = new Mock<UrlNormalizer>();
+        _urlValidator = new Mock<UrlValidator>();
         var logger = new Mock<ILogger<SitemapParser>>();
 
         _sitemapParser = new SitemapParser(_urlValidator.Object, _urlNormalizer.Object, _httpClientService.Object, logger.Object);
@@ -35,7 +34,7 @@ public class SitemapParserTests
 
         var result = await _sitemapParser.ParseAsync("https://www.google.com/");
 
-        _httpClientService.Setup(h => h.GetContent(uri)).Returns(
+        _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
             new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadGateway
@@ -49,7 +48,7 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetContent(uri)).Returns(
+        _httpClientService.Setup(h => h.GetAsync(uri)).ReturnsAsync(
             new HttpResponseMessage()
             {
                 Content = new StringContent(
@@ -69,8 +68,8 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetContent(It.IsAny<Uri>()))
-            .Returns(SetupHttpResponseMessage());
+        _httpClientService.Setup(h => h.GetAsync(It.IsAny<Uri>()))
+            .ReturnsAsync(SetupHttpResponseMessage());
 
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
             .Returns(SetupNormalizedUrls());

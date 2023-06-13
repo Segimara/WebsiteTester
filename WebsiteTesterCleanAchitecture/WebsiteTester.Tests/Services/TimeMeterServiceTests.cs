@@ -1,18 +1,23 @@
-﻿using Moq;
+﻿using HtmlAgilityPack;
+using Moq;
+using WebsiteTester.Crawler.Services;
+using WebsiteTester.Crawler.Utility;
+using WebsiteTester.Domain.Models;
 using Xunit;
 
 namespace WebsiteTester.Tests.Services
 {
     public class TimeMeterServiceTests
     {
+
         private readonly Mock<HttpClientService> _httpClientService;
-        private readonly TimeMeterService _renderTimeMeter;
+        private readonly TimeMeterUtility _renderTimeMeter;
 
         public TimeMeterServiceTests()
         {
-            HttpClient _webClient = new HttpClient();
-            _httpClientService = new Mock<HttpClientService>(_webClient);
-            _renderTimeMeter = new TimeMeterService(_httpClientService.Object);
+            var htmlweb = new Mock<HtmlWeb>();
+            _httpClientService = new Mock<HttpClientService>(htmlweb.Object);
+            _renderTimeMeter = new TimeMeterUtility(_httpClientService.Object);
         }
 
         [Fact]
@@ -26,11 +31,10 @@ namespace WebsiteTester.Tests.Services
                 }
             };
 
-            _httpClientService.Setup(x => x.GetAsync(It.IsAny<Uri>()))
-                .ReturnsAsync(() =>
+            _httpClientService.Setup(x => x.GetRenderTime(It.IsAny<Uri>()))
+                .Returns(() =>
             {
-                Task.Delay(TimeSpan.FromMilliseconds(1)).Wait();
-                return new HttpResponseMessage();
+                return 5;
             });
 
             var result = await _renderTimeMeter.TestRenderTimeAsync(urls);

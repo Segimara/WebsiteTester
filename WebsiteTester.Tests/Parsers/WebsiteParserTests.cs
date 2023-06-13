@@ -1,28 +1,28 @@
 ﻿using HtmlAgilityPack;
 using Moq;
-using WebsiteTester.Crawler.Normalizers;
-using WebsiteTester.Crawler.Parsers;
-using WebsiteTester.Crawler.Services;
-using WebsiteTester.Crawler.Validators;
+using WebsiteTester.Normalizers;
+using WebsiteTester.Parsers;
+using WebsiteTester.Services;
+using WebsiteTester.Validators;
 using Xunit;
 
 namespace WebsiteTester.Tests.Parsers
 {
     public class WebsiteParserTests
     {
-        private readonly Mock<HttpClientService> _contentLoaderService;
-        private readonly Mock<SimpleUrlValidator> _urlValidator;
-        private readonly Mock<IUrlNormalizer> _urlNormalizer;
+        private readonly Mock<ContentLoaderService> _contentLoaderService;
+        private readonly Mock<UrlValidator> _urlValidator;
+        private readonly Mock<UrlNormalizer> _urlNormalizer;
 
         private readonly WebsiteParser _websiteParser;
 
         public WebsiteParserTests()
         {
+            var htmlWeb = new HtmlWeb();
 
-            var htmlweb = new Mock<HtmlWeb>();
-            _contentLoaderService = new Mock<HttpClientService>(htmlweb.Object);
-            _urlValidator = new Mock<SimpleUrlValidator>();
-            _urlNormalizer = new Mock<IUrlNormalizer>();
+            _contentLoaderService = new Mock<ContentLoaderService>(htmlWeb);
+            _urlValidator = new Mock<UrlValidator>();
+            _urlNormalizer = new Mock<UrlNormalizer>();
 
             _websiteParser =
                 new WebsiteParser(_urlValidator.Object, _urlNormalizer.Object, _contentLoaderService.Object);
@@ -44,11 +44,12 @@ namespace WebsiteTester.Tests.Parsers
         {
             var url = "https://example.com";
 
-            var urls = new string[]{
-                "https://example.com/page1",
-                "https://example.com/page2" };
-            _contentLoaderService.Setup(cls => cls.GetAttributeValueOfDescendants(new Uri(url), "href", "a"))
-                .Returns(urls);
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(@"!<DOCTYPE html><html><body>
+                                    <a href='https://example.com/page1'>Page 1</a>
+                                    <a href='https://example.com/page2'>Page 2</a></body></html>");
+            _contentLoaderService.Setup(cls => cls.Load(new Uri(url)))
+                .Returns(htmlDoc);
 
             _urlValidator.Setup(uv => uv.IsValid(It.IsAny<string>())).Returns(true);
 
@@ -66,9 +67,10 @@ namespace WebsiteTester.Tests.Parsers
         public void Parse_WhenUrlIsNotHtml_ShouldThrowException()
         {
             var url = "https://example.com/image.png";
+            var html = "<html><body><img src='https://example.com/image.png'></body></html>";
 
-            _contentLoaderService.Setup(cls => cls.GetAttributeValueOfDescendants(new Uri(url), "href", "a"))
-                .Throws<Exception>();
+            _contentLoaderService.Setup(cls => cls.Load(new Uri(url)))
+                .Returns(new HtmlDocument() { Text = html });
 
             Assert.Throws<Exception>(() => _websiteParser.Parse(url));
         }
