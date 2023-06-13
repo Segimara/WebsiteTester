@@ -1,0 +1,17 @@
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.csproj.AssemblyReference.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.AssemblyInfoInputs.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.AssemblyInfo.cs
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.csproj.CoreCompileInputs.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Crawler.deps.json
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Crawler.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Crawler.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\refint\WebsiteTester.Crawler.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\ref\WebsiteTester.Crawler.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Application.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Domain.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Application.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\bin\Debug\net7.0\WebsiteTester.Domain.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Crawler\obj\Debug\net7.0\WebsiteTester.Crawler.csproj.CopyComplete

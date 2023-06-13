@@ -1,0 +1,12 @@
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\bin\Debug\net7.0\WebsiteTester.Domain.deps.json
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\bin\Debug\net7.0\WebsiteTester.Domain.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\bin\Debug\net7.0\WebsiteTester.Domain.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.csproj.AssemblyReference.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.AssemblyInfoInputs.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.AssemblyInfo.cs
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\refint\WebsiteTester.Domain.dll
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\WebsiteTester.Domain.pdb
+C:\Users\Segimara\Documents\GitHub\WebsiteTester\WebsiteTesterCleanAchitecture\WebsiteTester.Domain\obj\Debug\net7.0\ref\WebsiteTester.Domain.dll
