@@ -44,7 +44,7 @@ namespace WebsiteTester.Application.Features.WebsiteTester.Services
                 CreatedOn = DateTimeOffset.UtcNow,
             };
 
-            _dbContext.Links.Append(testedLink);
+            _dbContext.Add<Link>(testedLink);
 
             var webLinks = testResults.Select(r => new LinkTestResult
             {
@@ -57,7 +57,7 @@ namespace WebsiteTester.Application.Features.WebsiteTester.Services
                 CreatedOn = DateTimeOffset.UtcNow,
             });
 
-            _dbContext.LinkTestResults.Concat(webLinks);
+            _dbContext.AddRange<LinkTestResult>(webLinks);
             await _dbContext.SaveChangesAsync();
         }
     }
