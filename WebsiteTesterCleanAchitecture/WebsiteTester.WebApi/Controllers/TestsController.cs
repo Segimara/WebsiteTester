@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using WebsiteTester.Application.Features.WebsiteTester.DtoModels;
 using WebsiteTester.Application.Features.WebsiteTester.Services;
 using WebsiteTester.WebApi.Extensions;
+using WebsiteTester.WebApi.Hubs;
 using WebsiteTester.WebApi.Models;
+using WebsiteTester.WebApi.Services;
 
 namespace WebsiteTester.WebApi.Controllers
 {
@@ -10,10 +13,14 @@ namespace WebsiteTester.WebApi.Controllers
     {
         private readonly IResultsSaverService _resultsSaverService;
         private readonly IResultsReceiverService _resultsReceiverService;
-        public TestsController(IResultsReceiverService resultsReceiverService, IResultsSaverService resultsSaverService)
+        private readonly IHubContext<WebsiteTesterHub> _hubContext;
+        private readonly WebsiteTesterStateService _websiteTesterStateService;
+        public TestsController(IResultsReceiverService resultsReceiverService, IResultsSaverService resultsSaverService, IHubContext<WebsiteTesterHub> hubContext, WebsiteTesterStateService websiteTesterStateService)
         {
             _resultsSaverService = resultsSaverService;
             _resultsReceiverService = resultsReceiverService;
+            _hubContext = hubContext;
+            _websiteTesterStateService = websiteTesterStateService;
         }
 
         /// <summary>
@@ -80,8 +87,12 @@ namespace WebsiteTester.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> TestWebsite([FromBody] TestUrlRequest url)
         {
+            _hubContext.Clients.All.SendAsync("SetWebsiteTesterState", _websiteTesterStateService.IsTesterRunning);
+            _websiteTesterStateService.IsTesterRunning = true;
             var result = await _resultsSaverService.GetAndSaveResultsAsync(System.Web.HttpUtility.UrlDecode(url.Url));
-
+            _websiteTesterStateService.IsTesterRunning = false;
+            _hubContext.Clients.All.SendAsync("SetWebsiteTesterState", _websiteTesterStateService.IsTesterRunning);
+            _hubContext.Clients.All.SendAsync("TestFinished");
             return result.ToApiResponseResult(b => b);
         }
 

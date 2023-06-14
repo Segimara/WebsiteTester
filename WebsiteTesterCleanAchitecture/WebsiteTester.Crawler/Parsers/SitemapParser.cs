@@ -63,7 +63,7 @@ public class SitemapParser
 
     public async Task<string> GetSitemapXml(Uri url)
     {
-        var response = _httpClientService.GetContent(new Uri(url, "/sitemap.xml"));
+        var response = await _httpClientService.GetContent(new Uri(url, "/sitemap.xml"));
 
         if (response.IsSuccessStatusCode)
         {

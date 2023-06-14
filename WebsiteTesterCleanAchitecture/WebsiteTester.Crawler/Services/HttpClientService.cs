@@ -27,9 +27,9 @@ public class HttpClientService
             .Select(a => a.GetAttributeValue(attribute, null));
     }
 
-    public virtual HttpResponseMessage GetContent(Uri uri)
+    public virtual async Task<HttpResponseMessage> GetContent(Uri uri)
     {
-        var htmlDocResponse = _loader.Load(uri);
+        var htmlDocResponse = await _loader.LoadFromWebAsync(uri.ToString());
 
         return ConvertHtmlDocumentToHttpResponseMessage(htmlDocResponse);
     }
