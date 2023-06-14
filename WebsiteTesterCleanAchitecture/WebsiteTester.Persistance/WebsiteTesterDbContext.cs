@@ -20,14 +20,14 @@ namespace WebsiteTester.Persistance
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LinkTestResultConfiguration).Assembly);
         }
 
-        void IWebsiteTesterDbContext.Add<TEntity>(TEntity entity)
+        public void Add<T>(T link) where T : class
         {
-            this.Add(entity);
+            base.Add(link);
         }
 
-        public void AddRange<TEntity>(IEnumerable<TEntity> entity)
+        public void AddRange<T>(IEnumerable<T> links) where T : class
         {
-            this.AddRange(entity);
+            base.AddRange(links);
         }
 
         IQueryable<Link> IWebsiteTesterDbContext.Links => Links.AsQueryable<Link>();

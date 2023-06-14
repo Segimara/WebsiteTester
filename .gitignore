@@ -25,10 +25,14 @@ packages
 
 **/bin/*
 **/obj/*
-
+bin/
+obj/
+**/bin/
+**/obj/
 **/.vs/*
 *.dll
-
+*/.vs/
+**/.vs/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -375,3 +379,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+*.cache
+*.vsidx
+*.v2
