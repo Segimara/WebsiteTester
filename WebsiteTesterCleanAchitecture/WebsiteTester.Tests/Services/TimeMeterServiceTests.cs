@@ -2,6 +2,7 @@
 using Moq;
 using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Utility;
+using WebsiteTester.Domain.InternalModels;
 using WebsiteTester.Domain.Models;
 using Xunit;
 

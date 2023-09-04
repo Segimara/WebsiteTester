@@ -1,19 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WebsiteTester.Persistenсe.Migrations
+namespace WebsiteTester.Persistance.Migrations
 {
-    public partial class migrateToMsSql : Migration
+    /// <inheritdoc />
+    public partial class first : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Links",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "TEXT", nullable: false, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
@@ -24,13 +28,13 @@ namespace WebsiteTester.Persistenсe.Migrations
                 name: "LinkTestResults",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RenderTimeMilliseconds = table.Column<int>(type: "int", nullable: false),
-                    IsInSitemap = table.Column<bool>(type: "bit", nullable: false),
-                    IsInWebsite = table.Column<bool>(type: "bit", nullable: false),
-                    LinkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "TEXT", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    RenderTimeMilliseconds = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsInSitemap = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsInWebsite = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LinkId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,6 +52,7 @@ namespace WebsiteTester.Persistenсe.Migrations
                 column: "LinkId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

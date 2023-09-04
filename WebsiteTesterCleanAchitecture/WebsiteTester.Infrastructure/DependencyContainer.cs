@@ -20,12 +20,9 @@ namespace WebsiteTester.Infrastructure
 {
     public static class DependencyContainer
     {
-        public static void RegisterDbContext(this IServiceCollection services, string connectionString)
+        public static void RegisterDbContext(this IServiceCollection services, string connectionString = "Data Source=tester.db")
         {
-            services.AddDbContext<WebsiteTesterDbContext>(options =>
-                           options.UseSqlServer(connectionString)
-                           );
-
+            services.AddWebsiteTesterPersistence("Data Source=tester.db");
             services.AddScoped<IWebsiteTesterDbContext, WebsiteTesterDbContext>();
         }
 

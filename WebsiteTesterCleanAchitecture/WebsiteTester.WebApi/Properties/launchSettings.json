@@ -16,7 +16,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;"
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=False;User Id=sa;Password=123qwe123qwe"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7060;http://localhost:5199"
@@ -27,7 +27,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Encrypt = False;Trust Server Certificate = True;User ID = websitetester_api_pool; Password = 123qwe;"
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=False;User Id=sa;Password=123qwe123qwe,
       }
     },
     "IIS": {

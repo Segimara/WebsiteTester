@@ -11,7 +11,8 @@ namespace WebsiteTester.WebApi
             // Add services to the container.
 
             builder.Services.RegisterServices();
-            builder.Services.RegisterDbContext(Environment.GetEnvironmentVariable("DB_CONNECTION"));
+
+            builder.Services.RegisterDbContext();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

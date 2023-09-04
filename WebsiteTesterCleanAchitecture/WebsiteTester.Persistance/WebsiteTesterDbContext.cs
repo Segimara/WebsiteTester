@@ -30,8 +30,5 @@ namespace WebsiteTester.Persistance
             base.AddRange(links);
         }
 
-        IQueryable<Link> IWebsiteTesterDbContext.Links => Links.AsQueryable<Link>();
-        IQueryable<LinkTestResult> IWebsiteTesterDbContext.LinkTestResults => LinkTestResults.AsQueryable<LinkTestResult>();
-
     }
 }
