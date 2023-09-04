@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Link>
+
+@{
+}
+
+<form class="" method="post" asp-action="TestUrl">
+    <div class="d-flex flex-row gap-3 mt-5">
+        <div class="form-group d-flex align-items-center flex-row w-100">
+            <label for="url" class="w-25">Enter a website</label>
+            <input for="url" type="text" class="form-control" id="url" name="url" placeholder="Enter URL">
+        </div>
+        <div class="p-1">
+            <button type="submit" class="btn btn-primary">TEST</button>
+        </div>
+    </div>
+    @if (TempData["Error"] != null)
+    {
+        <p class="text-danger mt-1"><b>@TempData["Error"]</b></p>
+    }
+</form>
+
+<div>
+    <h2 class="mt-5">Test Results</h2>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Website</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var link in Model)
+            {
+                <tr>
+                    <td>@link.Url</td>
+                    <td>@link.CreatedOn.ToLocalTime().ToString("g")</td>
+                    <td><a asp-controller="WebsiteTester" asp-action="Details" asp-route-id="@link.Id">see details</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

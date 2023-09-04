@@ -1,0 +1,70 @@
+﻿@model Link
+
+
+@if (TempData["Error"] != null)
+{
+    <h3 class="text-danger text-center my-5"><b>@TempData["Error"]</b></h3>
+}
+else
+{
+    <h2 class="mt-5">@Model.Url</h2>
+    <div class="mt-5">
+        <h2>PERFOMANCE</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                    <th>Timing</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.TestResults)
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                        <td>@result.RenderTimeMilliseconds</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-5">
+        <h2>URLs NOT FOUND AT WEBSITE</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.TestResults.Where(x => x.IsInSitemap && !x.IsInWebsite))
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-5">
+        <h2>URLs NOT FOUND AT SITEMAP</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.TestResults.Where(x => x.IsInWebsite && !x.IsInSitemap))
+                {
+                    <tr>
+                        <td>@result.Url</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
