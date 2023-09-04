@@ -22,7 +22,7 @@ namespace WebsiteTester.Infrastructure
     {
         public static void RegisterDbContext(this IServiceCollection services, string connectionString = "Data Source=tester.db")
         {
-            services.AddWebsiteTesterPersistence("Data Source=tester.db");
+            services.AddWebsiteTesterPersistence(connectionString);
             services.AddScoped<IWebsiteTesterDbContext, WebsiteTesterDbContext>();
         }
 

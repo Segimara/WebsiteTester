@@ -27,7 +27,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=False;User Id=sa;Password=123qwe123qwe,
+        "DB_CONNECTION": "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=False;User Id=sa;Password=123qwe123qwe;"
       }
     },
     "IIS": {

@@ -7,7 +7,7 @@ namespace WebsiteTester.Persistance
     {
         public static IServiceCollection AddWebsiteTesterPersistence(this IServiceCollection services, string connectionString = "Data Source=tester.db")
         {
-            services.AddDbContext<WebsiteTesterDbContext>(options => options.UseSqlite(connectionString));
+            services.AddDbContext<WebsiteTesterDbContext>(options => options.UseSqlServer(connectionString));
 
             return services;
         }

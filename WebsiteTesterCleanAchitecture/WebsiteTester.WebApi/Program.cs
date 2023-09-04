@@ -12,7 +12,7 @@ namespace WebsiteTester.WebApi
 
             builder.Services.RegisterServices();
 
-            builder.Services.RegisterDbContext();
+            builder.Services.RegisterDbContext("Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=True;User Id=sa;Password=123qwe123qwe;");
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
