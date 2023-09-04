@@ -1,6 +1,6 @@
 ﻿
 using WebsiteTester.Crawler.Services;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 
 namespace WebsiteTester.Crawler.Utility;
 

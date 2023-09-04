@@ -3,7 +3,7 @@ using System.Xml;
 using WebsiteTester.Crawler.Normalizers;
 using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Validators.Interfaces;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 
 namespace WebsiteTester.Crawler.Parsers;
 
@@ -63,7 +63,7 @@ public class SitemapParser
 
     public async Task<string> GetSitemapXml(Uri url)
     {
-        var response = await _httpClientService.GetContent(new Uri(url, "/sitemap.xml"));
+        var response = await _httpClientService.GetContentAsync(new Uri(url, "/sitemap.xml"));
 
         if (response.IsSuccessStatusCode)
         {

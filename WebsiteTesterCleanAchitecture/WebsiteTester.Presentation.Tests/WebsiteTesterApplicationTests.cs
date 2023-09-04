@@ -1,7 +1,7 @@
 using Moq;
 using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
 using WebsiteTester.Application.Features.WebsiteTester.Services;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 using Xunit;
 
 namespace WebsiteTester.Presentation.Tests

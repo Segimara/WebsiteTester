@@ -7,7 +7,7 @@ using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Services;
 using WebsiteTester.Crawler.Utility;
 using WebsiteTester.Crawler.Validators.Interfaces;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 using Xunit;
 
 namespace WebsiteTester.Tests.Crawlers

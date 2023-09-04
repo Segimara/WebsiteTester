@@ -1,5 +1,5 @@
 ﻿using WebsiteTester.Application.Models;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 
 namespace WebsiteTester.Application.Features.WebsiteTester.Services
 {

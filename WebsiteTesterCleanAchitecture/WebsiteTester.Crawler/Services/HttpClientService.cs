@@ -27,7 +27,7 @@ public class HttpClientService
             .Select(a => a.GetAttributeValue(attribute, null));
     }
 
-    public virtual async Task<HttpResponseMessage> GetContent(Uri uri)
+    public virtual async Task<HttpResponseMessage> GetContentAsync(Uri uri)
     {
         var htmlDocResponse = await _loader.LoadFromWebAsync(uri.ToString());
 

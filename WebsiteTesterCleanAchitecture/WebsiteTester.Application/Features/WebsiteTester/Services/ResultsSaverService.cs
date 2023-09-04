@@ -2,6 +2,7 @@
 using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
 using WebsiteTester.Application.Features.WebsiteTester.Validators.Interfaces;
 using WebsiteTester.Application.Models;
+using WebsiteTester.Domain.InternalModels;
 using WebsiteTester.Domain.Models;
 
 namespace WebsiteTester.Application.Features.WebsiteTester.Services

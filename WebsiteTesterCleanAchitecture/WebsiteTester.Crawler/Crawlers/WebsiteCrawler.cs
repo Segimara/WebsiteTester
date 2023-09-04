@@ -1,7 +1,7 @@
 ﻿using WebsiteTester.Application.Features.WebsiteTester.Crawlers;
 using WebsiteTester.Crawler.Parsers;
 using WebsiteTester.Crawler.Utility;
-using WebsiteTester.Domain.Models;
+using WebsiteTester.Domain.InternalModels;
 
 namespace WebsiteTester.Crawler.Crawlers;
 

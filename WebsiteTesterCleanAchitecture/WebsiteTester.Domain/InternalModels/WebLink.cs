@@ -1,4 +1,4 @@
-﻿namespace WebsiteTester.Domain.Models;
+﻿namespace WebsiteTester.Domain.InternalModels;
 
 public class WebLink
 {

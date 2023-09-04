@@ -35,7 +35,7 @@ public class SitemapParserTests
 
         var result = await _sitemapParser.ParseAsync("https://www.google.com/");
 
-        _httpClientService.Setup(h => h.GetContent(uri)).Returns(
+        _httpClientService.Setup(h => h.GetContentAsync(uri)).ReturnsAsync(
             new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadGateway
@@ -49,7 +49,7 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetContent(uri)).Returns(
+        _httpClientService.Setup(h => h.GetContentAsync(uri)).ReturnsAsync(
             new HttpResponseMessage()
             {
                 Content = new StringContent(
@@ -69,8 +69,8 @@ public class SitemapParserTests
     {
         var uri = new Uri("https://jwt.io/");
 
-        _httpClientService.Setup(h => h.GetContent(It.IsAny<Uri>()))
-            .Returns(SetupHttpResponseMessage());
+        _httpClientService.Setup(h => h.GetContentAsync(It.IsAny<Uri>()))
+            .ReturnsAsync(SetupHttpResponseMessage());
 
         _urlNormalizer.Setup(n => n.NormalizeUrls(It.IsAny<IEnumerable<string>>(), It.IsAny<string>()))
             .Returns(SetupNormalizedUrls());
