@@ -10,7 +10,7 @@ namespace WebsiteTester.Persistance
             var dbContextBuilder = new DbContextOptionsBuilder<WebsiteTesterDbContext>();
 
             //var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-            var connectionString = "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=True;User Id=sa;Password=123qwe123qwe;";
+            var connectionString = "Server=localhost\\SQLEXPRESS;Database=WebsiteTesterDB;Trust Server Certificate=True;Encrypt=True;";
 
             dbContextBuilder.UseSqlServer(connectionString);
 

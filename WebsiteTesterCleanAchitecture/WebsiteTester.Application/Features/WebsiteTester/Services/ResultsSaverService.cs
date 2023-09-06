@@ -20,7 +20,7 @@ namespace WebsiteTester.Application.Features.WebsiteTester.Services
             _urlValidator = urlValidator;
         }
 
-        public async Task<Result<bool>> GetAndSaveResultsAsync(string url)
+        public async Task<Result<bool>> GetAndSaveResultsAsync(Guid userId, string url)
         {
             try
             {
@@ -33,14 +33,15 @@ namespace WebsiteTester.Application.Features.WebsiteTester.Services
 
             var links = await _websiteCrawler.GetUrlsAsync(url);
 
-            await SaveResultsAsync(url, links);
+            await SaveResultsAsync(userId, url, links);
             return true;
         }
 
-        public async Task SaveResultsAsync(string testedUrl, IEnumerable<WebLink> testResults)
+        public async Task SaveResultsAsync(Guid userId, string testedUrl, IEnumerable<WebLink> testResults)
         {
             var testedLink = new Link
             {
+                UserID = userId,
                 Url = testedUrl,
                 CreatedOn = DateTimeOffset.UtcNow,
             };

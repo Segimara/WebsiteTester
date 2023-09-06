@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebsiteTester.Application.Features.WebsiteTester.DtoModels;
 using WebsiteTester.Application.Features.WebsiteTester.Services;
 using WebsiteTester.WebApi.Extensions;
@@ -6,6 +7,8 @@ using WebsiteTester.WebApi.Models;
 
 namespace WebsiteTester.WebApi.Controllers
 {
+
+    [Authorize]
     public class TestsController : BaseController
     {
         private readonly IResultsSaverService _resultsSaverService;
@@ -21,13 +24,14 @@ namespace WebsiteTester.WebApi.Controllers
         /// </summary>
         /// <returns>Links Array</returns>
         /// <response code = "200">Success</response>
+        /// <response code = "401">Unauthorize</response>
         /// <response code = "500">If something went wrong</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<ViewModels.Link>>> TestResults()
         {
-            var result = await _resultsReceiverService.GetResultsAsync();
+            var result = await _resultsReceiverService.GetResultsAsync(UserId);
             return Ok(result);
         }
 
@@ -45,7 +49,7 @@ namespace WebsiteTester.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ViewModels.Link>> TestDetails(Guid id)
         {
-            var result = await _resultsReceiverService.GetTestDetailAsync(id.ToString());
+            var result = await _resultsReceiverService.GetTestDetailAsync(UserId, id.ToString());
             var mapper = delegate (Link link)
             {
                 return new ViewModels.Link
@@ -80,7 +84,7 @@ namespace WebsiteTester.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> TestWebsite([FromBody] TestUrlRequest url)
         {
-            var result = await _resultsSaverService.GetAndSaveResultsAsync(System.Web.HttpUtility.UrlDecode(url.Url));
+            var result = await _resultsSaverService.GetAndSaveResultsAsync(UserId, System.Web.HttpUtility.UrlDecode(url.Url));
 
             return result.ToApiResponseResult(b => b);
         }

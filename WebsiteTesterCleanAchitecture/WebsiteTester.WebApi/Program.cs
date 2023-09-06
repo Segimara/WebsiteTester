@@ -26,7 +26,7 @@ namespace WebsiteTester.WebApi
             builder.Services.AddSwaggerGen(c =>
             {
                 AddSwaggerOAuth2Configuration(c);
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "wellship_svc_app", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebsiteTester", Version = "v1" });
             });
 
             builder.Services.AddAuthentication(options =>

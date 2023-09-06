@@ -6,7 +6,7 @@
         {
             LinkTestResults = new List<LinkTestResult>();
         }
-
+        public Guid UserID { get; set; }
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Url { get; set; }
         public DateTimeOffset CreatedOn { get; set; }

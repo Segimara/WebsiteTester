@@ -12,20 +12,23 @@ namespace WebsiteTester.Application.Features.WebsiteTester.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Link>> GetResultsAsync()
+        public async Task<IEnumerable<Link>> GetResultsAsync(Guid userId)
         {
-            return _dbContext.Links.Select(l => new Link
-            {
-                Id = l.Id,
-                Url = l.Url,
-                CreatedOn = l.CreatedOn,
-            })
+            return _dbContext.Links
+                .Where(l => l.UserID.Equals(userId))
+                .Select(l => new Link
+                {
+                    Id = l.Id,
+                    Url = l.Url,
+                    CreatedOn = l.CreatedOn,
+                })
                .ToList();
         }
 
-        public async Task<Result<Link>> GetTestDetailAsync(string id)
+        public async Task<Result<Link>> GetTestDetailAsync(Guid userId, string id)
         {
             var link = _dbContext.Links
+                .Where(l => l.UserID.Equals (userId))
                 .Where(l => l.Id == Guid.Parse(id))
                 .Select(l => new Link
                 {
