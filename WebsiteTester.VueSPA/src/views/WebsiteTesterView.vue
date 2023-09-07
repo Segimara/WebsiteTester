@@ -42,9 +42,8 @@
 </template>
 
 <script lang="ts">
-import { computed } from '@vue/reactivity';
 import { useWebsiteTesterStore } from '../stores/WebsiteTesterStore';
-import type { Link } from '@/models/Link';
+import type { Link } from '../models/Link';
 export default {
     data() {
         const store = useWebsiteTesterStore();

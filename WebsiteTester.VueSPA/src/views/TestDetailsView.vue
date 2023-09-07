@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="result in testDetails?.testResults?.slice().sort((a, b) => a.renderTimeMilliseconds - b.renderTimeMilliseconds)">
+          v-for="(result, index) in testDetails?.testResults?.slice().sort((a, b) => a.renderTimeMilliseconds - b.renderTimeMilliseconds)" :key="index">
           <td>{{ result.url }}</td>
           <td>{{ result.renderTimeMilliseconds }}</td>
         </tr>
@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults?.slice().filter(x => x.isInSitemap && !x.isInWebsite)">
+        <tr v-for="(result, index) in testDetails?.testResults?.slice().filter(x => x.isInSitemap && !x.isInWebsite)" :key="index">
           <td>{{ result.url }}</td>
         </tr>
       </tbody>
@@ -44,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="result in testDetails?.testResults?.slice().filter(x => x.isInWebsite && !x.isInSitemap)">
+        <tr v-for="(result, index) in testDetails?.testResults?.slice().filter(x => x.isInWebsite && !x.isInSitemap)" :key="index">
           <td>{{ result.url }}</td>
         </tr>
       </tbody>
@@ -53,8 +53,8 @@
 </template>
 
 <script lang="ts">
-import type { Link } from '@/models/Link';
-import { useWebsiteTesterStore } from '@/stores/WebsiteTesterStore';
+import type { Link } from '../models/Link';
+import { useWebsiteTesterStore } from '../stores/WebsiteTesterStore';
 import { ref } from 'vue';
 
 export default {

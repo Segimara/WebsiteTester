@@ -42,6 +42,7 @@ namespace WebsiteTester.WebApi.Controllers
         /// <returns>Link model with </returns>
         /// <response code = "200">Success</response>
         /// <response code = "400">If given id is not valid</response>
+        /// <response code = "401">Unauthorize</response>
         /// <response code = "500">If something went wrong</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,6 +78,7 @@ namespace WebsiteTester.WebApi.Controllers
         /// <returns>True if url was tested</returns>
         /// <response code = "200">Success</response>
         /// <response code = "400">If given url is not valid</response>
+        /// <response code = "401">Unauthorize</response>
         /// <response code = "500">If something went wrong</response>
         [HttpPost("test")]
         [ProducesResponseType(StatusCodes.Status200OK)]
